@@ -23,6 +23,9 @@ public class AccidentProject extends Application {
     
    public static void main(String[] args) {
         Application.launch(args);
+       
+       
+       //TEST FOR PUSH
         
         /*test.solveForY();
         System.out.println(test.getFHeight());
