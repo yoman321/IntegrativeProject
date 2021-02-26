@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="integrativeproject.DemoInputScreenFXMLController">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <Pane prefHeight="104.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="44.0" prefWidth="600.0">
+                     <children>
+                        <TextField fx:id="iVelXYTF" prefHeight="25.0" prefWidth="129.0" promptText="Initial Velocity (m/s)">
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="fVelXYTF" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Final Velocity (m/s)">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="accelTF" layoutX="98.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Acceleration (m/s^2)">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="timeTF" layoutX="186.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Time (s)">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox layoutY="52.0" prefHeight="44.0" prefWidth="600.0">
+                     <children>
+                        <TextField fx:id="iHeightTF" prefHeight="25.0" prefWidth="129.0" promptText="Initial Height (m)">
+                           <HBox.margin>
+                              <Insets left="20.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="fHeightTF" prefHeight="25.0" prefWidth="129.0" promptText="Final Height (m)">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="iDistanceTF" prefHeight="25.0" prefWidth="129.0" promptText="Initial Distance (m)">
+                           <HBox.margin>
+                              <Insets right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <TextField fx:id="fDistanceTF" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Final Distance (m)">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </top>
+         <center>
+            <Pane fx:id="demoPane" prefHeight="238.0" prefWidth="582.0" style="-fx-border-color: black; -fx-border-width: 2;" BorderPane.alignment="CENTER" />
+         </center>
+         <bottom>
+            <HBox prefHeight="41.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Region prefHeight="41.0" prefWidth="126.0" />
+                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#handleNext" prefHeight="36.0" prefWidth="77.0" text="Next">
+                     <font>
+                        <Font name="Arial Black" size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
