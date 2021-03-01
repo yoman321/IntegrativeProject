@@ -179,4 +179,14 @@ public class ProjectileMotion {
     /*public double getForce(){
         
     }*/
+    
+    public void main(String[] args){
+        ProjectileMotion pm = new ProjectileMotion();
+        
+        pm.setIVelX(25);
+        pm.setHeight(50);
+        pm.setFDistance = 79.8;
+        
+        System.out.println(pm.solveForTime());
+    }
 }
