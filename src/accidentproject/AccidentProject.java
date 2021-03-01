@@ -22,28 +22,27 @@ import javafx.stage.Stage;
 public class AccidentProject extends Application {
     
    public static void main(String[] args) {
-        Application.launch(args);
+       launch(args);
         
-        /*test.solveForY();
-        System.out.println(test.getFHeight());
-        test.setTime(test.getTime() + 0.01);
-        while(test.getFHeight() >= 0){
-            test.solveForY();
-            System.out.println(test.getFHeight());
-            test.setTime(test.getTime() + 0.01); */
+//        test.solveForY();
+//        System.out.println(test.getFHeight());
+//        test.setTime(test.getTime() + 0.01);
+//        while(test.getFHeight() >= 0){
+//            test.solveForY();
+//            System.out.println(test.getFHeight());
+//            test.setTime(test.getTime() + 0.01); 
         
     }
         
-        
-
     @Override
     public void start(Stage stage) throws Exception {
     
-        Parent root = FXMLLoader.load(getClass().getResource("GravityTestGUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("FXML/LoginSceneFXML.fxml"));
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        //This is trial
     }
     
 }
