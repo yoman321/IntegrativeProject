@@ -14,6 +14,7 @@ import integrativeproject.FallingObjectClasses.FallingObject;
 public class ProjectileMotion {
     
     private double iVelY, iVelX, fVelY, time, velXY, iHeight, iDistance, fHeight, fDistance;
+    private final double ACCELERATION = 9.8;
     private boolean hasIVelY = false, hasIVelX = false, hasFVelY = false, hasTime = false, hasVelXY = false, hasIHeight = false, hasIDistance = false, hasFHeight = false, hasFDistance = false;
     FallingObject object; //Added a FallingObject variable
     
@@ -117,9 +118,41 @@ public class ProjectileMotion {
         return -1;
         
     }
-    /*public double solveForTime(){
+    public double solveForTime(){
         
-    }*/
+        if (hasIHeight == true && hasFHeight == true && hasIVelY == true && hasFVelY == true){
+            double numerator = 2 * (fHeight - iHeight);
+            double denominator = iVelY + fVelY;
+            double time = numerator / denominator;
+            
+            return time;
+            
+        }
+        else if (hasFVelY == true && hasIVelY == true){
+            
+            double numerator = -1 * (fVelY - iVelY);
+            double denominator = ACCELERATION;
+            double time = numerator / denominator;
+            
+            return time;
+        }
+        else if (hasFHeight == true && hasIHeight == true && hasIVelY == true){
+            double a = -0.5(ACCELERATION);
+            double b = iVelY;
+            double c = (iHeight + fHeight);
+            double time = quadratic(a,b,c);
+            
+            return time;
+        }
+        else if (hasFDistance == true && hasFDistance == true && hasIVelX){
+            double numerator = (fDistance - iDistance);
+            double denominator = iVelX;
+            double time = numerator / denominator;
+            
+            return time;
+        }
+        
+    }
     
     
     public void convertXY(double degree){
