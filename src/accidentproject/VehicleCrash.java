@@ -56,8 +56,9 @@ public class VehicleCrash {
     public double getDistance(VehicleCrash vehicle){
         return Math.abs(vehicle.getPosition() - getPosition());
     }
-    public double crashDistance(double m1, double v1, double m2, double v2){
-        return ((m1 * v1) + (m2 * v2))/(m1 + m2);
+    public double crashDistance(VehicleCrash vehicle){
+        return ((getVelocity() * getMass()) + (vehicle.getVelocity() * vehicle.getMass())) / (getMass() + vehicle.getMass());
     }
+    
     
 }
