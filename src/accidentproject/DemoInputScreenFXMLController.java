@@ -23,14 +23,25 @@ public class DemoInputScreenFXMLController {
     @FXML private TextField fHeightTF;
     @FXML private TextField iDistanceTF;
     @FXML private TextField fDistanceTF;
-    @FXML private Pane demoPane;
+    @FXML private AnchorPane demoPane;
+    @FXML private Label rLabel;
+    @FXML private Slider rSlider;
+    @FXML private Label gLabel;
+    @FXML private Slider gSlider;
+    @FXML private Label bLabel;
+    @FXML private Slider bSlider;
+    @FXML private Slider objectPosSlider;
+
     protected ProjectileMotion pm = new ProjectileMotion();
     
 
     public void handleNext(){
         
         
-        
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
     
             
