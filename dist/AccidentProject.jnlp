@@ -3,12 +3,12 @@
   <information>
     <title>AccidentProject</title>
     <vendor>luoph</vendor>
-    <description>null</description>
+    <description>AccidentProject</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="AccidentProject.jar" size="13354" download="eager" />
+    <jar href="AccidentProject.jar" size="25986" download="eager" />
   </resources>
   <jfx:javafx-desc  width="800" height="600" main-class="accidentproject.AccidentProject"  name="AccidentProject" />
   <update check="always"/>
