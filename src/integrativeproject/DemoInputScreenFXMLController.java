@@ -7,11 +7,14 @@ package integrativeproject;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -40,6 +43,12 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private Slider bSlider;
     @FXML private Slider objectPosSlider;
     @FXML private ImageView heightObject;
+    @FXML private RadioButton rbBasketball;
+    @FXML private RadioButton rbBoxSquare;
+    @FXML private RadioButton rbBoxRectangle;
+    @FXML private ImageView fallingObjectDisplay;
+    
+    
 
     protected ProjectileMotion pm = new ProjectileMotion();
     
@@ -51,7 +60,8 @@ public class DemoInputScreenFXMLController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        
     }
     
-            
 }
