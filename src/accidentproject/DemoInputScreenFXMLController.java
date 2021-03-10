@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package integrativeproject;
+package accidentproject;
 
-import javafx.event.ActionEvent;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
  * @author Liam
  */
-public class DemoInputScreenFXMLController {
+public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField iVelXYTF;
     @FXML private TextField fVelXYTF;
     @FXML private TextField accelTF;

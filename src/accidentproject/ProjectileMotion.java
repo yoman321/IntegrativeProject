@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package integrativeproject;
+package accidentproject;
 
 import integrativeproject.FallingObjectClasses.FallingObject;
 
@@ -137,7 +137,7 @@ public class ProjectileMotion {
             return time;
         }
         else if (hasFHeight == true && hasIHeight == true && hasIVelY == true){
-            double a = -0.5(ACCELERATION);
+            double a = -0.5*ACCELERATION;
             double b = iVelY;
             double c = (iHeight + fHeight);
             double time = quadratic(a,b,c);
@@ -151,7 +151,7 @@ public class ProjectileMotion {
             
             return time;
         }
-        
+        return -1;
     }
     
     
