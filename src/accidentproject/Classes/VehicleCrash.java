@@ -5,6 +5,7 @@
  */
 package accidentproject.Classes;
 
+import javafx.scene.shape.Rectangle;
 /**
  *
  * @author luoph
@@ -15,19 +16,25 @@ public class VehicleCrash {
     private double mass;
     private double velocity;
     private double acceleration;
-    private double position;
+    private double x;
+    private double y;
+    private String startLocation;
+    private Rectangle vehicle;
     
     //Create constructor
     public VehicleCrash(){
         
     }
-    public VehicleCrash(double mass, double velocity, double acceleration, double position){
+    public VehicleCrash(double mass, double velocity, double acceleration, double x, double y, String startLocation,Rectangle vehicle) {
         this.mass = mass;
         this.velocity = velocity;
         this.acceleration = acceleration;
-        this.position = position;
+        this.x = x;
+        this.y = y;
+        this.startLocation = startLocation;
+        this.vehicle = vehicle;
     }
-    //Create getter and setters
+    //Create getters
     public double getMass(){
         return mass;
     }
@@ -37,9 +44,20 @@ public class VehicleCrash {
     public double getAcceleration(){
         return acceleration;
     }
-    public double getPosition(){
-        return position;
+    public double getX(){
+        return x;
     }
+    public double getY(){
+        return y;
+    }
+    public String getStartLocation(){
+        return startLocation;
+    }
+    public Rectangle getVehicle(){
+        return vehicle;
+    }
+    
+    //Create setters
     public void setMass(double mass){
         this.mass = mass;
     }
@@ -49,13 +67,22 @@ public class VehicleCrash {
     public void setAcceleration(double acceleration){
         this.acceleration = acceleration;
     }
-    public void setPosition(double posisiton){
-        this.position = position;
+    public void setX(double x){
+        this.x = x;
     }
-    //Create methods
-    public double getDistance(VehicleCrash vehicle){
-        return Math.abs(vehicle.getPosition() - getPosition());
+    public void setY(double y){
+        this.y = y;
     }
+    public void setStartLocation(String startLocation){
+        this.startLocation = startLocation;
+    }
+    public void setVehicle(Rectangle vehicle){
+        this.vehicle = vehicle;
+    }
+//    //Create methods
+//    public double getDistance(VehicleCrash vehicle){
+//        return Math.abs(vehicle.getPosition() - getPosition());
+//    }
     public double crashDistance(VehicleCrash vehicle){
         return ((getVelocity() * getMass()) + (vehicle.getVelocity() * vehicle.getMass())) / (getMass() + vehicle.getMass());
     }

@@ -21,7 +21,7 @@
             <Image url="@../Ressources/VehicleCollisionsBackground.png" />
          </image>
       </ImageView>
-      <Pane prefHeight="1000.0" prefWidth="1000.0">
+      <Pane fx:id="pane" prefHeight="1000.0" prefWidth="1000.0">
          <children>
             <GridPane layoutX="8.0" layoutY="14.0" prefHeight="159.0" prefWidth="298.0">
               <columnConstraints>
