@@ -3,23 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package accidentproject;
+package integrativeproject;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
  *
- * @author luoph
+ * @author liamd
  */
-public class AccidentProject extends Application {
+public class IntegrativeProject extends Application {
     
    public static void main(String[] args) {
         Application.launch(args);
@@ -42,7 +38,7 @@ public class AccidentProject extends Application {
     @Override
     public void start(Stage stage) throws Exception {
     
-        Parent root = FXMLLoader.load(getClass().getResource("GravityTestGUI.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("DemoInputScreen.fxml"));
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
