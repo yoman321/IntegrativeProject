@@ -5,7 +5,6 @@
  */
 package accidentproject;
 
-import integrativeproject.FallingObjectClasses.FallingObject;
 import javafx.scene.shape.Rectangle;
 
 /**
