@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane prefHeight="356.0" prefWidth="600.0">
@@ -27,7 +26,7 @@
                </HBox.margin>
             </Label>
             <Region prefHeight="44.0" prefWidth="10.0" />
-            <TextField editable="false" prefHeight="25.0" prefWidth="72.0" />
+            <TextField editable="false" opacity="0.5" prefHeight="25.0" prefWidth="72.0" />
             <Region layoutX="52.0" layoutY="10.0" prefHeight="44.0" prefWidth="10.0" />
             <Label text="Height:">
                <HBox.margin>
@@ -35,7 +34,7 @@
                </HBox.margin>
             </Label>
             <Region layoutX="122.0" layoutY="10.0" prefHeight="44.0" prefWidth="10.0" />
-            <TextField editable="false" prefHeight="25.0" prefWidth="72.0" />
+            <TextField editable="false" opacity="0.5" prefHeight="25.0" prefWidth="72.0" />
             <Region layoutX="168.0" layoutY="10.0" prefHeight="44.0" prefWidth="10.0" />
             <Label text="Distance:">
                <HBox.margin>
@@ -43,7 +42,7 @@
                </HBox.margin>
             </Label>
             <Region layoutX="235.0" layoutY="10.0" prefHeight="44.0" prefWidth="29.0" />
-            <TextField editable="false" prefHeight="25.0" prefWidth="72.0" />
+            <TextField editable="false" opacity="0.5" prefHeight="25.0" prefWidth="72.0" />
             <Region prefHeight="34.0" prefWidth="120.0" />
             <Button mnemonicParsing="false" onAction="#handleGo" text="GO!">
                <HBox.margin>

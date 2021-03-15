@@ -5,16 +5,23 @@
  */
 package integrativeproject;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  *
@@ -42,15 +49,23 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private RadioButton rbBoxSquare;
     @FXML private RadioButton rbBoxRectangle;
     @FXML private ImageView fallingObjectDisplay;
+    @FXML private ImageView demoBackground;
+    @FXML private ImageView demoLedge;
+    
     
     
 
     protected ProjectileMotion pm = new ProjectileMotion();
     
 
-    public void handleNext(){
+    public void handleNext(ActionEvent actionEvent) throws IOException{
         
+        Parent demo = FXMLLoader.load(getClass().getResource("/resources/DemoScreen.fxml"));
+        Scene demoScene = new Scene(demo);
         
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(demoScene);
+        stage.show();
     }
 
     @Override
