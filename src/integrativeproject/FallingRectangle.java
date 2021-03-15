@@ -9,39 +9,30 @@ import javafx.scene.shape.Rectangle;
 
 /**
  *
- * @author Liam
+ * @author liamd
  */
 public class FallingRectangle extends FallingObject{
-    private double width, height;
+    
     private Rectangle rectangle;
+    private double width, height;
     
-    //Constructors
-    public FallingRectangle(Rectangle rectangle, double width, double height, double x, double y){
+    public FallingRectangle(double width, double height){
         this.width = width;
         this.height = height;
-        rectangle = new Rectangle(width, height);
-        setX(x);
-        setY(y);
-    }
-    public FallingRectangle(Rectangle rectangle, double width, double height){
-        this.width = width;
-        this.height = height;
-        rectangle = new Rectangle(width, height);
-    }
-    public FallingRectangle(){
+        rectangle.setWidth(width);
+        rectangle.setHeight(height);
     }
     
-    //Setters and getters
-    public void setHeight(double height){
-        this.height = height;
-    }
     public void setWidth(double width){
         this.width = width;
     }
-    public double getHeight(){
-        return height;
+    public void setHeight(double height){
+        this.height = height;
     }
     public double getWidth(){
         return width;
+    }
+    public double getHeight(){
+        return height;
     }
 }

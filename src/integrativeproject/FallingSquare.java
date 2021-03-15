@@ -9,31 +9,24 @@ import javafx.scene.shape.Rectangle;
 
 /**
  *
- * @author Liam
+ * @author liamd
  */
 public class FallingSquare extends FallingObject{
-    private double side;
+    
     private Rectangle square;
+    private double side;
     
-    //Constructors
-    public FallingSquare(Rectangle square, double side, double x, double y){
+    public FallingSquare(double side){
         this.side = side;
-        square = new Rectangle(side, side);
-        setX(x);
-        setY(y);
-    }
-    public FallingSquare(Rectangle square, double side){
-        this.side = side;
-        square = new Rectangle(side, side);
-    }
-    public FallingSquare(){
+        square.setWidth(side);
+        square.setHeight(side);
     }
     
-    //Setters and getters
     public void setSide(double side){
         this.side = side;
     }
     public double getSide(){
         return side;
     }
+    
 }

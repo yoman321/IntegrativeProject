@@ -7,24 +7,19 @@ package integrativeproject;
 
 /**
  *
- * @author Liam
+ * @author liamd
  */
-public abstract class FallingObject {
-    private double x, y, mass; //added the mass variable
+public class FallingObject {
+    private double x, y;
     
-    //Constructor
     public FallingObject(){
     }
     
-    //Basic setters and getters
     public void setX(double x){
         this.x = x;
     }
     public void setY(double y){
         this.y = y;
-    }
-    public void setMass(double mass){
-        this.mass = mass;
     }
     public double getX(){
         return x;
@@ -32,7 +27,5 @@ public abstract class FallingObject {
     public double getY(){
         return y;
     }
-    public double getMass(){
-        return mass;
-    }
+    
 }
