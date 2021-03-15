@@ -60,7 +60,7 @@ public class DemoInputScreenFXMLController implements Initializable {
 
     public void handleNext(ActionEvent actionEvent) throws IOException{
         
-        Parent demo = FXMLLoader.load(getClass().getResource("/resources/DemoScreen.fxml"));
+        Parent demo = FXMLLoader.load(getClass().getResource("DemoScreen.fxml"));
         Scene demoScene = new Scene(demo);
         
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

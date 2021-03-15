@@ -37,9 +37,8 @@ public class IntegrativeProject extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-    
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/DemoInputScreen.fxml"));
-        
+
+        Parent root = FXMLLoader.load(getClass().getResource("DemoInputScreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
