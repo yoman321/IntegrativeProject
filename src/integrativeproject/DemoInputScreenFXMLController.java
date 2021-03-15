@@ -58,14 +58,9 @@ public class DemoInputScreenFXMLController implements Initializable {
     protected ProjectileMotion pm = new ProjectileMotion();
     
 
-    public void handleNext(ActionEvent actionEvent) throws IOException{
+    public void handleNext(ActionEvent event) throws IOException{
         
-        Parent demo = FXMLLoader.load(getClass().getResource("DemoScreen.fxml"));
-        Scene demoScene = new Scene(demo);
-        
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(demoScene);
-        stage.show();
+        Parent demo = FXMLLoader.load(getClass().getResource("ProjectileMotionDemo.fxml"));
     }
 
     @Override
