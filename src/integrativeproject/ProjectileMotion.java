@@ -57,6 +57,15 @@ public class ProjectileMotion {
         hasFDistance = true;
         this.fDistance = fDistance;
     }
+    public void setObject(FallingCircle object){
+        this.object = object;
+    }
+    public void setObject(FallingSquare object){
+        this.object = object;
+    }
+    public void setObject(FallingRectangle object){
+        this.object = object;
+    }
     public double getIVelY(){
         return iVelY;
     }
@@ -84,6 +93,7 @@ public class ProjectileMotion {
     public double getFDistance(){
         return fDistance;
     }
+    
     
     
     public double solveForX(){
@@ -179,5 +189,6 @@ public class ProjectileMotion {
     }*/
     
     public void main(String[] args){
+        
     }
 }

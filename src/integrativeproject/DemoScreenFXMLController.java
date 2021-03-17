@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
  * @author liamd
  */
 public class DemoScreenFXMLController {
-    @FXML private ImageView demoBackground;
-    @FXML private ImageView demoLedge;
+    
+    @FXML private ImageView background;
+    @FXML private ImageView ledge;
+    @FXML private ImageView fallingObject;
 }

@@ -8,19 +8,34 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="integrativeproject.DemoScreenFXMLController">
    <children>
       <StackPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="363.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="background" fitHeight="363.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/ProjectileMotionBackground.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="ledge" fitHeight="337.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/Ledge.png" />
+               </image>
+            </ImageView>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="fallingObject" fitHeight="80.0" fitWidth="39.0" layoutX="-5.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/Custom%20BasketBall.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </StackPane>
       <HBox layoutY="337.0" prefHeight="63.0" prefWidth="600.0">

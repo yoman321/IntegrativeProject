@@ -6,7 +6,9 @@
 package integrativeproject;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,15 +31,14 @@ import javafx.stage.Stage;
  */
 public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField iVelXYTF;
-    @FXML private TextField fVelXYTF;
     @FXML private TextField accelTF;
+    @FXML private TextField angleTF;
     @FXML private TextField timeTF;
     @FXML private TextField iHeightTF;
-    @FXML private TextField fHeightTF;
-    @FXML private TextField iDistanceTF;
     @FXML private TextField fDistanceTF;
     @FXML private AnchorPane demoPane;
     @FXML private Label rLabel;
+    @FXML private Label demoLabel;
     @FXML private Slider rSlider;
     @FXML private Label gLabel;
     @FXML private Slider gSlider;
@@ -51,7 +52,7 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private ImageView fallingObjectDisplay;
     @FXML private ImageView demoBackground;
     @FXML private ImageView demoLedge;
-    
+    private double velXY, angle, time, height, distance;
     
     
 
@@ -59,13 +60,33 @@ public class DemoInputScreenFXMLController implements Initializable {
     
 
     public void handleNext(ActionEvent event) throws IOException{
+
+        //Retrieving user input
+        if(iVelXYTF.getText() != "" && isDouble(iVelXYTF.getText()))
+            velXY = Double.parseDouble(iVelXYTF.getText());
+        angle = Double.parseDouble(angleTF.getText());
+        time = Double.parseDouble(timeTF.getText());
+        height = Double.parseDouble(iHeightTF.getText());
+        distance = Double.parseDouble(fDistanceTF.getText());
+        //Adding input into the projectile motion class
+        pm.setVelXY(velXY);
+        pm.convertXY(angle);
+        pm.setTime(time);
+        pm.setIHeight(height);
+        pm.setFDistance(distance);
         
-        Parent demo = FXMLLoader.load(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
-        Scene scene = new Scene(demo);
         
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        if(pm.solveForX() != -1 && pm.solveForY() != -1){
+            Parent demo = FXMLLoader.load(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
+            Scene scene = new Scene(demo);
+        
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        }
+        else{
+            demoLabel.setText("Error: Not enough Information");
+        }
     }
 
     @Override
@@ -74,4 +95,28 @@ public class DemoInputScreenFXMLController implements Initializable {
         
     }
     
+    public boolean isDouble(String string){
+        
+        ArrayList<Character> charArray = new ArrayList<>();
+        for(int i = 0; i < string.length(); i++){
+            charArray.add(string.charAt(i));
+        }
+        for(int i = 0; i < charArray.size();i++){
+            String test = "" + charArray.get(i);
+            if((i == 0 && test.equals("-")) || (i == 0 && test.equals("+"))){
+                continue;
+            }
+            if(test.equals("0") || test.equals("1") || test.equals("2") || test.equals("3") || test.equals("4") || test.equals("5") || test.equals("6") || test.equals("7") || test.equals("8") || test.equals("9")){
+                continue;
+            }
+            else{
+                return false;
+            }
+        }
+
+        
+        
+        return true;
+    }
+
 }
