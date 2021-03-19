@@ -11,10 +11,10 @@ package integrativeproject;
  */
 public class ProjectileMotion {
     
-    private double iVelY, iVelX, fVelY, time, velXY, iHeight, iDistance, fHeight, fDistance;
+    private double iVelY, iVelX, fVelY, time, velXY, iHeight, iDistance = 0, fHeight, fDistance;
     private final double ACCELERATION = 9.8;
     private boolean hasIVelY = false, hasIVelX = false, hasFVelY = false, hasTime = false, hasVelXY = false, hasIHeight = false, hasIDistance = false, hasFHeight = false, hasFDistance = false;
-    FallingObject object; //Added a FallingObject variable
+    FallingObject object = new FallingObject(); //Added a FallingObject variable
     
     
     public ProjectileMotion(){
@@ -37,9 +37,10 @@ public class ProjectileMotion {
         hasTime = true;
         this.time = time;
     }
-    public void setVelXY(double velXY){
+    public void setVelXY(double velXY,double angle){
         hasVelXY = true;
         this.velXY = velXY;
+        convertXY(angle);
     }
     public void setIHeight(double iHeight){
         hasIHeight = true;
@@ -100,7 +101,7 @@ public class ProjectileMotion {
         if (hasIVelX == false & hasIDistance == true && hasFDistance == true && hasTime){
             setIVelX((fDistance - iDistance)/time);
         }
-        else if(hasIDistance == true && hasIVelX == true && hasTime == true){
+        else if(hasIVelX == true && hasTime == true){
             double position = iDistance + (iVelX * time);
             object.setX(position);
         }
@@ -109,7 +110,7 @@ public class ProjectileMotion {
     public double solveForY(){
         if(hasIVelY == true && hasTime == true){
             double formulaTwo = iVelY - (9.8 * time);
-            setIVelY(formulaTwo);
+            setFVelY(formulaTwo);
         }
         else if(hasIHeight == true && hasIVelY == true && hasFVelY == true && hasTime == true){
             double formulaOne = iHeight + (0.5 *(iVelY + fVelY) * time);

@@ -72,7 +72,7 @@
                                           </TextField>
                                           <Label fx:id="demoLabel" text="User Input">
                                              <HBox.margin>
-                                                <Insets left="100.0" top="9.0" />
+                                                <Insets left="10.0" top="9.0" />
                                              </HBox.margin>
                                              <font>
                                                 <Font size="17.0" />

@@ -61,19 +61,28 @@ public class DemoInputScreenFXMLController implements Initializable {
 
     public void handleNext(ActionEvent event) throws IOException{
 
-        //Retrieving user input
-        if(iVelXYTF.getText() != "" && isDouble(iVelXYTF.getText()))
+        //Retrieving user input and adding input into the projectile motion class
+        if(isDouble(iVelXYTF.getText()) && isDouble(angleTF.getText())){
+            angle = Double.parseDouble(angleTF.getText());
             velXY = Double.parseDouble(iVelXYTF.getText());
-        angle = Double.parseDouble(angleTF.getText());
-        time = Double.parseDouble(timeTF.getText());
-        height = Double.parseDouble(iHeightTF.getText());
-        distance = Double.parseDouble(fDistanceTF.getText());
-        //Adding input into the projectile motion class
-        pm.setVelXY(velXY);
-        pm.convertXY(angle);
-        pm.setTime(time);
-        pm.setIHeight(height);
-        pm.setFDistance(distance);
+            pm.setVelXY(velXY, angle);
+        }
+        if(isDouble(angleTF.getText())){
+            angle = Double.parseDouble(angleTF.getText());
+            pm.convertXY(angle);
+        }
+        if(isDouble(timeTF.getText())){
+            time = Double.parseDouble(timeTF.getText());
+            pm.setTime(time);
+        }
+        if(isDouble(iHeightTF.getText())){
+            height = Double.parseDouble(iHeightTF.getText());
+            pm.setIHeight(height);
+        }
+        if(isDouble(fDistanceTF.getText())){
+            distance = Double.parseDouble(fDistanceTF.getText());
+            pm.setFDistance(distance);
+        }
         
         
         if(pm.solveForX() != -1 && pm.solveForY() != -1){
@@ -86,6 +95,8 @@ public class DemoInputScreenFXMLController implements Initializable {
         }
         else{
             demoLabel.setText("Error: Not enough Information");
+            System.out.println("Solve For X: " + pm.solveForX());
+            System.out.println("Solve For Y: " + pm.solveForY());
         }
     }
 

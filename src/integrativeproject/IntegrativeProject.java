@@ -18,9 +18,7 @@ import javafx.stage.Stage;
 public class IntegrativeProject extends Application {
     
    public static void main(String[] args) {
-        //Application.launch(args);
-        DemoInputScreenFXMLController controller = new DemoInputScreenFXMLController();
-        System.out.println(controller.isDouble("+503"));
+        Application.launch(args);
         
        
        
