@@ -6,6 +6,9 @@
 package accidentproject.Classes;
 
 import javafx.scene.shape.Rectangle;
+import java.util.concurrent.*;
+import javafx.application.Platform;
+import static java.lang.System.out;
 /**
  *
  * @author luoph
@@ -85,6 +88,40 @@ public class VehicleCrash {
 //    }
     public double crashDistance(VehicleCrash vehicle){
         return ((getVelocity() * getMass()) + (vehicle.getVelocity() * vehicle.getMass())) / (getMass() + vehicle.getMass());
+    }
+    //Animation method
+    public synchronized void vehicleAnimation(){
+        
+        Thread thread = new Thread(new Runnable(){
+            @Override
+             public void run(){
+                 try{
+                    if (getStartLocation().equals("up")){
+                        while (true){
+                            setY(getY() + 5);
+                            Platform.runLater(() -> getVehicle().setY(getY()));
+                            Thread.sleep(10);
+                            out.println("nothing"); //test
+                        }
+                        
+                    }
+                    if (getStartLocation().equals("down")){ 
+                        while (true){
+                            setY(getY() - 5);
+                            Platform.runLater(() -> getVehicle().setY(getY()));
+                            Thread.sleep(10);
+                            out.println("something");//test
+                             }
+                    }
+                }
+                 catch (Exception ex){
+                     ex.getStackTrace();
+                 }
+             }
+            
+            
+        });
+        thread.start();
     }
     
     
