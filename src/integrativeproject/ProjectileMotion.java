@@ -11,10 +11,19 @@ package integrativeproject;
  */
 public class ProjectileMotion {
     
+<<<<<<< HEAD
     private double iVelY, iVelX, fVelY, time, velXY, iHeight, iDistance = 0, fHeight, fDistance;
     private final double ACCELERATION = 9.8;
     private boolean hasIVelY = false, hasIVelX = false, hasFVelY = false, hasTime = false, hasVelXY = false, hasIHeight = false, hasIDistance = false, hasFHeight = false, hasFDistance = false;
     FallingObject object = new FallingObject(); //Added a FallingObject variable
+=======
+    private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0;
+    private final double ACCELERATION = 9.8;
+    private boolean hasIVelY = false, hasIVelX = false, hasTime = false, hasIHeight = false, hasFDistance = false;
+    FallingCircle circleObject;
+    FallingRectangle rectangleObject;
+    FallingSquare squareObject;
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
     
     
     public ProjectileMotion(){
@@ -29,52 +38,38 @@ public class ProjectileMotion {
         hasIVelX = true;
         this.iVelX = iVelX;
     }
-    public void setFVelY(double fVelY){
-        hasFVelY = true;
-        this.fVelY = fVelY;
+    public void setVelXY(double velXY){
+        this.velXY = velXY;
     }
     public void setTime(double time){
-        hasTime = true;
         this.time = time;
     }
+<<<<<<< HEAD
     public void setVelXY(double velXY,double angle){
         hasVelXY = true;
         this.velXY = velXY;
         convertXY(angle);
     }
+=======
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
     public void setIHeight(double iHeight){
         hasIHeight = true;
         this.iHeight = iHeight;
     }
-    public void setIDistance(double iDistance){
-        hasIDistance = true;
-        this.iDistance = iDistance;
-    }
-    public void setFHeight(double fHeight){
-        hasFHeight = true;
-        this.fHeight = fHeight;
-    }
-    public void setFDistance(double fDistance){
-        hasFDistance = true;
-        this.fDistance = fDistance;
-    }
     public void setObject(FallingCircle object){
-        this.object = object;
+        circleObject = object;
     }
     public void setObject(FallingSquare object){
-        this.object = object;
+        squareObject = object;
     }
     public void setObject(FallingRectangle object){
-        this.object = object;
+        rectangleObject = object;
     }
     public double getIVelY(){
         return iVelY;
     }
     public double getIVelX(){
         return iVelX;
-    }
-    public double getFVelY(){
-        return fVelY;
     }
     public double getTime(){
         return time;
@@ -85,29 +80,45 @@ public class ProjectileMotion {
     public double getIHeight(){
         return iHeight;
     }
-    public double getIDistance(){
-        return iDistance;
-    }
-    public double getFHeight(){
-        return fHeight;
-    }
     public double getFDistance(){
         return fDistance;
     }
+    public FallingCircle getCircleObject(){
+        return circleObject;
+    }
+    public FallingRectangle getRectangleObject(){
+        return rectangleObject;
+    }
+    public FallingSquare getSquareObject(){
+        return squareObject;
+    }
     
-    
-    
-    public double solveForX(){
-        if (hasIVelX == false & hasIDistance == true && hasFDistance == true && hasTime){
-            setIVelX((fDistance - iDistance)/time);
+    //Solve for time has to be written before any solve for methods since they wont have access to the time
+    public double solveForDistance(){
+        if(hasTime == true && hasIVelX == true){
+            fDistance = iDistance + (iVelX * time);
+            hasFDistance = true;
+            return fDistance;
         }
+<<<<<<< HEAD
         else if(hasIVelX == true && hasTime == true){
             double position = iDistance + (iVelX * time);
             object.setX(position);
+=======
+        else{
+            return -1;
+        }
+        
+    }
+    public double solveForX(){
+        if(hasFDistance && hasIVelX){
+            return fDistance - (iVelX * time);
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
         }
             return -1;
     }
     public double solveForY(){
+<<<<<<< HEAD
         if(hasIVelY == true && hasTime == true){
             double formulaTwo = iVelY - (9.8 * time);
             setFVelY(formulaTwo);
@@ -123,40 +134,20 @@ public class ProjectileMotion {
         else if(hasIVelY == true && hasFVelY == true && hasIHeight == true){
             double formulaFour = (((iVelY*iVelY) - (fVelY*fVelY))/(2*9.8)) + iHeight;
             object.setY(formulaFour);
+=======
+        if(hasIVelY && hasIHeight){
+            return (0.5 * ACCELERATION * time * time) - (iVelY * time) + fHeight;
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
         }
         return -1;
-        
     }
-    public double solveForTime(){
-        
-        if (hasIHeight == true && hasFHeight == true && hasIVelY == true && hasFVelY == true){
-            double numerator = 2 * (fHeight - iHeight);
-            double denominator = iVelY + fVelY;
-            double time = numerator / denominator;
-            
-            return time;
-            
-        }
-        else if (hasFVelY == true && hasIVelY == true){
-            
-            double numerator = -1 * (fVelY - iVelY);
-            double denominator = ACCELERATION;
-            double time = numerator / denominator;
-            
-            return time;
-        }
-        else if (hasFHeight == true && hasIHeight == true && hasIVelY == true){
+    public double solveForTime(){ 
+        if (hasIHeight && hasIVelY){
             double a = -0.5*ACCELERATION;
             double b = iVelY;
-            double c = (iHeight + fHeight);
-            double time = quadratic(a,b,c);
-            
-            return time;
-        }
-        else if (hasFDistance == true && hasFDistance == true && hasIVelX){
-            double numerator = (fDistance - iDistance);
-            double denominator = iVelX;
-            double time = numerator / denominator;
+            double c = (iHeight - fHeight);
+            time = quadratic(a,b,c);
+            hasTime = true;
             
             return time;
         }
@@ -188,8 +179,5 @@ public class ProjectileMotion {
     /*public double getForce(){
         
     }*/
-    
-    public void main(String[] args){
-        
-    }
+
 }

@@ -31,13 +31,12 @@ import javafx.stage.Stage;
  */
 public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField iVelXYTF;
-    @FXML private TextField accelTF;
     @FXML private TextField angleTF;
     @FXML private TextField timeTF;
     @FXML private TextField iHeightTF;
-    @FXML private TextField fDistanceTF;
     @FXML private AnchorPane demoPane;
     @FXML private Label rLabel;
+    @FXML private Label accelerationLabel;
     @FXML private Label demoLabel;
     @FXML private Slider rSlider;
     @FXML private Label gLabel;
@@ -61,6 +60,7 @@ public class DemoInputScreenFXMLController implements Initializable {
 
     public void handleNext(ActionEvent event) throws IOException{
 
+<<<<<<< HEAD
         //Retrieving user input and adding input into the projectile motion class
         if(isDouble(iVelXYTF.getText()) && isDouble(angleTF.getText())){
             angle = Double.parseDouble(angleTF.getText());
@@ -83,21 +83,44 @@ public class DemoInputScreenFXMLController implements Initializable {
             distance = Double.parseDouble(fDistanceTF.getText());
             pm.setFDistance(distance);
         }
+=======
+        //Retrieving user input
+        if(isDouble(iVelXYTF.getText())&& isDouble(angleTF.getText()) && isDouble(iHeightTF.getText())){
+            velXY = Double.parseDouble(iVelXYTF.getText());
+            angle = Double.parseDouble(angleTF.getText());
+            height = Double.parseDouble(iHeightTF.getText());
+        }
+        else{
+            demoLabel.setText("Not enough information");
+            return;
+        }
+        //Adding input into the projectile motion class
+        pm.setVelXY(velXY);
+        pm.convertXY(angle);
+        pm.setIHeight(height);
+        pm.solveForTime(); //This method solves for the time and sets the value for the time variable in its method
+        pm.solveForDistance();
+        
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
         
         
         if(pm.solveForX() != -1 && pm.solveForY() != -1){
+            System.out.println(pm.solveForX() + "\n" + pm.solveForY() );
             Parent demo = FXMLLoader.load(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
             Scene scene = new Scene(demo);
-        
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         }
+<<<<<<< HEAD
         else{
             demoLabel.setText("Error: Not enough Information");
             System.out.println("Solve For X: " + pm.solveForX());
             System.out.println("Solve For Y: " + pm.solveForY());
         }
+=======
+
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
     }
 
     @Override
@@ -108,6 +131,9 @@ public class DemoInputScreenFXMLController implements Initializable {
     
     public boolean isDouble(String string){
         
+        if(string.length() == 0){
+            return false;
+        }
         ArrayList<Character> charArray = new ArrayList<>();
         for(int i = 0; i < string.length(); i++){
             charArray.add(string.charAt(i));

@@ -34,45 +34,42 @@
                            <top>
                               <Pane prefHeight="104.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <HBox prefHeight="44.0" prefWidth="600.0">
+                                    <HBox prefHeight="53.0" prefWidth="600.0">
                                        <children>
                                           <TextField fx:id="iVelXYTF" prefHeight="25.0" prefWidth="129.0" promptText="Velocity (m/s)">
                                              <HBox.margin>
-                                                <Insets left="20.0" right="10.0" top="10.0" />
+                                                <Insets left="35.0" right="71.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
                                           <TextField fx:id="angleTF" prefHeight="25.0" prefWidth="129.0" promptText="Launch Angle (°C)">
                                              <HBox.margin>
-                                                <Insets right="10.0" top="10.0" />
+                                                <Insets right="71.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField fx:id="accelTF" layoutX="98.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Acceleration (m/s^2)">
+                                          <TextField fx:id="iHeightTF" prefHeight="25.0" prefWidth="129.0" promptText="Initial Height (m)">
                                              <HBox.margin>
-                                                <Insets right="10.0" top="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="timeTF" layoutX="186.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Time (s)">
-                                             <HBox.margin>
-                                                <Insets right="10.0" top="10.0" />
+                                                <Insets right="10.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
                                        </children>
                                     </HBox>
                                     <HBox layoutY="52.0" prefHeight="44.0" prefWidth="600.0">
                                        <children>
-                                          <TextField fx:id="iHeightTF" prefHeight="25.0" prefWidth="129.0" promptText="Initial Height (m)">
+                                          <Label fx:id="accelerationLabel" text="Acceleration: ">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
                                              <HBox.margin>
-                                                <Insets left="20.0" right="10.0" top="10.0" />
+                                                <Insets left="20.0" top="9.0" />
                                              </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="fDistanceTF" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="129.0" promptText="Final Distance (m)">
-                                             <HBox.margin>
-                                                <Insets top="10.0" />
-                                             </HBox.margin>
-                                          </TextField>
+                                          </Label>
                                           <Label fx:id="demoLabel" text="User Input">
                                              <HBox.margin>
+<<<<<<< HEAD
                                                 <Insets left="10.0" top="9.0" />
+=======
+                                                <Insets left="150.0" top="9.0" />
+>>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
                                              </HBox.margin>
                                              <font>
                                                 <Font size="17.0" />
