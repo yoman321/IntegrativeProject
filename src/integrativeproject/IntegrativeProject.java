@@ -18,12 +18,7 @@ import javafx.stage.Stage;
 public class IntegrativeProject extends Application {
     
    public static void main(String[] args) {
-        Application.launch(args);
-<<<<<<< HEAD
-        
-=======
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
-       
+        Application.launch(args); 
        
        //TEST FOR PUSH
         

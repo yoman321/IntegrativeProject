@@ -10,20 +10,12 @@ package integrativeproject;
  * @author Liam
  */
 public class ProjectileMotion {
-    
-<<<<<<< HEAD
-    private double iVelY, iVelX, fVelY, time, velXY, iHeight, iDistance = 0, fHeight, fDistance;
-    private final double ACCELERATION = 9.8;
-    private boolean hasIVelY = false, hasIVelX = false, hasFVelY = false, hasTime = false, hasVelXY = false, hasIHeight = false, hasIDistance = false, hasFHeight = false, hasFDistance = false;
-    FallingObject object = new FallingObject(); //Added a FallingObject variable
-=======
     private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0;
     private final double ACCELERATION = 9.8;
     private boolean hasIVelY = false, hasIVelX = false, hasTime = false, hasIHeight = false, hasFDistance = false;
     FallingCircle circleObject;
     FallingRectangle rectangleObject;
     FallingSquare squareObject;
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
     
     
     public ProjectileMotion(){
@@ -44,14 +36,9 @@ public class ProjectileMotion {
     public void setTime(double time){
         this.time = time;
     }
-<<<<<<< HEAD
     public void setVelXY(double velXY,double angle){
-        hasVelXY = true;
         this.velXY = velXY;
-        convertXY(angle);
     }
-=======
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
     public void setIHeight(double iHeight){
         hasIHeight = true;
         this.iHeight = iHeight;
@@ -100,11 +87,6 @@ public class ProjectileMotion {
             hasFDistance = true;
             return fDistance;
         }
-<<<<<<< HEAD
-        else if(hasIVelX == true && hasTime == true){
-            double position = iDistance + (iVelX * time);
-            object.setX(position);
-=======
         else{
             return -1;
         }
@@ -113,31 +95,12 @@ public class ProjectileMotion {
     public double solveForX(){
         if(hasFDistance && hasIVelX){
             return fDistance - (iVelX * time);
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
         }
             return -1;
     }
     public double solveForY(){
-<<<<<<< HEAD
-        if(hasIVelY == true && hasTime == true){
-            double formulaTwo = iVelY - (9.8 * time);
-            setFVelY(formulaTwo);
-        }
-        else if(hasIHeight == true && hasIVelY == true && hasFVelY == true && hasTime == true){
-            double formulaOne = iHeight + (0.5 *(iVelY + fVelY) * time);
-            object.setY(formulaOne);
-        }
-        else if(hasIHeight == true && hasIVelY == true && hasTime == true){
-            double formulaThree = iHeight + (iVelY * time) - (0.5*9.8*(Math.pow(time, 2)));
-            object.setY(formulaThree);
-        }
-        else if(hasIVelY == true && hasFVelY == true && hasIHeight == true){
-            double formulaFour = (((iVelY*iVelY) - (fVelY*fVelY))/(2*9.8)) + iHeight;
-            object.setY(formulaFour);
-=======
         if(hasIVelY && hasIHeight){
             return (0.5 * ACCELERATION * time * time) - (iVelY * time) + fHeight;
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
         }
         return -1;
     }

@@ -60,30 +60,6 @@ public class DemoInputScreenFXMLController implements Initializable {
 
     public void handleNext(ActionEvent event) throws IOException{
 
-<<<<<<< HEAD
-        //Retrieving user input and adding input into the projectile motion class
-        if(isDouble(iVelXYTF.getText()) && isDouble(angleTF.getText())){
-            angle = Double.parseDouble(angleTF.getText());
-            velXY = Double.parseDouble(iVelXYTF.getText());
-            pm.setVelXY(velXY, angle);
-        }
-        if(isDouble(angleTF.getText())){
-            angle = Double.parseDouble(angleTF.getText());
-            pm.convertXY(angle);
-        }
-        if(isDouble(timeTF.getText())){
-            time = Double.parseDouble(timeTF.getText());
-            pm.setTime(time);
-        }
-        if(isDouble(iHeightTF.getText())){
-            height = Double.parseDouble(iHeightTF.getText());
-            pm.setIHeight(height);
-        }
-        if(isDouble(fDistanceTF.getText())){
-            distance = Double.parseDouble(fDistanceTF.getText());
-            pm.setFDistance(distance);
-        }
-=======
         //Retrieving user input
         if(isDouble(iVelXYTF.getText())&& isDouble(angleTF.getText()) && isDouble(iHeightTF.getText())){
             velXY = Double.parseDouble(iVelXYTF.getText());
@@ -101,8 +77,6 @@ public class DemoInputScreenFXMLController implements Initializable {
         pm.solveForTime(); //This method solves for the time and sets the value for the time variable in its method
         pm.solveForDistance();
         
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
-        
         
         if(pm.solveForX() != -1 && pm.solveForY() != -1){
             System.out.println(pm.solveForX() + "\n" + pm.solveForY() );
@@ -112,15 +86,6 @@ public class DemoInputScreenFXMLController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
-<<<<<<< HEAD
-        else{
-            demoLabel.setText("Error: Not enough Information");
-            System.out.println("Solve For X: " + pm.solveForX());
-            System.out.println("Solve For Y: " + pm.solveForY());
-        }
-=======
-
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
     }
 
     @Override
