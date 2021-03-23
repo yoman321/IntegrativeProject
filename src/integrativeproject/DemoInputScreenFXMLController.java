@@ -31,13 +31,12 @@ import javafx.stage.Stage;
  */
 public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField iVelXYTF;
-    @FXML private TextField accelTF;
     @FXML private TextField angleTF;
     @FXML private TextField timeTF;
     @FXML private TextField iHeightTF;
-    @FXML private TextField fDistanceTF;
     @FXML private AnchorPane demoPane;
     @FXML private Label rLabel;
+    @FXML private Label accelerationLabel;
     @FXML private Label demoLabel;
     @FXML private Slider rSlider;
     @FXML private Label gLabel;
@@ -62,18 +61,16 @@ public class DemoInputScreenFXMLController implements Initializable {
     public void handleNext(ActionEvent event) throws IOException{
 
         //Retrieving user input
-        if(iVelXYTF.getText() != "" && isDouble(iVelXYTF.getText()))
+        if(isDouble(iVelXYTF.getText()))
             velXY = Double.parseDouble(iVelXYTF.getText());
-        angle = Double.parseDouble(angleTF.getText());
-        time = Double.parseDouble(timeTF.getText());
-        height = Double.parseDouble(iHeightTF.getText());
-        distance = Double.parseDouble(fDistanceTF.getText());
+        if(isDouble(angleTF.getText()))
+            angle = Double.parseDouble(angleTF.getText());
+        if(isDouble(iHeightTF.getText()))
+            height = Double.parseDouble(iHeightTF.getText());
         //Adding input into the projectile motion class
         pm.setVelXY(velXY);
         pm.convertXY(angle);
-        pm.setTime(time);
         pm.setIHeight(height);
-        pm.setFDistance(distance);
         
         
         if(pm.solveForX() != -1 && pm.solveForY() != -1){
