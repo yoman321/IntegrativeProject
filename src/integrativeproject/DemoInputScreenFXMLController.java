@@ -61,29 +61,33 @@ public class DemoInputScreenFXMLController implements Initializable {
     public void handleNext(ActionEvent event) throws IOException{
 
         //Retrieving user input
-        if(isDouble(iVelXYTF.getText()))
+        if(isDouble(iVelXYTF.getText())&& isDouble(angleTF.getText()) && isDouble(iHeightTF.getText())){
             velXY = Double.parseDouble(iVelXYTF.getText());
-        if(isDouble(angleTF.getText()))
             angle = Double.parseDouble(angleTF.getText());
-        if(isDouble(iHeightTF.getText()))
             height = Double.parseDouble(iHeightTF.getText());
+        }
+        else{
+            demoLabel.setText("Not enough information");
+            return;
+        }
         //Adding input into the projectile motion class
         pm.setVelXY(velXY);
         pm.convertXY(angle);
         pm.setIHeight(height);
+        pm.solveForTime(); //This method solves for the time and sets the value for the time variable in its method
+        pm.solveForDistance();
+        
         
         
         if(pm.solveForX() != -1 && pm.solveForY() != -1){
+            System.out.println(pm.solveForX() + "\n" + pm.solveForY() );
             Parent demo = FXMLLoader.load(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
             Scene scene = new Scene(demo);
-        
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
         }
-        else{
-            demoLabel.setText("Error: Not enough Information");
-        }
+
     }
 
     @Override
@@ -94,6 +98,9 @@ public class DemoInputScreenFXMLController implements Initializable {
     
     public boolean isDouble(String string){
         
+        if(string.length() == 0){
+            return false;
+        }
         ArrayList<Character> charArray = new ArrayList<>();
         for(int i = 0; i < string.length(); i++){
             charArray.add(string.charAt(i));

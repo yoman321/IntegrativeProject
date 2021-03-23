@@ -79,16 +79,21 @@ public class ProjectileMotion {
     }
     
     //Solve for time has to be written before any solve for methods since they wont have access to the time
-    
-    public double solveForX(){
-        if(hasTime == true && hasIVelX == true && hasFDistance == false){
+    public double solveForDistance(){
+        if(hasTime == true && hasIVelX == true){
             fDistance = iDistance + (iVelX * time);
             hasFDistance = true;
+            return fDistance;
         }
-        else if(hasFDistance && hasIVelX){
-            return fDistance - (iVelX * time);
+        else{
+            return -1;
         }
         
+    }
+    public double solveForX(){
+        if(hasFDistance && hasIVelX){
+            return fDistance - (iVelX * time);
+        }
             return -1;
     }
     public double solveForY(){
@@ -96,7 +101,6 @@ public class ProjectileMotion {
             return (0.5 * ACCELERATION * time * time) - (iVelY * time) + fHeight;
         }
         return -1;
-        
     }
     public double solveForTime(){ 
         if (hasIHeight && hasIVelY){

@@ -18,9 +18,7 @@ import javafx.stage.Stage;
 public class IntegrativeProject extends Application {
     
    public static void main(String[] args) {
-        //Application.launch(args);
-        ProjectileMotion pm = new ProjectileMotion();
-        pm.solveForY();
+        Application.launch(args);
        
        
        //TEST FOR PUSH
