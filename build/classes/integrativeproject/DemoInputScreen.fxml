@@ -65,16 +65,17 @@
                                           </Label>
                                           <Label fx:id="demoLabel" text="User Input">
                                              <HBox.margin>
-<<<<<<< HEAD
-                                                <Insets left="10.0" top="9.0" />
-=======
-                                                <Insets left="150.0" top="9.0" />
->>>>>>> 239c9311426ae4ca9d6f5b392420650077eb7ee8
+                                                 <Insets left="140.0" top="9.0" />
                                              </HBox.margin>
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
                                           </Label>
+                                          <Button mnemonicParsing="false" onAction="#handleInitialize" prefHeight="25.0" prefWidth="66.0" text="Initialize">
+                                             <HBox.margin>
+                                                <Insets left="135.0" top="8.5" />
+                                             </HBox.margin>
+                                          </Button>
                                        </children>
                                     </HBox>
                                  </children>
@@ -103,14 +104,14 @@
                               </HBox>
                            </bottom>
                            <center>
-                              <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                              <StackPane fx:id="demoPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="406.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/ProjectileMotionBackground.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fx:id="heightObject" fitHeight="230.0" fitWidth="406.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="demoLedge" fitHeight="230.0" fitWidth="406.0" pickOnBounds="true">
                                        <image>
                                           <Image url="@../resources/Ledge.png" />
                                        </image>

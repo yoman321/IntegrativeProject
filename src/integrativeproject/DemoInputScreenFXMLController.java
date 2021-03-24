@@ -23,6 +23,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -34,7 +35,7 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField angleTF;
     @FXML private TextField timeTF;
     @FXML private TextField iHeightTF;
-    @FXML private AnchorPane demoPane;
+    @FXML private StackPane demoPane;
     @FXML private Label rLabel;
     @FXML private Label accelerationLabel;
     @FXML private Label demoLabel;
@@ -50,7 +51,7 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private RadioButton rbBoxRectangle;
     @FXML private ImageView fallingObjectDisplay;
     @FXML private ImageView demoBackground;
-    @FXML private ImageView demoLedge;
+    @FXML private ImageView demoLedge = new ImageView();
     private double velXY, angle, time, height, distance;
     
     
@@ -120,5 +121,20 @@ public class DemoInputScreenFXMLController implements Initializable {
         
         return true;
     }
+    
+    public double determinePreviewHeight(){
 
+        double windowHeight = demoPane.getHeight();
+        double newHeight = Double.parseDouble(iHeightTF.getText()) / 2;
+        
+        if(newHeight > windowHeight){
+            newHeight = windowHeight;
+        }
+        return newHeight;
+    }
+
+    public void handleInitialize(ActionEvent event){
+        double newHeight = determinePreviewHeight();
+        demoLedge.setFitHeight(newHeight);
+    }
 }
