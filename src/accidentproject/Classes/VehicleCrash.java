@@ -111,8 +111,23 @@ public class VehicleCrash {
                             Platform.runLater(() -> getVehicle().setY(getY()));
                             Thread.sleep(10);
                             out.println("something");//test
-                             }
+                       }
                     }
+                    if (getStartLocation().equals("left")){
+                        while (true){
+                            setX(getX() + 5);
+                            Platform.runLater(() -> getVehicle().setX(getX()));
+                            Thread.sleep(10);
+                        }
+                    }
+                    if (getStartLocation().equals("right")){
+                        while (true){
+                            setX(getX() - 5);
+                            Platform.runLater(() -> getVehicle().setX(getX()));
+                            Thread.sleep(10);
+                        }
+                    }
+                    
                 }
                  catch (Exception ex){
                      ex.getStackTrace();

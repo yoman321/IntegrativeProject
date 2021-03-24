@@ -47,16 +47,15 @@ public class VehicleCollisionsController {
     
     
     //Create datafields
-    private static VehicleCrash car;
-    private static VehicleCrash car2;
     private final String[] startLocations = {"up", "down", "left", "right"};
-    ExecutorService executor = Executors.newFixedThreadPool(2);
+    ExecutorService executor = Executors.newFixedThreadPool(8);
     private ArrayList<VehicleCrash> vehicleArray = new ArrayList<>();
     Alert alert = new Alert(AlertType.WARNING);
     private TextField[] massArray;
     private TextField[] velocityArray;
     private TextField[] accelerationArray;
     private ComboBox[] directionArray;
+    private VehicleCrash[] vehicles;
     private ObservableList<String> items = FXCollections.observableArrayList(startLocations);
 
     //Create initialize mesthod
@@ -95,6 +94,7 @@ public class VehicleCollisionsController {
             velocityArray = new TextField[Integer.valueOf(nbreVehicle.getText())];
             accelerationArray = new TextField[Integer.valueOf(nbreVehicle.getText())];
             directionArray = new ComboBox[Integer.valueOf(nbreVehicle.getText())];
+            vehicles = new VehicleCrash[Integer.valueOf(nbreVehicle.getText())]; //Create vehicles
             
             for (int i=0; i<Integer.valueOf(nbreVehicle.getText()); i++){
                 massArray[i] = new TextField();
@@ -112,50 +112,34 @@ public class VehicleCollisionsController {
         }
     }
     public void onclickStart(){
-        int count = 1;
-//        for (int i=1; i<vehicleValues.length-2; i++){
-//            for (int j=1; j<vehicleValues[i].length; j++){
-//                if (count % Integer.valueOf(nbreVehicle.getText()) == 0){
-//                    out.println();
-//                    count++;
-//                }
-//                else 
-//                    count++;
-//                    out.print((TextField)vehicleValues[i][j].getText()+" ");
-//            }
-//        }
-//    public void onclickStart(){
-//        if (cbox1.getValue().equals("up") || cbox2.getValue().equals("up")){
-//            car = new VehicleCrash(0, 0, 0, 430, 5, "up", new Rectangle(430, 5, 20, 20));
-//            pane.getChildren().add(car.getVehicle());
-//            executor.execute(new vehicleMovementTask());
-//            out.println("upCar");//test
-////            executor.shutdown();
-//            
-//        }
-//        if (cbox1.getValue().equals("down") || cbox2.getValue().equals("down")){
-////            Rectangle car = new Rectangle(545, 975, 20, 20);
-//            car2 = new VehicleCrash(0, 0, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20));
-//            pane.getChildren().add(car2.getVehicle());
-//            executor.execute(new vehicleMovementTask());
-//            out.println("downCar");//test
-////            executor.shutdown();
-//        }
-//        if (cbox1.getValue().equals("right") || cbox2.getValue().equals("right")){
-////            Rectangle car = new Rectangle(975, 435, 20, 20);
-//            car = new VehicleCrash(0, 0, 0, 975, 435, "right", new Rectangle(975, 435, 20, 20));
-//            pane.getChildren().add(car.getVehicle());
-//            executor.execute(new vehicleMovementTask());
-//            executor.shutdown();
-//        }
-//        if (cbox1.getValue().equals("left") || cbox2.getValue().equals("left")){
-////            Rectangle car = new Rectangle(5, 545, 20, 20);
-//            car = new VehicleCrash(0, 0, 0, 5, 545, "left", new Rectangle(5, 545, 20, 20));
-//            pane.getChildren().add(car.getVehicle());
-//            executor.execute(new vehicleMovementTask());
-//            executor.shutdown();
-//        }
-//        
+        for (int i=0; i<directionArray.length; i++){
+            if (directionArray[i].getValue().equals("up")){
+                vehicles[i] = new VehicleCrash(0, 0, 0, 430, 5, "up", new Rectangle(430, 5, 20, 20));
+                pane.getChildren().add(vehicles[i].getVehicle());
+                executor.execute(new vehicleMovementTask());
+                out.println("upCar");//test
+            
+            }
+            if (directionArray[i].getValue().equals("down")){
+                vehicles[i] = new VehicleCrash(0, 0, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20));
+                pane.getChildren().add(vehicles[i].getVehicle());
+                executor.execute(new vehicleMovementTask());
+                out.println("downCar");//test
+            }
+            if (directionArray[i].getValue().equals("right")){
+                vehicles[i] = new VehicleCrash(0, 0, 0, 975, 435, "right", new Rectangle(975, 435, 20, 20));
+                pane.getChildren().add(vehicles[i].getVehicle());
+                executor.execute(new vehicleMovementTask());
+                executor.shutdown();
+            }
+            if (directionArray[i].getValue().equals("left")){
+                vehicles[i] = new VehicleCrash(0, 0, 0, 5, 545, "left", new Rectangle(5, 545, 20, 20));
+                pane.getChildren().add(vehicles[i].getVehicle());
+                executor.execute(new vehicleMovementTask());
+                executor.shutdown();
+            }
+        }
+        
     }
     //Create tasks
     public class vehicleMovementTask implements Runnable{
@@ -184,8 +168,10 @@ public class VehicleCollisionsController {
 //                        Thread.sleep(10);
 //                    }
 //                }
-                  Platform.runLater(() -> car.vehicleAnimation());
-                  Platform.runLater(() -> car2.vehicleAnimation());
+                for (VehicleCrash vehicle : vehicles) {
+                    vehicle.vehicleAnimation();
+                }
+                 
             }
             catch (Exception ex){
                 ex.printStackTrace();
