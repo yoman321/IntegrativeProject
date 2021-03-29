@@ -118,28 +118,20 @@ public class VehicleCollisionsController {
         for (int i=0; i<directionArray.length; i++){
             if (directionArray[i].getValue().equals("up")){
                 // x - 430
-//                vehicles.add(new VehicleCrash(0, 0, 0, 545, 5, "up", new Rectangle(545, 5, 20, 20)));
-//                pane.getChildren().add(vehicles.get(i).getVehicle());
                 vehicles[i] = new VehicleCrash(0, 0, 0, 545, 5, "up", new Rectangle(545, 5, 20, 20));
                 pane.getChildren().add(vehicles[i].getVehicle());
             }
             if (directionArray[i].getValue().equals("down")){
-//                vehicles.add(new VehicleCrash(0, 0, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20)));
-//                pane.getChildren().add(vehicles.get(i).getVehicle());
                 vehicles[i] = new VehicleCrash(0, 0, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20));
                 pane.getChildren().add(vehicles[i].getVehicle());
        
             }
             if (directionArray[i].getValue().equals("right")){
-//                vehicles.add(new VehicleCrash(0, 0, 0, 975, 435, "right", new Rectangle(975, 435, 20, 20)));
-//                pane.getChildren().add(vehicles.get(i).getVehicle());
                 vehicles[i] = new VehicleCrash(0, 0, 0, 975, 435, "right", new Rectangle(975, 435, 20, 20));
                 pane.getChildren().add(vehicles[i].getVehicle());
 
             }
             if (directionArray[i].getValue().equals("left")){
-//                vehicles.add(new VehicleCrash(0, 0, 0, 5, 545, "left", new Rectangle(5, 545, 20, 20)));
-//                pane.getChildren().add(vehicles.get(i).getVehicle());
                 vehicles[i] = new VehicleCrash(0, 0, 0, 5, 545, "left", new Rectangle(5, 545, 20, 20));
                 pane.getChildren().add(vehicles[i].getVehicle());
             }
@@ -151,9 +143,6 @@ public class VehicleCollisionsController {
         @Override
         public void run(){
             try{
-//                for (int i=0; i<vehicles.size(); i++){
-//                    vehicles.get(i).vehicleAnimation(vehicles, vehicles.get(i));
-//                }
                 for (int i=0; i<vehicles.length; i++){
                     vehicles[i].vehicleAnimation(vehicles, vehicles[i]);
                 }

@@ -89,8 +89,7 @@ public class VehicleCrash {
     }
     public boolean isCrash(VehicleCrash[] vehicles){
         for (int i=0; i<vehicles.length; i++){
-//            out.println((Math.sqrt(Math.pow(vehicles.get(i).getX() - getX(), 2) + Math.pow(vehicles.get(i).getY() - getY(), 2))));
-            if ((Math.sqrt(Math.pow(vehicles[i].getX() - getX(), 2) + Math.pow(vehicles[i].getY() - getY(), 2))) <= 50){
+            if ((Math.sqrt(Math.pow(vehicles[i].getX() - getX(), 2) + Math.pow(vehicles[i].getY() - getY(), 2))) == 20){
                 
                 return true;
             }
@@ -98,56 +97,6 @@ public class VehicleCrash {
         return false;
     }
     //Animation method
-//    public synchronized void vehicleAnimation(ArrayList<VehicleCrash> vehicles, VehicleCrash duplicateVehicle){
-//        
-//        //Remove duplicate vehicle in ArrayList
-//        if (vehicles.contains(duplicateVehicle)){
-//            vehicles.remove(duplicateVehicle);
-//        }
-//        Thread thread = new Thread(new Runnable(){
-//            @Override
-//             public void run(){
-//                 try{
-//                    if (getStartLocation().equals("up")){
-//                        while (!isCrash(vehicles)){
-//                            setY(getY() + 5);
-//                            Platform.runLater(() -> getVehicle().setY(getY()));
-//                            Thread.sleep(10);
-//          
-// 
-//                        }
-//                    }
-//                    if (getStartLocation().equals("down")){ 
-//                        while (!isCrash(vehicles)){
-//                            setY(getY() - 5);
-//                            Platform.runLater(() -> getVehicle().setY(getY()));
-//                            Thread.sleep(10);
-//              
-//                       }
-//                    }
-//                    if (getStartLocation().equals("left")){
-//                        while (!isCrash(vehicles)){
-//                            setX(getX() + 5);
-//                            Platform.runLater(() -> getVehicle().setX(getX()));
-//                            Thread.sleep(10);
-//                        }
-//                    }
-//                    if (getStartLocation().equals("right")){
-//                        while (!isCrash(vehicles)){
-//                            setX(getX() - 5);
-//                            Platform.runLater(() -> getVehicle().setX(getX()));
-//                            Thread.sleep(10);
-//                        }
-//                    }
-//                    
-//                }
-//                 catch (Exception ex){
-//                     ex.getStackTrace();
-//                 }
-//             } 
-//        });
-//        thread.start();
-//    }
     public synchronized void vehicleAnimation(VehicleCrash[] vehicles, VehicleCrash duplicateVehicle){
         
         //Create copu array
@@ -169,14 +118,14 @@ public class VehicleCrash {
                         while(!isCrash(copyVehicles)){
                             setY(getY() + 5);
                             Platform.runLater(() -> getVehicle().setY(getY()));
-                            Thread.sleep(1);
+                            Thread.sleep(3);
                         }
                     }
                     if (getStartLocation().equals("down")){
                         while (!isCrash(copyVehicles)){
                             setY(getY() - 5);
                             Platform.runLater(() -> getVehicle().setY(getY()));
-                            Thread.sleep(1);
+                            Thread.sleep(3);
               
                        }
                     }
@@ -184,14 +133,14 @@ public class VehicleCrash {
                         while (!isCrash(copyVehicles)){
                             setX(getX() + 5);
                             Platform.runLater(() -> getVehicle().setX(getX()));
-                            Thread.sleep(1);
+                            Thread.sleep(3);
                         }
                     }
                     if (getStartLocation().equals("right")){
                         while (!isCrash(copyVehicles)){
                             setX(getX() - 5);
                             Platform.runLater(() -> getVehicle().setX(getX()));
-                            Thread.sleep(1);
+                            Thread.sleep(3);
                         }
                     }
                 }
