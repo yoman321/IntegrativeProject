@@ -31,8 +31,6 @@ import javafx.scene.text.Text;
 public class VehicleCollisionsController {
     
     //Create FFXML datafields
-    @FXML private ComboBox cbox1;
-    @FXML private ComboBox cbox2;
     @FXML private Pane pane;
     @FXML private TextField nbreVehicle;
     @FXML private GridPane variableGrid;
@@ -118,11 +116,11 @@ public class VehicleCollisionsController {
         for (int i=0; i<directionArray.length; i++){
             if (directionArray[i].getValue().equals("up")){
                 // x - 430
-                vehicles[i] = new VehicleCrash(0, 0, 0, 545, 5, "up", new Rectangle(545, 5, 20, 20));
+                vehicles[i] = new VehicleCrash(990, 50, 0, 545, 5, "up", new Rectangle(545, 5, 20, 20));
                 pane.getChildren().add(vehicles[i].getVehicle());
             }
             if (directionArray[i].getValue().equals("down")){
-                vehicles[i] = new VehicleCrash(0, 0, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20));
+                vehicles[i] = new VehicleCrash(1090, 100, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20));
                 pane.getChildren().add(vehicles[i].getVehicle());
        
             }
