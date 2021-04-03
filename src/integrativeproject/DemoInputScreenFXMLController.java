@@ -10,6 +10,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,8 +54,11 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private ImageView fallingObjectDisplay;
     @FXML private ImageView demoBackground;
     @FXML private ImageView demoLedge = new ImageView();
-    private double velXY, angle, time, height, distance;
+    @FXML private Slider heightSlider = new Slider();
     
+    private double velXY, angle, time, height, distance;
+    private double ledgeHeight, previewHeight;
+    private boolean isInitialized = false;
     
 
     protected ProjectileMotion pm = new ProjectileMotion();
@@ -62,7 +67,11 @@ public class DemoInputScreenFXMLController implements Initializable {
     public void handleNext(ActionEvent event) throws IOException{
 
         //Retrieving user input
-        if(isDouble(iVelXYTF.getText())&& isDouble(angleTF.getText()) && isDouble(iHeightTF.getText())){
+        if(isInitialized == false){
+            demoLabel.setText("Must Initialize to Proceed");
+            return;
+        }
+        if(isDouble(iVelXYTF.getText())&& isDouble(angleTF.getText())){
             velXY = Double.parseDouble(iVelXYTF.getText());
             angle = Double.parseDouble(angleTF.getText());
             height = Double.parseDouble(iHeightTF.getText());
@@ -73,16 +82,29 @@ public class DemoInputScreenFXMLController implements Initializable {
         }
         //Adding input into the projectile motion class
         pm.setVelXY(velXY);
-        pm.convertXY(angle);
+        if(angle >= 90){
+            demoLabel.setText("Angle must be < 90");
+            return;
+        }
+        else{
+            pm.convertXY(angle);
+        }
+        
         pm.setIHeight(height);
         pm.solveForTime(); //This method solves for the time and sets the value for the time variable in its method
         pm.solveForDistance();
         
         
-        if(pm.solveForX() != -1 && pm.solveForY() != -1){
-            System.out.println(pm.solveForX() + "\n" + pm.solveForY() );
-            Parent demo = FXMLLoader.load(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
+        if(pm.solveForHeight() != -1 && pm.solveForDistance() != -1){
+            setLedgeHeight(ledgeHeight);
+            setPreviewHeight(demoPane.getHeight());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
+            Parent demo = loader.load();
             Scene scene = new Scene(demo);
+            
+            DemoScreenFXMLController controller = loader.getController();
+            controller.InitializeData(this);
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
@@ -91,7 +113,15 @@ public class DemoInputScreenFXMLController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        height = (int)heightSlider.getValue();;
+        iHeightTF.setText(Double.toString(height));
+        heightSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+                height = (int)heightSlider.getValue();;
+                iHeightTF.setText(Double.toString(height));
+            }
+        });
         
     }
     
@@ -121,20 +151,22 @@ public class DemoInputScreenFXMLController implements Initializable {
         
         return true;
     }
-    
-    public double determinePreviewHeight(){
-
-        double windowHeight = demoPane.getHeight();
-        double newHeight = Double.parseDouble(iHeightTF.getText()) / 2;
-        
-        if(newHeight > windowHeight){
-            newHeight = windowHeight;
-        }
-        return newHeight;
-    }
-
     public void handleInitialize(ActionEvent event){
-        double newHeight = determinePreviewHeight();
-        demoLedge.setFitHeight(newHeight);
+        previewHeight = demoPane.getHeight();
+        ledgeHeight =(Double.parseDouble(iHeightTF.getText()));
+        demoLedge.setFitHeight(ledgeHeight);
+        isInitialized = true;
+    }
+    public void setLedgeHeight(double lh){
+        ledgeHeight = lh;
+}
+    public void setPreviewHeight(double ph){
+        previewHeight = ph;
+    }
+    public double getLedgeHeight(){
+        return ledgeHeight;
+    }
+    public double getPreviewHeight(){
+        return previewHeight;
     }
 }

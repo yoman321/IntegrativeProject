@@ -36,21 +36,26 @@
                                  <children>
                                     <HBox prefHeight="53.0" prefWidth="600.0">
                                        <children>
-                                          <TextField fx:id="iVelXYTF" prefHeight="25.0" prefWidth="129.0" promptText="Velocity (m/s)">
+                                          <TextField fx:id="iVelXYTF" prefHeight="25.0" prefWidth="99.0" promptText="Velocity (m/s)">
                                              <HBox.margin>
-                                                <Insets left="35.0" right="71.0" top="14.0" />
+                                                <Insets left="10.0" right="10.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
                                           <TextField fx:id="angleTF" prefHeight="25.0" prefWidth="129.0" promptText="Launch Angle (°C)">
                                              <HBox.margin>
-                                                <Insets right="71.0" top="14.0" />
-                                             </HBox.margin>
-                                          </TextField>
-                                          <TextField fx:id="iHeightTF" prefHeight="25.0" prefWidth="129.0" promptText="Initial Height (m)">
-                                             <HBox.margin>
                                                 <Insets right="10.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
+                                          <TextField fx:id="iHeightTF" prefHeight="25.0" prefWidth="104.0" promptText="Initial Height (m)">
+                                             <HBox.margin>
+                                                <Insets right="20.0" top="14.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Slider fx:id="heightSlider" max="230.0" min="1.0" prefHeight="14.0" prefWidth="179.0">
+                                             <HBox.margin>
+                                                <Insets right="35.0" top="19.5" />
+                                             </HBox.margin>
+                                          </Slider>
                                        </children>
                                     </HBox>
                                     <HBox layoutY="52.0" prefHeight="44.0" prefWidth="600.0">
@@ -63,17 +68,19 @@
                                                 <Insets left="20.0" top="9.0" />
                                              </HBox.margin>
                                           </Label>
-                                          <Label fx:id="demoLabel" text="User Input">
+                                          <Region prefHeight="44.0" prefWidth="24.0" />
+                                          <Label fx:id="demoLabel" alignment="CENTER" prefHeight="26.0" prefWidth="292.0" text="User Input">
                                              <HBox.margin>
-                                                 <Insets left="140.0" top="9.0" />
+                                                 <Insets top="9.0" />
                                              </HBox.margin>
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
                                           </Label>
+                                          <Region prefHeight="44.0" prefWidth="29.0" />
                                           <Button mnemonicParsing="false" onAction="#handleInitialize" prefHeight="25.0" prefWidth="66.0" text="Initialize">
                                              <HBox.margin>
-                                                <Insets left="135.0" top="8.5" />
+                                                <Insets top="8.5" />
                                              </HBox.margin>
                                           </Button>
                                        </children>
@@ -104,19 +111,19 @@
                               </HBox>
                            </bottom>
                            <center>
-                              <StackPane fx:id="demoPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                              <StackPane fx:id="demoPane" maxHeight="230.0" maxWidth="406.0" minHeight="230.0" minWidth="406.0" prefHeight="230.0" prefWidth="406.0" BorderPane.alignment="CENTER">
                                  <children>
                                     <ImageView fitHeight="230.0" fitWidth="406.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../resources/ProjectileMotionBackground.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fx:id="demoLedge" fitHeight="230.0" fitWidth="406.0" pickOnBounds="true">
+                                    <ImageView fx:id="demoLedge" fitHeight="1.0" fitWidth="406.0" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
                                        <image>
                                           <Image url="@../resources/Ledge.png" />
                                        </image>
                                     </ImageView>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="229.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="410.0" />
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="230.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="410.0" />
                                  </children>
                               </StackPane>
                            </center>

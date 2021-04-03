@@ -10,9 +10,9 @@ package integrativeproject;
  * @author Liam
  */
 public class ProjectileMotion {
-    private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0;
+    private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0, fVelY;
     private final double ACCELERATION = 9.8;
-    private boolean hasIVelY = false, hasIVelX = false, hasTime = false, hasIHeight = false, hasFDistance = false;
+    private boolean hasIVelY = false, hasIVelX = false, hasTime = false, hasIHeight = false, hasFDistance = false, hasFHeight = false;
     FallingCircle circleObject;
     FallingRectangle rectangleObject;
     FallingSquare squareObject;
@@ -92,18 +92,15 @@ public class ProjectileMotion {
         }
         
     }
-    public double solveForX(){
-        if(hasFDistance && hasIVelX){
-            return fDistance - (iVelX * time);
-        }
-            return -1;
+    public double solveForHeight(){
+         if(hasIHeight == true && hasIVelY == true && hasTime == true){
+             fHeight = iHeight + (iVelY * time) - (0.5 * ACCELERATION * time * time);
+             hasFHeight = true;
+             return fHeight;
+         }
+         return -1;
     }
-    public double solveForY(){
-        if(hasIVelY && hasIHeight){
-            return (0.5 * ACCELERATION * time * time) - (iVelY * time) + fHeight;
-        }
-        return -1;
-    }
+
     public double solveForTime(){ 
         if (hasIHeight && hasIVelY){
             double a = -0.5*ACCELERATION;
@@ -115,6 +112,10 @@ public class ProjectileMotion {
             return time;
         }
         return -1;
+    }
+    public double solveForFVelY(){
+        fVelY = iVelY - (ACCELERATION * time);
+        return fVelY;
     }
     
     

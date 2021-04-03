@@ -12,17 +12,16 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="integrativeproject.DemoScreenFXMLController">
    <children>
-      <StackPane prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane fx:id="finalDemoPane" maxHeight="337.0" maxWidth="600.0" minHeight="337.0" minWidth="600.0" prefHeight="337.0" prefWidth="600.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fx:id="background" fitHeight="363.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../resources/ProjectileMotionBackground.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="ledge" fitHeight="337.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ledge" fitHeight="337.0" fitWidth="600.0" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
                <image>
                   <Image url="@../resources/Ledge.png" />
                </image>
@@ -76,7 +75,7 @@
                </HBox.margin>
             </TextField>
             <Region layoutX="366.0" layoutY="10.0" prefHeight="63.0" prefWidth="79.0" />
-            <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="53.0" text="GO!">
+            <Button mnemonicParsing="false" onAction="#handleGo" prefHeight="36.0" prefWidth="53.0" text="GO!">
                <HBox.margin>
                   <Insets right="10.0" top="13.5" />
                </HBox.margin>
