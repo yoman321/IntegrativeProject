@@ -24,6 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import java.util.ArrayList;
 import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 /**
  *
  * @author luoph
@@ -46,7 +47,7 @@ public class VehicleCollisionsController {
     
     //Create datafields
     private final String[] startLocations = {"up", "down", "left", "right"};
-    ExecutorService executor = Executors.newFixedThreadPool(8);
+    ExecutorService executor = Executors.newFixedThreadPool(1);
     private ArrayList<VehicleCrash> vehicleArray = new ArrayList<>();
     Alert alert = new Alert(AlertType.WARNING);
     private TextField[] massArray;
@@ -69,7 +70,7 @@ public class VehicleCollisionsController {
     }
     //Check for numbers of vehicle
     public void onclickNbreVehicles(){
-        if (Integer.valueOf(nbreVehicle.getText()) > 8){
+        if (Integer.valueOf(nbreVehicle.getText()) > 2){
             alert.setContentText("There is more than 8 vehicles.");
             alert.show();
         }
@@ -116,11 +117,12 @@ public class VehicleCollisionsController {
         for (int i=0; i<directionArray.length; i++){
             if (directionArray[i].getValue().equals("up")){
                 // x - 430
-                vehicles[i] = new VehicleCrash(990, 50, 0, 545, 5, "up", new Rectangle(545, 5, 20, 20));
+                vehicles[i] = new VehicleCrash(990, 100, 0, 545, 5, "up", new Rectangle(545, 5, 20, 40));
                 pane.getChildren().add(vehicles[i].getVehicle());
             }
             if (directionArray[i].getValue().equals("down")){
-                vehicles[i] = new VehicleCrash(1090, 100, 0, 545, 975, "down", new Rectangle(545, 675, 20, 20));
+                vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, "down", new Rectangle(545, 675, 20, 40));
+                vehicles[i].getVehicle().setFill(Color.BLUE);
                 pane.getChildren().add(vehicles[i].getVehicle());
        
             }
@@ -136,6 +138,16 @@ public class VehicleCollisionsController {
         }
         executor.execute(new vehicleMovementTask());
     }
+//    Reset the simulation
+    public void onclickReset(){
+        for (int i=0; i<vehicles.length; i++){
+            vehicles[i].getVehicle().setX(2000);
+            vehicles[i].getVehicle().setY(2000);
+        }
+        vehicles = new VehicleCrash[Integer.valueOf(nbreVehicle.getText())];   
+        executor = Executors.newFixedThreadPool(1);
+        out.println("reset");
+    }
     //Create tasks
     public class vehicleMovementTask implements Runnable{
         @Override
@@ -144,7 +156,7 @@ public class VehicleCollisionsController {
                 for (int i=0; i<vehicles.length; i++){
                     vehicles[i].vehicleAnimation(vehicles, vehicles[i]);
                 }
-                 
+                out.println("nothing");
             }
             catch (Exception ex){
                 ex.printStackTrace();
