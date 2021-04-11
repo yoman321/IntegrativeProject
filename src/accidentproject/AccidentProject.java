@@ -24,7 +24,6 @@ public class AccidentProject extends Application {
    public static void main(String[] args) {
        launch(args);
         
-        
     }
         
     @Override
@@ -35,6 +34,8 @@ public class AccidentProject extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        
+        stage.setOnCloseRequest(e -> System.exit(0));
     }
     
 }

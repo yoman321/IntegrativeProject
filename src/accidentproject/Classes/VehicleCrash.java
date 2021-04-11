@@ -24,6 +24,7 @@ public class VehicleCrash {
     private double acceleration;
     private double x;
     private double y;
+    private boolean isDrunk;
     private String startLocation;
     private String startPosition;
     private String trafficLight;
@@ -33,12 +34,13 @@ public class VehicleCrash {
     public VehicleCrash(){
         
     }
-    public VehicleCrash(double mass, double velocity, double acceleration, double x, double y, String startLocation, String startPosition, String trafficLight, Rectangle vehicle) {
+    public VehicleCrash(double mass, double velocity, double acceleration, double x, double y, boolean isDrunk, String startLocation, String startPosition, String trafficLight, Rectangle vehicle) {
         this.mass = mass;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.x = x;
         this.y = y;
+        this.isDrunk = isDrunk;
         this.startLocation = startLocation;
         this.startPosition = startPosition;
         this.trafficLight = trafficLight;
@@ -59,6 +61,9 @@ public class VehicleCrash {
     }
     public double getY(){
         return y;
+    }
+    public boolean getIsDrunk(){
+        return isDrunk;
     }
     public String getStartLocation(){
         return startLocation;
@@ -88,6 +93,9 @@ public class VehicleCrash {
     }
     public void setY(double y){
         this.y = y;
+    }
+    public void setIsDrunk(boolean isDrunk){
+        this.isDrunk = isDrunk;
     }
     public void setStartLocation(String startLocation){
         this.startLocation = startLocation;
@@ -163,17 +171,40 @@ public class VehicleCrash {
                     setVelocity(conversionMetersPerSeconds(getVelocity()));
                     setMass(conversionToG(getMass()));
                     
-                    //Check for correct traffic light
-                    if (getTrafficLight().equals("green")){
+                    //Check if drunk
+                    if (getIsDrunk()){
+                        int random = (int)(Math.random() * 2);
+                        setAcceleration(-6.86);
+                        
+                        //Check side of road
+                        if (random == 1){
+                            out.println("random: "+random);
+                            setX(430);
+                            getVehicle().setX(getX());
+                        }
+                        while(isCrash(copyVehicles) < 0){
+                            setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
+                            setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
+//                            out.println("Position: "+getY()+" "+getStartLocation());
+                            Platform.runLater(() -> getVehicle().setY(getY()));
+                            Thread.sleep(1);
+//                            out.println("up");  
+                        }
+                    }
+                    //Check for traffic light
+                    else if (getTrafficLight().equals("green")){
                     //Check for which movement for each vehicle
                     while(isCrash(copyVehicles) < 0){
-                                setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
-                                setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
-                                out.println("Position: "+getY()+" "+getStartLocation());
-                                Platform.runLater(() -> getVehicle().setY(getY()));
-                                Thread.sleep(1);
-                                out.println("up");  
-                            }
+                        setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
+                        setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
+//                                out.println("Position: "+getY()+" "+getStartLocation());
+                        Platform.runLater(() -> getVehicle().setY(getY()));
+                        if (getY() < 0 || getY() > 1000){
+                            thread.interrupt();
+                        }
+                        Thread.sleep(1);
+//                                out.println("up");  
+                    }
 //                        if (getStartLocation().equals("up")){
 //                            while(isCrash(copyVehicles) < 0){
 //                                setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));

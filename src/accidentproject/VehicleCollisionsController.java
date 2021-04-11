@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.CheckBox;
 /**
  *
  * @author luoph
@@ -46,13 +47,14 @@ public class VehicleCollisionsController {
     @FXML private Button nbreVehicleBtn;
     @FXML private ImageView backgroundImage;
     @FXML private Text nbreVehicleText;
+    @FXML private CheckBox drunkChk;
     
     //right light (575,576)
     //left light (355, 274)
     //Create datafields
     ExecutorService executor = Executors.newFixedThreadPool(1);
     Alert alert = new Alert(AlertType.WARNING);
-    private final String[] startLocations = {"up", "down", "left", "right"};
+    private final String[] startLocations = {"up", "down"};
     private final String[] startPositions = {"back", "center"};
     private final String[] trafficLighString = {"red", "green"};
     private final ImageView[] trafficLight = {new ImageView("accidentProject/Ressources/RedLight.png")};
@@ -100,6 +102,7 @@ public class VehicleCollisionsController {
             sLocationGrid.setVisible(true);
             sPositionGrid.setVisible(true);
             trafficLightGrid.setVisible(true);
+            
             nbreVehicleBtn.setVisible(false);
             nbreVehicle.setVisible(false);
             nbreVehicleText.setVisible(false);
@@ -137,74 +140,84 @@ public class VehicleCollisionsController {
     }
     //Start simulation
     public void onclickStart(){
-        ImageView imageview = new ImageView();
+        backgroundImage.setOpacity(1);
+        ImageView trafficLight = new ImageView();
         for (int i=0; i<vehicles.length; i++){
             if (sLocationArray[i].getValue().equals("up") && sPositionArray[i].getValue().equals("back")){
                 // x - 430
                 if (trafficLightArray[i].getValue().equals("red")){
-                    imageview = new ImageView("accidentProject/Ressources/RedLight.png");
-                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 5, "up", "back", "red", new Rectangle(430, 5, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 5, false, "up", "back", "red", new Rectangle(430, 5, 20, 40));
                 } 
                 else if (trafficLightArray[i].getValue().equals("green")){
-                    imageview = new ImageView("accidentProject/Ressources/GreenLight.png");
-                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 5, "up", "back", "green", new Rectangle(430, 5, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 5, false, "up", "back", "green", new Rectangle(430, 5, 20, 40));
                 }
-                imageview.setX(372);
-                imageview.setY(331);
-                imageview.setFitWidth(53);
-                imageview.setFitHeight(95);
-                pane.getChildren().add(imageview);
+                trafficLight.setX(372);
+                trafficLight.setY(331);
+                trafficLight.setFitWidth(53);
+                trafficLight.setFitHeight(95);
+                pane.getChildren().add(trafficLight);
                 pane.getChildren().add(vehicles[i].getVehicle());
             }
             else if (sLocationArray[i].getValue().equals("up") && sPositionArray[i].getValue().equals("center")){
                 if (trafficLightArray[i].getValue().equals("red")){
-                    imageview = new ImageView("accidentProject/Ressources/RedLight.png");
-                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 385, "up", "center", "red", new Rectangle(430, 385, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 385, false, "up", "center", "red", new Rectangle(430, 385, 20, 40));
                     
                 }
                 else if (trafficLightArray[i].getValue().equals("green")){
-                    imageview = new ImageView("accidentProject/Ressources/GreenLight.png");
-                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 385, "up", "center", "green", new Rectangle(430, 385, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                    vehicles[i] = new VehicleCrash(990, 100, 0, 430, 385, false, "up", "center", "green", new Rectangle(430, 385, 20, 40));
                 }
-                imageview.setX(372);
-                imageview.setY(331);
-                imageview.setFitWidth(53);
-                imageview.setFitHeight(95);
-                pane.getChildren().add(imageview);
+                trafficLight.setX(372);
+                trafficLight.setY(331);
+                trafficLight.setFitWidth(53);
+                trafficLight.setFitHeight(95);
+                pane.getChildren().add(trafficLight);
                 pane.getChildren().add(vehicles[i].getVehicle());
             }
             else if (sLocationArray[i].getValue().equals("down") && sPositionArray[i].getValue().equals("back")){
                 if (trafficLightArray[i].getValue().equals("red")){
-                    imageview = new ImageView("accidentProject/Ressources/RedLight.png");
-                    vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, "down", "back", "red", new Rectangle(545, 975, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                    if (drunkChk.isSelected()){
+                        vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, true, "down", "back", "red", new Rectangle(545, 975, 20, 40));
+                    }
+                    else 
+                        vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, false, "down", "back", "red", new Rectangle(545, 975, 20, 40));
                 }   
                 else if (trafficLightArray[i].getValue().equals("green")){
-                    imageview = new ImageView("accidentProject/Ressources/GreenLight.png");
-                    vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, "down", "back", "green", new Rectangle(545, 975, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                    if (drunkChk.isSelected()){
+                        vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, true, "down", "back", "green", new Rectangle(545, 975, 20, 40));
+                    }
+                    else 
+                        vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 975, false, "down", "back", "green", new Rectangle(545, 975, 20, 40));
+
                 }
-                imageview.setX(574);
-                imageview.setY(574);
-                imageview.setFitWidth(53);
-                imageview.setFitHeight(95);
-                pane.getChildren().add(imageview);
+                trafficLight.setX(574);
+                trafficLight.setY(574);
+                trafficLight.setFitWidth(53);
+                trafficLight.setFitHeight(95);
+                pane.getChildren().add(trafficLight);
                 pane.getChildren().add(vehicles[i].getVehicle());
                 vehicles[i].getVehicle().setFill(Color.BLUE);
        
             }
             else if (sLocationArray[i].getValue().equals("down") && sPositionArray[i].getValue().equals("center")){
                 if (trafficLightArray[i].getValue().equals("red")){
-                    imageview = new ImageView("accidentProject/Ressources/RedLight.png");
-                    vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 585, "down", "center", "red", new Rectangle(545, 585, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                    vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 585, false, "down", "center", "red", new Rectangle(545, 585, 20, 40));
                 } 
                 else if (trafficLightArray[i].getValue().equals("green")){
-                    imageview = new ImageView("accidentProject/Ressources/GreenLight.png");
-                    vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 585, "down", "center", "green", new Rectangle(545, 585, 20, 40));
+                    trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                    vehicles[i] = new VehicleCrash(2000, 200, 0, 545, 585, false, "down", "center", "green", new Rectangle(545, 585, 20, 40));
                 }
-                imageview.setX(574);
-                imageview.setY(574);
-                imageview.setFitWidth(53);
-                imageview.setFitHeight(95);
-                pane.getChildren().add(imageview);
+                trafficLight.setX(574);
+                trafficLight.setY(574);
+                trafficLight.setFitWidth(53);
+                trafficLight.setFitHeight(95);
+                pane.getChildren().add(trafficLight);
                 pane.getChildren().add(vehicles[i].getVehicle());
                 vehicles[i].getVehicle().setFill(Color.BLUE);
             }
