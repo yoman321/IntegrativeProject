@@ -28,7 +28,7 @@
             </ImageView>
             <Pane fx:id="objectPane" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <ImageView fx:id="targetObject" fitHeight="63.0" fitWidth="74.0" layoutX="37.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" scaleZ="2.0">
+                  <ImageView fx:id="targetObject" fitHeight="57.0" fitWidth="111.0" layoutX="58.0" layoutY="244.0" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" scaleZ="2.0">
                      <image>
                         <Image url="@../resources/Box.png" />
                      </image>

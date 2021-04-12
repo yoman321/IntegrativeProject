@@ -87,10 +87,13 @@ public class DemoInputScreenFXMLController implements Initializable {
             demoLabel.setText("Angle must be < 90");
             return;
         }
-        else{
-            pm.convertXY(angle);
+        else if(angle <=0){
+            demoLabel.setText("Angle must be > 0");
+            return;
         }
-        
+        else{
+        pm.convertXY(angle);
+        }
         pm.setIHeight(height);
         pm.solveForTime(); //This method solves for the time and sets the value for the time variable in its method
         pm.solveForDistance();

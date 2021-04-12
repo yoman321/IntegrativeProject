@@ -123,12 +123,12 @@
                                           <Image url="@../resources/Ledge.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fx:id="targetObject" fitHeight="45.0" fitWidth="45.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" scaleZ="2.0" translateX="25.0" translateY="-20.0" StackPane.alignment="BOTTOM_LEFT">
+                                    <ImageView fx:id="targetObject" fitHeight="31.0" fitWidth="51.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" scaleZ="2.0" translateX="25.0" translateY="-20.0" StackPane.alignment="BOTTOM_LEFT">
                                        <image>
                                           <Image url="@../resources/Box.png" />
                                        </image>
                                        <StackPane.margin>
-                                          <Insets />
+                                          <Insets left="15.0" />
                                        </StackPane.margin>
                                     </ImageView>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="230.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="410.0" />

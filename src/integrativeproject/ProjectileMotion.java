@@ -88,6 +88,9 @@ public class ProjectileMotion {
     public double getMass(){
         return mass;
     }
+    public double getAcceleration(){
+        return ACCELERATION;
+    }
     
     //Solve for time has to be written before any solve for methods since they wont have access to the time
     public double solveForDistance(){
@@ -151,7 +154,7 @@ public class ProjectileMotion {
     
     public double getForce(){
         double distanceInObject = 0.1; //Since the box in our simulation is hard, we are only going to allow the falling object to travel 0.01 m into the target object. We are going to assume that after this threshold,
-        double forceOnImpact = /*getMass()*/ 0.59 * ACCELERATION * maxHeight / distanceInObject;
+        double forceOnImpact = getMass() * ACCELERATION * maxHeight / distanceInObject;
         return forceOnImpact;
         
     }

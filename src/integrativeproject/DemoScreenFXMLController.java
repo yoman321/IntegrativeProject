@@ -6,6 +6,7 @@
 package integrativeproject;
 
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +36,9 @@ public class DemoScreenFXMLController implements Initializable{
     @FXML private TextField forceTF;
     @FXML private Button goButton;
     private double targetObjectLayoutX;
-    private Image boxChipped = new Image("/resources/Box_Destroyed 2.png");
+    private boolean collision = false;
+    private Image boxChipped = new Image("/resources/Box_Destroyed 1.png");
+    private Image boxDestroyed = new Image("/resources/Box_Destroyed 2.png");
     DemoInputScreenFXMLController input = new DemoInputScreenFXMLController();
     ProjectileMotion motion = new ProjectileMotion();
     
@@ -47,7 +50,7 @@ public class DemoScreenFXMLController implements Initializable{
         targetObject.setLayoutX(input.getTargetObjectDistance() * finalDemoPane.getPrefWidth() / input.getPreviewWidth());
         System.out.println(input.getTargetObjectDistance() +"\t\t\t" + finalDemoPane.getPrefWidth() + "\t\t\t" + input.getPreviewHeight());
         fallingObject.setY(finalDemoPane.getPrefHeight() - ledge.getFitHeight() -11);
-        targetObjectLayoutX = targetObject.getX();
+        targetObjectLayoutX = targetObject.getLayoutX();
     }
     public void handleGo(){
         
@@ -104,8 +107,9 @@ public class DemoScreenFXMLController implements Initializable{
                     fallingObject.setX(currentDistance);
                     fallingObject.setY(initialY + heightDifference);
                 
+                    //Box coords are stuck to its initial position right at the base of the ledge NEEDS FIXING
                     if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
-                        break;
+                        collision = true;break;
                     }
                 
                     motion.setTime(motion.getTime() + 0.01);
@@ -116,8 +120,18 @@ public class DemoScreenFXMLController implements Initializable{
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 }
-                //Added 0.49 so the integer gets rounded properly (ex: 1.60 + 0.49 = 2.09 so it gets rounded to 2. But, 1.50 + 0.49 = 1.99 which gets rounded to 1)
-                forceTF.setText(Double.toString(motion.getForce()));
+                motion.setMass(0.59);
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                forceTF.setText((decimalFormat.format(motion.getForce())));
+                if(collision == true){
+                    double forceExerted = motion.getForce();
+                    if(START_HEIGHT >= 85 && START_HEIGHT < 180){
+                        targetObject.setImage(boxChipped);
+                    }
+                    else if(START_HEIGHT >= 180){
+                        targetObject.setImage(boxDestroyed);
+                    }
+                }
         });
         demoMotion.start();
         }
