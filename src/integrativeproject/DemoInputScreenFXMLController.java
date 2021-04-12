@@ -38,6 +38,7 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField timeTF;
     @FXML private TextField iHeightTF;
     @FXML private StackPane demoPane;
+    @FXML private ImageView targetObject;
     @FXML private Label rLabel;
     @FXML private Label accelerationLabel;
     @FXML private Label demoLabel;
@@ -56,8 +57,8 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private ImageView demoLedge = new ImageView();
     @FXML private Slider heightSlider = new Slider();
     
-    private double velXY, angle, time, height, distance;
-    private double ledgeHeight, previewHeight;
+    private double velXY, angle, time, height, distance, targetObjectDistance;
+    private double ledgeHeight, previewHeight, previewWidth;
     private boolean isInitialized = false;
     
 
@@ -98,6 +99,7 @@ public class DemoInputScreenFXMLController implements Initializable {
         if(pm.solveForHeight() != -1 && pm.solveForDistance() != -1){
             setLedgeHeight(ledgeHeight);
             setPreviewHeight(demoPane.getHeight());
+            setPreviewWidth(demoPane.getWidth());
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
             Parent demo = loader.load();
@@ -122,7 +124,6 @@ public class DemoInputScreenFXMLController implements Initializable {
                 iHeightTF.setText(Double.toString(height));
             }
         });
-        
     }
     
     public boolean isDouble(String string){
@@ -155,6 +156,7 @@ public class DemoInputScreenFXMLController implements Initializable {
         previewHeight = demoPane.getHeight();
         ledgeHeight =(Double.parseDouble(iHeightTF.getText()));
         demoLedge.setFitHeight(ledgeHeight);
+        targetObject.setTranslateX(objectPosSlider.getValue());
         isInitialized = true;
     }
     public void setLedgeHeight(double lh){
@@ -168,5 +170,14 @@ public class DemoInputScreenFXMLController implements Initializable {
     }
     public double getPreviewHeight(){
         return previewHeight;
+    }
+    public double getPreviewWidth(){
+        return previewWidth;
+    }
+    public void setPreviewWidth(double width){
+        previewWidth = width;
+    }
+    public double getTargetObjectDistance(){
+        return targetObject.getTranslateX();
     }
 }

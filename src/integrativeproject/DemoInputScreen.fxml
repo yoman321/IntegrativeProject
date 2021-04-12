@@ -51,7 +51,7 @@
                                                 <Insets right="20.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <Slider fx:id="heightSlider" max="230.0" min="1.0" prefHeight="14.0" prefWidth="179.0">
+                                          <Slider fx:id="heightSlider" max="230.0" min="50.0" prefHeight="14.0" prefWidth="179.0">
                                              <HBox.margin>
                                                 <Insets right="35.0" top="19.5" />
                                              </HBox.margin>
@@ -96,7 +96,7 @@
                                           <Insets left="10.0" top="12.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Slider fx:id="objectPosSlider" prefHeight="14.0" prefWidth="371.0">
+                                    <Slider fx:id="objectPosSlider" max="363.0" min="20.0" prefHeight="14.0" prefWidth="371.0">
                                        <HBox.margin>
                                           <Insets top="15.0" />
                                        </HBox.margin>
@@ -118,10 +118,18 @@
                                           <Image url="@../resources/ProjectileMotionBackground.png" />
                                        </image>
                                     </ImageView>
-                                    <ImageView fx:id="demoLedge" fitHeight="1.0" fitWidth="406.0" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
+                                    <ImageView fx:id="demoLedge" fitHeight="50.0" fitWidth="406.0" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
                                        <image>
                                           <Image url="@../resources/Ledge.png" />
                                        </image>
+                                    </ImageView>
+                                    <ImageView fx:id="targetObject" fitHeight="45.0" fitWidth="45.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" scaleX="2.0" scaleY="2.0" scaleZ="2.0" translateX="25.0" translateY="-20.0" StackPane.alignment="BOTTOM_LEFT">
+                                       <image>
+                                          <Image url="@../resources/Box.png" />
+                                       </image>
+                                       <StackPane.margin>
+                                          <Insets />
+                                       </StackPane.margin>
                                     </ImageView>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="230.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="410.0" />
                                  </children>

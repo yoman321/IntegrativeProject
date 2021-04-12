@@ -10,7 +10,7 @@ package integrativeproject;
  * @author Liam
  */
 public class ProjectileMotion {
-    private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0, fVelY;
+    private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0, fVelY, maxHeight, mass;
     private final double ACCELERATION = 9.8;
     private boolean hasIVelY = false, hasIVelX = false, hasTime = false, hasIHeight = false, hasFDistance = false, hasFHeight = false;
     FallingCircle circleObject;
@@ -52,6 +52,12 @@ public class ProjectileMotion {
     public void setObject(FallingRectangle object){
         rectangleObject = object;
     }
+    public void setMaxHeight(double height){
+        maxHeight = height;
+    }
+    public void setMass(double mass){
+        this.mass = mass;
+    }
     public double getIVelY(){
         return iVelY;
     }
@@ -78,6 +84,9 @@ public class ProjectileMotion {
     }
     public FallingSquare getSquareObject(){
         return squareObject;
+    }
+    public double getMass(){
+        return mass;
     }
     
     //Solve for time has to be written before any solve for methods since they wont have access to the time
@@ -140,8 +149,11 @@ public class ProjectileMotion {
     }
     
     
-    /*public double getForce(){
+    public double getForce(){
+        double distanceInObject = 0.1; //Since the box in our simulation is hard, we are only going to allow the falling object to travel 0.01 m into the target object. We are going to assume that after this threshold,
+        double forceOnImpact = /*getMass()*/ 0.59 * ACCELERATION * maxHeight / distanceInObject;
+        return forceOnImpact;
         
-    }*/
+    }
 
 }
