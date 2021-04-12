@@ -27,12 +27,16 @@ import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.CheckBox;
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 /**
  *
  * @author luoph
  */
 public class VehicleCollisionsController {
     
+    public static VehicleCollisionsController controllerInstance;
     //Create FFXML datafields
     @FXML private Pane pane;
     @FXML private TextField nbreVehicle;
@@ -48,6 +52,10 @@ public class VehicleCollisionsController {
     @FXML private ImageView backgroundImage;
     @FXML private Text nbreVehicleText;
     @FXML private CheckBox drunkChk;
+    @FXML private Button startBtn;
+    @FXML private Button resetBtn;
+    @FXML private Text collisionText;
+    @FXML private Text noCollisionText;
     
     //right light (575,576)
     //left light (355, 274)
@@ -81,7 +89,12 @@ public class VehicleCollisionsController {
         sLocationGrid.setVisible(false);
         sPositionGrid.setVisible(false);
         trafficLightGrid.setVisible(false);
+        startBtn.setVisible(false);
+        resetBtn.setVisible(false);
         backgroundImage.setOpacity(0.4);
+    }
+    public VehicleCollisionsController(){
+        controllerInstance = this;
     }
     //Check for numbers of vehicle
     public void onclickNbreVehicles(){
@@ -102,6 +115,8 @@ public class VehicleCollisionsController {
             sLocationGrid.setVisible(true);
             sPositionGrid.setVisible(true);
             trafficLightGrid.setVisible(true);
+            startBtn.setVisible(true);
+            resetBtn.setVisible(true);
             
             nbreVehicleBtn.setVisible(false);
             nbreVehicle.setVisible(false);
@@ -134,7 +149,6 @@ public class VehicleCollisionsController {
                 sLocationGrid.add(sLocationArray[i], i, 0);
                 sPositionGrid.add(sPositionArray[i], i, 0);
                 trafficLightGrid.add(trafficLightArray[i], i, 0);
-                
             }
         }
     }
@@ -233,12 +247,29 @@ public class VehicleCollisionsController {
         }
         executor.execute(new vehicleMovementTask());
     }
-//    Reset the simulation
+    public void collisionText(boolean collision){
+        FadeTransition ft;
+        if (collision){
+            collisionText.setVisible(true);
+            ft = new FadeTransition(Duration.millis(3000), collisionText);
+        }
+        else
+            noCollisionText.setVisible(true);
+            ft = new FadeTransition(Duration.millis(3000), noCollisionText);  
+        
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.setAutoReverse(false);
+        ft.play();
+    }
+    //Reset the simulation
     public void onclickReset(){
         for (int i=0; i<vehicles.length; i++){
             vehicles[i].getVehicle().setX(2000);
             vehicles[i].getVehicle().setY(2000);
         }
+        collisionText.setOpacity(0.0);
+        noCollisionText.setOpacity(0.0);
         vehicles = new VehicleCrash[Integer.valueOf(nbreVehicle.getText())];   
         executor = Executors.newFixedThreadPool(1);
         out.println("reset");

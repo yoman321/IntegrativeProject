@@ -25,7 +25,7 @@ public class AccidentProject extends Application {
        launch(args);
         
     }
-        
+
     @Override
     public void start(Stage stage) throws Exception {
     
