@@ -10,6 +10,12 @@ import javafx.application.Platform;
 import static java.lang.System.out;
 import javafx.scene.input.KeyCode;
 import javafx.scene.control.Button;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 /**
  *
  * @author luoph
@@ -17,34 +23,23 @@ import javafx.scene.control.Button;
 public class SpeedingVehicle {
     
     //Create datafields
-    private double xPos;
-    private double yPos;
     private Rectangle vehicle;
+    private static String currentKey = "stop";
+    boolean up = false;
+        boolean down = false;
+        boolean right = false;
+        boolean left = false;
     
     //Create constructor
     public SpeedingVehicle(){
         
     }
-    public SpeedingVehicle(double xPos, double yPos, Rectangle vehicle){
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public SpeedingVehicle(Rectangle vehicle){
         this.vehicle = vehicle;
     }
     //Create getters and setters
-    public double getX(){
-        return xPos;
-    }
-    public double getY(){
-        return yPos;
-    }
     public Rectangle getVehicle(){
         return vehicle;
-    }
-    public void setX(double xPos){
-        this.xPos = xPos;
-    }
-    public void setY(double yPos){
-        this.yPos = yPos;
     }
     public void setVehicle(Rectangle vehicle){
         this.vehicle = vehicle;
@@ -52,53 +47,72 @@ public class SpeedingVehicle {
 //    public double getDistanceAccident(Accident accident){
 //        return Math.sqrt(Math.pow(accident.getXPos() - getXPos(), 2) + Math.pow(accident.getYPos() - getYPos(), 2));
 //    }
+    //Create methods
+    public void move (String direction){
+         switch (direction){
+            case "up": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 100)); break;
+            case "down": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 100)); break;
+            case "left": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 100)); break;
+            case "right": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 100)); break;
+            default: break;
+        
+        }
+    }
     //Create animation methods
     public void vehicleMovmentAnimation(){
         
-//        Thread thread = new Thread(new Runnable(){
-//            @Override
-//            public void run(){
-//                getVehicle().setOnKeyPressed(e -> {
-//                    switch (e.getCode()){
-//                        case DOWN: setY(getY() + 5); 
-//                            Platform.runLater(() -> getVehicle().setY(getY())); out.println("DOWN"); break;
-//                        case UP: setY(getY() - 5); 
-//                            Platform.runLater(() -> getVehicle().setY(getY())); break;
-//                        case LEFT: setX(getX() - 5);
-//                            Platform.runLater(() -> getVehicle().setX(getX())); break;
-//                        case RIGHT: setX(getX() + 5);
-//                            Platform.runLater(() -> getVehicle().setX(getX())); break;
-//                    }
-//                });
-//            }
-//        });
-//        thread.start();
-
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run(){
+                if (up){
+                    Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 10));
+                }
+                if (down){
+                    Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 10));
+                }
+                if (right){
+                   Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 10)); 
+                }
+                if (left){
+                    Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 10));
+                }
+//                switch(currentKey){
+//                    case "up": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 10)); break;
+//                    case "down": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 10)); break;
+//                    case "right": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 10)); break;
+//                    case "left": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 10)); break;
+//                }
+            }
+        }, 0, 20);
+        
         vehicle.setOnKeyPressed(e -> {
             switch (e.getCode()){
                 case DOWN: Platform.runLater(() -> getVehicle().requestFocus());
-                    setY(getY() + 100); 
-                    Platform.runLater(() -> getVehicle().setY(getY())); break;
+                    down = true; break;
                 case UP: Platform.runLater(() -> getVehicle().requestFocus());
-                    setY(getY() - 100); 
-                    Platform.runLater(() -> getVehicle().setY(getY())); break;
+                    up = true; break;
                 case LEFT: Platform.runLater(() -> getVehicle().requestFocus());
-                    setX(getX() - 100);
-                    Platform.runLater(() -> getVehicle().setX(getX())); break;
+                    left = true; break;
                 case RIGHT: Platform.runLater(() -> getVehicle().requestFocus());
-                    setX(getX() + 100);
-                    Platform.runLater(() -> getVehicle().setX(getX())); break;
-        }
+                    right = true; break;
+            }
                     
-    });
-//        while(true){
-//            Platform.runLater(() -> getVehicle().requestFocus());
-//        }
-          Platform.runLater(() -> getVehicle().requestFocus());
-
-//        vehicle.setOnMousePressed(e -> {
-//            vehicle.setX(0);
-//            vehicle.setY(0);
-//        });
+        });
+        vehicle.setOnKeyReleased(e -> {
+           switch (e.getCode()){
+                case DOWN: Platform.runLater(() -> getVehicle().requestFocus());
+                    down = false; break;
+                case UP: Platform.runLater(() -> getVehicle().requestFocus());
+                    up = false; break;
+                case LEFT: Platform.runLater(() -> getVehicle().requestFocus());
+                    left = false; break;
+                case RIGHT: Platform.runLater(() -> getVehicle().requestFocus());
+                    right = false; break;
+            }
+        });
+        
+         Platform.runLater(() -> getVehicle().requestFocus());
     }
 }

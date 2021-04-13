@@ -7,6 +7,9 @@ package accidentproject;
 
 import java.util.concurrent.*;
 import accidentproject.Classes.SpeedingVehicle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import static java.lang.System.out;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
@@ -21,7 +24,8 @@ public class SpeedingVehicleController {
     
     //Create variables
     ExecutorService executor = Executors.newFixedThreadPool(1);
-    private SpeedingVehicle vehicle = new SpeedingVehicle(325, 500, new Rectangle(305, 500, 20, 40));
+    private SpeedingVehicle vehicle = new SpeedingVehicle(new Rectangle(305, 500, 40, 60));
+   static String currentKey = "stop";
     
     public void initialize(){
         
@@ -41,4 +45,5 @@ public class SpeedingVehicleController {
             }
         }
     }
+
 }
