@@ -36,7 +36,9 @@ import javafx.util.Duration;
  */
 public class VehicleCollisionsController {
     
+    //Create controller instance
     public static VehicleCollisionsController controllerInstance;
+    
     //Create FFXML datafields
     @FXML private Pane pane;
     @FXML private TextField nbreVehicle;
@@ -117,6 +119,9 @@ public class VehicleCollisionsController {
             trafficLightGrid.setVisible(true);
             startBtn.setVisible(true);
             resetBtn.setVisible(true);
+            if (Integer.valueOf(nbreVehicle.getText()) < 2){
+                drunkChk.setVisible(false);
+            }
             
             nbreVehicleBtn.setVisible(false);
             nbreVehicle.setVisible(false);

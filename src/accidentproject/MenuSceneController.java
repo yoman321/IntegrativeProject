@@ -26,4 +26,12 @@ public class MenuSceneController {
             stage.setScene(trainerScene);
             stage.show();
     }
+    public void onclickSpeedingVehicle(ActionEvent e) throws Exception{
+        Parent nextPane = FXMLLoader.load(getClass().getResource(("FXML/SpeedingVehicleFXML.fxml")));
+            Scene trainerScene = new Scene (nextPane);
+        
+            Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+            stage.setScene(trainerScene);
+            stage.show();
+    }
 }
