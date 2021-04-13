@@ -16,6 +16,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javafx.scene.paint.Color;
+import accidentproject.SpeedingVehicleController;
 /**
  *
  * @author luoph
@@ -25,10 +27,10 @@ public class SpeedingVehicle {
     //Create datafields
     private Rectangle vehicle;
     private static String currentKey = "stop";
-    boolean up = false;
-        boolean down = false;
-        boolean right = false;
-        boolean left = false;
+    private boolean up = false;
+    private boolean down = false;
+    private boolean right = false;
+    private boolean left = false;
     
     //Create constructor
     public SpeedingVehicle(){
@@ -61,7 +63,6 @@ public class SpeedingVehicle {
     //Create animation methods
     public void vehicleMovmentAnimation(){
         
-        
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
@@ -78,12 +79,6 @@ public class SpeedingVehicle {
                 if (left){
                     Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 10));
                 }
-//                switch(currentKey){
-//                    case "up": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 10)); break;
-//                    case "down": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 10)); break;
-//                    case "right": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 10)); break;
-//                    case "left": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 10)); break;
-//                }
             }
         }, 0, 20);
         
@@ -115,4 +110,80 @@ public class SpeedingVehicle {
         
          Platform.runLater(() -> getVehicle().requestFocus());
     }
+//    public void accidentMovementAnimation(){
+//        
+////        Timer timer = new Timer();
+////        timer.schedule(new TimerTask(){
+////            @Override
+////            public void run(){
+////                out.println("hello");
+////                //Create variables
+////                int lane = (int)(Math.random() * 3);
+////                getVehicle().setHeight(40);
+////                getVehicle().setWidth(20);
+////                getVehicle().setY(50);
+////                getVehicle().setFill(Color.BLUE);
+////                
+////                //Randomize lane
+////                if (lane == 0){
+////                    getVehicle().setX(187);
+////                }
+////                else if (lane == 1){
+////                    getVehicle().setX(305);
+////                }
+////                else if (lane == 2){
+////                    getVehicle().setX(418);
+////                }
+////                //Accident movement
+////                try{
+////                    while (getVehicle().getY() < 1000){
+////                        out.println(getVehicle().getY());
+////                        Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 8));
+////                        Thread.sleep(50);
+//////                    out.println("something");
+////                    }
+////                }
+////                catch(Exception ex){
+////                    ex.printStackTrace();
+////                }
+////            }
+////        }, 0, 1000);
+//        Thread thread = new Thread(new Runnable(){
+//            @Override
+//            public void run(){
+//                out.println("hello");
+//                //Create variables
+//                int lane = (int)(Math.random() * 3);
+//                getVehicle().setHeight(40);
+//                getVehicle().setWidth(20);
+//                getVehicle().setY(50);
+//                getVehicle().setFill(Color.BLUE);
+//                
+//                //Randomize lane
+//                if (lane == 0){
+//                    getVehicle().setX(187);
+//                }
+//                else if (lane == 1){
+//                    getVehicle().setX(305);
+//                }
+//                else if (lane == 2){
+//                    getVehicle().setX(418);
+//                }
+//                //Accident movement
+//                try{
+//                    while (getVehicle().getY() < 1000){
+//                        out.println(getVehicle().getY());
+//                        Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 8));
+//                        Thread.sleep(50);
+////                    out.println("something");
+//                    }
+//                }
+//                catch(Exception ex){
+//                    ex.printStackTrace();
+//                }
+//            }
+//        });
+//        thread.start();
+//        
+//    }
 }
