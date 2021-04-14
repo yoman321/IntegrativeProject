@@ -115,6 +115,12 @@ public class DemoInputScreenFXMLController implements Initializable {
             stage.show();
         }
     }
+    
+    public void handleBack(){
+        
+        
+        
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
