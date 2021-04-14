@@ -22,7 +22,6 @@ import javafx.scene.text.Text;
 public class VehicleCrash {
     
     //Create FXML variables
-
     @FXML Text avoidCollisionText;
     
     //Create datafields
@@ -113,6 +112,7 @@ public class VehicleCrash {
     public void setVehicle(Rectangle vehicle){
         this.vehicle = vehicle;
     }
+    
     //Create methods
     public double crashSpeed(VehicleCrash vehicle){
         return (getVelocity() * getMass() + vehicle.getVelocity() * vehicle.getMass())
