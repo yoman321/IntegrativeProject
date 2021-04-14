@@ -18,13 +18,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javafx.scene.paint.Color;
 import accidentproject.SpeedingVehicleController;
+import accidentproject.Classes.SpeedingVehicle;
 /**
  *
  * @author luoph
  */
 public class Accident {
 
-    public void accidentMovementAnimation(){
+    public void accidentMovementAnimation(SpeedingVehicle vehicle){
         
         //Create variables
         int lane = (int)(Math.random() * 3);
@@ -54,7 +55,7 @@ public class Accident {
             @Override
             public void run(){
                 try{
-                    while (accident.getY() < 1000){
+                    while (accident.getY() < 1000 && distance(vehicle.getVehicle().getX(), accident.getX(), vehicle.getVehicle().getY(), accident.getY()) > 30){
                         Platform.runLater(() -> accident.setY(accident.getY() + 8));
                         Thread.sleep(50);
                     }
@@ -66,5 +67,8 @@ public class Accident {
         });
         thread.start();
     } 
-     
+    //Create method for distance between accidents and vehicle
+    public double distance(double x1, double x2, double y1, double y2){
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
 }

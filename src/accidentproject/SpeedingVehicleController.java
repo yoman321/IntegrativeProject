@@ -62,7 +62,7 @@ public class SpeedingVehicleController {
         @Override
         public void run(){
             try{
-                accident.accidentMovementAnimation();
+                accident.accidentMovementAnimation(vehicle);
             }
             catch (Exception ex){
                 ex.printStackTrace();

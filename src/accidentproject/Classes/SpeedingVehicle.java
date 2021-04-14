@@ -26,7 +26,6 @@ public class SpeedingVehicle {
     
     //Create datafields
     private Rectangle vehicle;
-    private static String currentKey = "stop";
     private boolean up = false;
     private boolean down = false;
     private boolean right = false;
