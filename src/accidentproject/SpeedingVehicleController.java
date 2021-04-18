@@ -11,11 +11,16 @@ import accidentproject.Classes.Accident;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import static java.lang.System.out;
+import javafx.animation.FadeTransition;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
 import javafx.application.Platform;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import javafx.scene.image.ImageView;
+
 
 /**
  *
@@ -27,6 +32,8 @@ public class SpeedingVehicleController {
     
     //Create FXML variables
     @FXML private Pane pane;
+    @FXML private ImageView backgroundImage;
+    @FXML private Text collisionText;
     
     //Create variables
     private ExecutorService vehicleExecutor = Executors.newFixedThreadPool(1);
@@ -44,7 +51,6 @@ public class SpeedingVehicleController {
         pane.getChildren().add(vehicle.getVehicle());
         vehicleExecutor.execute(new vehicleMovementTask());
         accidentExecutor.scheduleWithFixedDelay(new accidentMovementTask(), 0, 1, TimeUnit.SECONDS);
-//        accidentExecutor.execute(new accidentMovementTask());
     }
     private class vehicleMovementTask implements Runnable{
         @Override
@@ -71,6 +77,51 @@ public class SpeedingVehicleController {
     }
     public void addAccident(Rectangle accident){
         Platform.runLater(() -> pane.getChildren().add(accident));
+    }
+    public void removeAccident(Rectangle accident) throws Exception{
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), accident);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+        ft.setAutoReverse(false);
+        ft.play();
+        Thread.sleep(3000);
+        Platform.runLater(() -> pane.getChildren().remove(accident));
+    }
+    public void removeVehicle(Rectangle vehicle) throws Exception{
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), vehicle);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.0);
+        ft.setAutoReverse(false);
+        ft.play();
+        Thread.sleep(3000);
+        Platform.runLater(() -> pane.getChildren().remove(vehicle));
+    }
+    //Create thread shutdownsmethods
+    public void accidentExecutorShutdown(){
+        accidentExecutor.shutdown();
+    }
+    public void vehicleExecutorShutdown(){
+        vehicleExecutor.shutdown();
+    }
+    public boolean vehicleExceutorIsShutdown(){
+        return vehicleExecutor.isShutdown();
+    }
+    public boolean accidentExecutorIsShutdown(){
+        return accidentExecutor.isShutdown();
+    }
+    //Create endgame text 
+    public void collisionText(){
+        FadeTransition ft = new FadeTransition(Duration.millis(3000), collisionText);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.setAutoReverse(false);
+        ft.play();
+        
+        FadeTransition ft1 = new FadeTransition(Duration.millis(3000), backgroundImage);
+        ft1.setFromValue(1.0);
+        ft1.setToValue(0.4);
+        ft1.setAutoReverse(false);
+        ft1.play();
     }
     
 }

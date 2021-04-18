@@ -30,6 +30,10 @@ public class SpeedingVehicle {
     private boolean down = false;
     private boolean right = false;
     private boolean left = false;
+    private double[] upLeftCorner = {305, 500};  
+    private double[] upRightCorner = {345, 500};
+    private double[] bottomLeftCorner = {305, 560};
+    private double[] bottomRightCorner = {345, 600};
     
     //Create constructor
     public SpeedingVehicle(){
@@ -49,16 +53,35 @@ public class SpeedingVehicle {
 //        return Math.sqrt(Math.pow(accident.getXPos() - getXPos(), 2) + Math.pow(accident.getYPos() - getYPos(), 2));
 //    }
     //Create methods
-    public void move (String direction){
-         switch (direction){
-            case "up": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 100)); break;
-            case "down": Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 100)); break;
-            case "left": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 100)); break;
-            case "right": Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 100)); break;
-            default: break;
-        
-        }
-    }
+    //Create corner location methods
+//    public double[] getUpLeftCorner(){
+//        return upLeftCorner;
+//    }
+//    public double[] getUpRightCorner(){
+//        return upRightCorner;
+//    }
+//    public double[] getBottomLeftCorner(){
+//        return bottomLeftCorner;
+//    }
+//    public double[] getBottomRightCorner(){
+//        return bottomRightCorner;
+//    }
+//    public void setUpLeftCorner(double x, double y){
+//        this.upLeftCorner[0] += x;
+//        this.upLeftCorner[1] += y;
+//    }
+//    public void setUpRightCorner(double x, double y){
+//        this.upRightCorner[0] += x;
+//        this.upRightCorner[1] += y;
+//    }
+//    public void setBottomLeftCorner(double x, double y){
+//        this.bottomLeftCorner[0] += x;
+//        this.bottomLeftCorner[1] += y;
+//    }
+//    public void setBottomRightCorner(double x, double y){
+//        this.bottomRightCorner[0] += x;
+//        this.bottomRightCorner[1] += y;
+//    }
     //Create animation methods
     public void vehicleMovmentAnimation(){
         
@@ -66,21 +89,48 @@ public class SpeedingVehicle {
         timer.schedule(new TimerTask(){
             @Override
             public void run(){
+                try{
+                    if (SpeedingVehicleController.speedingInstance.vehicleExceutorIsShutdown()){
+                        SpeedingVehicleController.speedingInstance.removeVehicle(vehicle);
+                        timer.cancel();
+                    }
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
                 if (up){
-                    Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 10));
+//                    setUpLeftCorner(0, -10);
+//                    out.println(getUpLeftCorner()[1]);
+//                    setUpRightCorner(0, -10);
+//                    setBottomLeftCorner(0, -10);
+//                    setBottomRightCorner(0, -10);
+                    Platform.runLater(() -> getVehicle().setY(getVehicle().getY() - 5));
+                   
                 }
                 if (down){
-                    Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 10));
+//                    setUpLeftCorner(0, 10);
+//                    setUpRightCorner(0, 10);
+//                    setBottomLeftCorner(0, 10);
+//                    setBottomRightCorner(0, 10);
+                    Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 5));   
                 }
                 if (right){
-                   Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 10)); 
+//                   setUpLeftCorner(10, 0);
+//                   setUpRightCorner(10, 0);
+//                   setBottomLeftCorner(10, 0);
+//                   setBottomRightCorner(10, 0);
+                   Platform.runLater(() -> getVehicle().setX(getVehicle().getX() + 5)); 
                 }
                 if (left){
-                    Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 10));
+//                    setUpLeftCorner(-10, 0);
+//                    setUpRightCorner(-10, 0);
+//                    setBottomLeftCorner(-10, 0);
+//                    setBottomRightCorner(-10, 0);
+                    Platform.runLater(() -> getVehicle().setX(getVehicle().getX() - 5));
                 }
             }
         }, 0, 20);
-        
+         
         vehicle.setOnKeyPressed(e -> {
             switch (e.getCode()){
                 case DOWN: Platform.runLater(() -> getVehicle().requestFocus());
@@ -109,80 +159,4 @@ public class SpeedingVehicle {
         
          Platform.runLater(() -> getVehicle().requestFocus());
     }
-//    public void accidentMovementAnimation(){
-//        
-////        Timer timer = new Timer();
-////        timer.schedule(new TimerTask(){
-////            @Override
-////            public void run(){
-////                out.println("hello");
-////                //Create variables
-////                int lane = (int)(Math.random() * 3);
-////                getVehicle().setHeight(40);
-////                getVehicle().setWidth(20);
-////                getVehicle().setY(50);
-////                getVehicle().setFill(Color.BLUE);
-////                
-////                //Randomize lane
-////                if (lane == 0){
-////                    getVehicle().setX(187);
-////                }
-////                else if (lane == 1){
-////                    getVehicle().setX(305);
-////                }
-////                else if (lane == 2){
-////                    getVehicle().setX(418);
-////                }
-////                //Accident movement
-////                try{
-////                    while (getVehicle().getY() < 1000){
-////                        out.println(getVehicle().getY());
-////                        Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 8));
-////                        Thread.sleep(50);
-//////                    out.println("something");
-////                    }
-////                }
-////                catch(Exception ex){
-////                    ex.printStackTrace();
-////                }
-////            }
-////        }, 0, 1000);
-//        Thread thread = new Thread(new Runnable(){
-//            @Override
-//            public void run(){
-//                out.println("hello");
-//                //Create variables
-//                int lane = (int)(Math.random() * 3);
-//                getVehicle().setHeight(40);
-//                getVehicle().setWidth(20);
-//                getVehicle().setY(50);
-//                getVehicle().setFill(Color.BLUE);
-//                
-//                //Randomize lane
-//                if (lane == 0){
-//                    getVehicle().setX(187);
-//                }
-//                else if (lane == 1){
-//                    getVehicle().setX(305);
-//                }
-//                else if (lane == 2){
-//                    getVehicle().setX(418);
-//                }
-//                //Accident movement
-//                try{
-//                    while (getVehicle().getY() < 1000){
-//                        out.println(getVehicle().getY());
-//                        Platform.runLater(() -> getVehicle().setY(getVehicle().getY() + 8));
-//                        Thread.sleep(50);
-////                    out.println("something");
-//                    }
-//                }
-//                catch(Exception ex){
-//                    ex.printStackTrace();
-//                }
-//            }
-//        });
-//        thread.start();
-//        
-//    }
 }

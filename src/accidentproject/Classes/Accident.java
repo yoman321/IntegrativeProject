@@ -27,15 +27,16 @@ public class Accident {
 
     public void accidentMovementAnimation(SpeedingVehicle vehicle){
         
-        //Create variables
-        int lane = (int)(Math.random() * 3);
-        Rectangle accident = new Rectangle();
         
         //Set values for accident
-        accident.setHeight(40);
-        accident.setWidth(20);
-        accident.setY(50);
+        Rectangle accident = new Rectangle();
+        accident.setHeight(70);
+        accident.setWidth(50);
+        accident.setY(-60);
         accident.setFill(Color.BLUE);
+        
+        //Create lane variable
+        int lane = (int)(Math.random() * 3);
                
         //Randomize lane
         if (lane == 0){
@@ -47,6 +48,7 @@ public class Accident {
         else if (lane == 2){
             accident.setX(418);
         }
+        
         //Add accident to pane        
         SpeedingVehicleController.speedingInstance.addAccident(accident);
         
@@ -55,20 +57,46 @@ public class Accident {
             @Override
             public void run(){
                 try{
-                    while (accident.getY() < 1000 && distance(vehicle.getVehicle().getX(), accident.getX(), vehicle.getVehicle().getY(), accident.getY()) > 30){
+//                    while (accident.getY() < 1000 && !distance(vehicle.getUpLeftCorner(), vehicle.getUpRightCorner(), vehicle.getBottomLeftCorner(), vehicle.getBottomRightCorner(), accidentCorners)){
+//                        for (int i=1; i<accidentCorners.length; i+=2){
+//                            accidentCorners[i] += 8;
+//                        }
+//                        Platform.runLater(() -> accident.setY(accident.getY() + 8));
+//                        Thread.sleep(50);
+//                    }
+                    while (!accident.intersects(vehicle.getVehicle().getBoundsInLocal())){
+                        if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
+                            break;
+                            
+                        }
                         Platform.runLater(() -> accident.setY(accident.getY() + 8));
                         Thread.sleep(50);
                     }
+                    SpeedingVehicleController.speedingInstance.accidentExecutorShutdown();
+                    SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown();
+                    SpeedingVehicleController.speedingInstance.collisionText();
+                    SpeedingVehicleController.speedingInstance.removeAccident(accident);
+                    
                 }
                 catch(Exception ex){
                     ex.printStackTrace();
                 }
+                
             }
         });
         thread.start();
     } 
-    //Create method for distance between accidents and vehicle
-    public double distance(double x1, double x2, double y1, double y2){
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    }
+//    //Create method for distance between accidents and vehicle
+//    public boolean distance(double[] upLeftCorner, double[] upRightCorner, double[] bottomLeftCorner, double[] bottomRightCorner, double[] accidentCorners){
+//        //Check distance between all corners
+//        for (int i=0, j=i+1; i<accidentCorners.length; i+=2, j+=2){
+//            if (Math.sqrt(Math.pow(upLeftCorner[0] - accidentCorners[i], 2) + Math.pow(upLeftCorner[1] - accidentCorners[j], 2)) < 10 || 
+//                    Math.sqrt(Math.pow(upRightCorner[0] - accidentCorners[i], 2) + Math.pow(upRightCorner[1] - accidentCorners[j], 2)) < 10 ||
+//                        Math.sqrt(Math.pow(bottomLeftCorner[0] - accidentCorners[i], 2) + Math.pow(bottomLeftCorner[1] - accidentCorners[j], 2)) < 10 ||
+//                            Math.sqrt(Math.pow(bottomRightCorner[0] - accidentCorners[i], 2) + Math.pow(bottomRightCorner[1] - accidentCorners[j], 2)) < 10){
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 }
