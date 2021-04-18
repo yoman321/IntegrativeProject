@@ -19,16 +19,17 @@ import java.awt.event.ActionEvent;
 import javafx.scene.paint.Color;
 import accidentproject.SpeedingVehicleController;
 import accidentproject.Classes.SpeedingVehicle;
+import javafx.scene.image.ImageView;
 /**
  *
  * @author luoph
  */
 public class Accident {
 
-    public void accidentMovementAnimation(SpeedingVehicle vehicle){
-        
+    public void accidentMovementAnimation(SpeedingVehicle vehicle, ImageView backgroundImage){
         
         //Set values for accident
+        long time = 40;
         Rectangle accident = new Rectangle();
         accident.setHeight(70);
         accident.setWidth(50);
@@ -40,10 +41,10 @@ public class Accident {
                
         //Randomize lane
         if (lane == 0){
-            accident.setX(187);
+            accident.setX(175);
         }
         else if (lane == 1){
-            accident.setX(305);
+            accident.setX(295);
         }
         else if (lane == 2){
             accident.setX(418);
@@ -57,20 +58,12 @@ public class Accident {
             @Override
             public void run(){
                 try{
-//                    while (accident.getY() < 1000 && !distance(vehicle.getUpLeftCorner(), vehicle.getUpRightCorner(), vehicle.getBottomLeftCorner(), vehicle.getBottomRightCorner(), accidentCorners)){
-//                        for (int i=1; i<accidentCorners.length; i+=2){
-//                            accidentCorners[i] += 8;
-//                        }
-//                        Platform.runLater(() -> accident.setY(accident.getY() + 8));
-//                        Thread.sleep(50);
-//                    }
                     while (!accident.intersects(vehicle.getVehicle().getBoundsInLocal())){
                         if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
                             break;
-                            
                         }
                         Platform.runLater(() -> accident.setY(accident.getY() + 8));
-                        Thread.sleep(50);
+                        Thread.sleep(SpeedingVehicleController.speedingInstance.getTime());
                     }
                     SpeedingVehicleController.speedingInstance.accidentExecutorShutdown();
                     SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown();
