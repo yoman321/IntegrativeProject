@@ -20,7 +20,7 @@
             <Image url="@../Ressources/SpeedingVehicleBackground.png" />
          </image>
       </ImageView>
-      <Pane fx:id="pane" prefHeight="1000.0" prefWidth="650.0">
+      <Pane fx:id="pane" prefHeight="988.0" prefWidth="650.0">
          <children>
             <Text fx:id="collisionText" layoutX="199.0" layoutY="66.0" opacity="0.0" stroke="#9a2424" strokeType="OUTSIDE" strokeWidth="0.0" text="Driving a bit fast there... Hope we find you in one piece." wrappingWidth="251.68115234375">
                <font>

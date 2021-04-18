@@ -29,46 +29,54 @@ public class Accident {
     public void accidentMovementAnimation(SpeedingVehicle vehicle, ImageView backgroundImage){
         
         //Set values for accident
-        long time = 40;
-        Rectangle accident = new Rectangle();
-        accident.setHeight(70);
-        accident.setWidth(50);
-        accident.setY(-60);
-        accident.setFill(Color.BLUE);
+//        Rectangle accident = new Rectangle();
+//        accident.setHeight(80);
+//        accident.setWidth(50);
+//        accident.setY(-60);
+//        accident.setFill(Color.BLUE);
+        
+        //Create images for accidents
+        ImageView[] accident = {new ImageView("accidentproject/Ressources/BlueCarBase.png"), 
+            new ImageView("accidentproject/Ressources/PinkCarBase.png"), new ImageView("accidentproject/Ressources/RedCarBase.png")};
         
         //Create lane variable
         int lane = (int)(Math.random() * 3);
+        int cars = (int)(Math.random() * 3);
                
         //Randomize lane
         if (lane == 0){
-            accident.setX(175);
+            accident[cars].setX(175);
         }
         else if (lane == 1){
-            accident.setX(295);
+            accident[cars].setX(295);
         }
         else if (lane == 2){
-            accident.setX(418);
+            accident[cars].setX(418);
         }
+        //Set accident values
+        accident[cars].setY(-60);
+        accident[cars].setFitHeight(90);
+        accident[cars].setFitWidth(50);
         
         //Add accident to pane        
-        SpeedingVehicleController.speedingInstance.addAccident(accident);
+        SpeedingVehicleController.speedingInstance.addAccident(accident[cars]);
         
         //Create accident movement
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run(){
                 try{
-                    while (!accident.intersects(vehicle.getVehicle().getBoundsInLocal())){
+                    while (!accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal())){
                         if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
                             break;
                         }
-                        Platform.runLater(() -> accident.setY(accident.getY() + 8));
+                        Platform.runLater(() -> accident[cars].setY(accident[cars].getY() + 8));
                         Thread.sleep(SpeedingVehicleController.speedingInstance.getTime());
                     }
                     SpeedingVehicleController.speedingInstance.accidentExecutorShutdown();
                     SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown();
                     SpeedingVehicleController.speedingInstance.collisionText();
-                    SpeedingVehicleController.speedingInstance.removeAccident(accident);
+                    SpeedingVehicleController.speedingInstance.removeAccident(accident[cars]);
                     
                 }
                 catch(Exception ex){

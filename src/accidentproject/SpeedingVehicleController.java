@@ -45,9 +45,9 @@ public class SpeedingVehicleController {
     private ScheduledExecutorService accidentExecutor = Executors.newScheduledThreadPool(3);
     private ExecutorService imageExecutor = Executors.newFixedThreadPool(1);
     private ExecutorService timerExecutor = Executors.newFixedThreadPool(1);
-    
+    //305, 500, 40, 60
     //Create objects
-    private SpeedingVehicle vehicle = new SpeedingVehicle(new Rectangle(305, 500, 40, 60));
+    private SpeedingVehicle vehicle = new SpeedingVehicle(new ImageView("accidentproject/Ressources/YellowCarBase.png"));
     private BackgroundImageClass bImage = new BackgroundImageClass();
     private TimerClass timer = new TimerClass();
     private Accident accident = new Accident();
@@ -114,10 +114,10 @@ public class SpeedingVehicleController {
     public long getTime(){
         return time;
     }
-    public void addAccident(Rectangle accident){
+    public void addAccident(ImageView accident){
         Platform.runLater(() -> pane.getChildren().add(accident));
     }
-    public void removeAccident(Rectangle accident) throws Exception{
+    public void removeAccident(ImageView accident) throws Exception{
         FadeTransition ft = new FadeTransition(Duration.millis(3000), accident);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);
@@ -126,7 +126,7 @@ public class SpeedingVehicleController {
         Thread.sleep(3000);
         Platform.runLater(() -> pane.getChildren().remove(accident));
     }
-    public void removeVehicle(Rectangle vehicle) throws Exception{
+    public void removeVehicle(ImageView vehicle) throws Exception{
         FadeTransition ft = new FadeTransition(Duration.millis(3000), vehicle);
         ft.setFromValue(1.0);
         ft.setToValue(0.0);

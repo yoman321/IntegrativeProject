@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javafx.scene.paint.Color;
 import accidentproject.SpeedingVehicleController;
+import javafx.scene.image.ImageView;
 /**
  *
  * @author luoph
@@ -25,7 +26,7 @@ import accidentproject.SpeedingVehicleController;
 public class SpeedingVehicle {
     
     //Create datafields
-    private Rectangle vehicle;
+    private ImageView vehicle;
     private boolean up = false;
     private boolean down = false;
     private boolean right = false;
@@ -39,14 +40,14 @@ public class SpeedingVehicle {
     public SpeedingVehicle(){
         
     }
-    public SpeedingVehicle(Rectangle vehicle){
+    public SpeedingVehicle(ImageView vehicle){
         this.vehicle = vehicle;
     }
     //Create getters and setters
-    public Rectangle getVehicle(){
+    public ImageView getVehicle(){
         return vehicle;
     }
-    public void setVehicle(Rectangle vehicle){
+    public void setVehicle(ImageView vehicle){
         this.vehicle = vehicle;
     }
 //    public double getDistanceAccident(Accident accident){
@@ -84,6 +85,11 @@ public class SpeedingVehicle {
 //    }
     //Create animation methods
     public void vehicleMovmentAnimation(){
+        
+        getVehicle().setFitWidth(50);
+        getVehicle().setFitHeight(90);
+        getVehicle().setX(305);
+        getVehicle().setY(500);
         
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
