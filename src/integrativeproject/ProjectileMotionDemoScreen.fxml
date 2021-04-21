@@ -45,48 +45,19 @@
       </StackPane>
       <HBox layoutY="337.0" prefHeight="63.0" prefWidth="600.0">
          <children>
-            <Label text="Velocity:">
-               <HBox.margin>
-                  <Insets left="10.0" top="23.0" />
-               </HBox.margin>
-            </Label>
-            <Region prefHeight="63.0" prefWidth="7.0" />
-            <TextField fx:id="velTF" editable="false" prefHeight="25.0" prefWidth="74.0">
-               <HBox.margin>
-                  <Insets top="19.0" />
-               </HBox.margin>
-            </TextField>
-            <Region layoutX="55.0" layoutY="10.0" prefHeight="63.0" prefWidth="13.0" />
-            <Label layoutX="10.0" layoutY="10.0" text="Height:">
+            <Region prefHeight="77.0" prefWidth="96.0" />
+            <Label text="Force: ">
                <HBox.margin>
                   <Insets top="23.0" />
                </HBox.margin>
             </Label>
-            <Region layoutX="148.0" layoutY="10.0" prefHeight="63.0" prefWidth="7.0" />
-            <TextField fx:id="heightTF" editable="false" layoutX="38.0" layoutY="10.0" prefHeight="25.0" prefWidth="74.0">
-               <HBox.margin>
-                  <Insets top="19.0" />
-               </HBox.margin>
-            </TextField>
-            <Region layoutX="206.0" layoutY="10.0" prefHeight="63.0" prefWidth="13.0" />
-            <Label layoutX="112.0" layoutY="10.0" text="Distance:">
-               <HBox.margin>
-                  <Insets top="23.0" />
-               </HBox.margin>
-            </Label>
-            <Region layoutX="299.0" layoutY="10.0" prefHeight="63.0" prefWidth="7.0" />
-            <TextField fx:id="distanceTF" editable="false" layoutX="140.0" layoutY="10.0" prefHeight="25.0" prefWidth="74.0">
-               <HBox.margin>
-                  <Insets top="19.0" />
-               </HBox.margin>
-            </TextField>
             <Region prefHeight="63.0" prefWidth="13.0" />
-            <TextField fx:id="forceTF" editable="false" prefHeight="25.0" prefWidth="85.0" promptText="Force (N)">
+            <TextField>
                <HBox.margin>
-                  <Insets top="19.0" />
+                  <Insets top="18.0" />
                </HBox.margin>
             </TextField>
-            <Region prefHeight="63.0" prefWidth="23.0" />
+            <Region prefHeight="200.0" prefWidth="200.0" />
             <Button fx:id="goButton" mnemonicParsing="false" onAction="#handleGo" prefHeight="36.0" prefWidth="53.0" text="GO!">
                <HBox.margin>
                   <Insets right="10.0" top="13.5" />

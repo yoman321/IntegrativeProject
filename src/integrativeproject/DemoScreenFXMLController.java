@@ -6,26 +6,20 @@
 package integrativeproject;
 
 import java.io.IOException;
-import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
@@ -35,16 +29,12 @@ import javafx.stage.Stage;
 public class DemoScreenFXMLController{
     
     
-    @FXML private ImageView background;
     @FXML private ImageView ledge;
     @FXML private ImageView fallingObject;
     @FXML private StackPane finalDemoPane;
     @FXML private ImageView targetObject;
     @FXML private TextField forceTF;
     @FXML private Button goButton;
-    @FXML private TextField velTF;
-    @FXML private TextField heightTF;
-    @FXML private TextField distanceTF;
     private double targetObjectLayoutX;
     private boolean collision = false;
     private Image boxChipped = new Image("/resources/Box_Destroyed 1.png");
@@ -154,25 +144,25 @@ public class DemoScreenFXMLController{
                 
                     //If statement that controls the collision with the falling object and the target object
                     if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
-                        collision = true;break;
+                        collision = true;
+                        break;
                     }
                 
                     //Increasing the time by 0.01 seconds for the next iteration
                     motion.setTime(motion.getTime() + 0.01);
                 
                 try {
-                    Thread.sleep(3);
+                    Thread.sleep(5);
                 }catch (InterruptedException ex) {
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 }
                 
                 //Sets the impact force exerted on the target object or floor from the falling object
-                forceTF.setText((decimalFormat.format(motion.getForce())) +"N");
+
                 
                 //If the objects collide, this statement is true
                 if(collision == true){
-                    double forceExerted = motion.getForce();
                     
                     //If and else if statement to set the damage done to the target object
                     if(START_HEIGHT >= 85 && START_HEIGHT < 180){
@@ -181,6 +171,7 @@ public class DemoScreenFXMLController{
                     else if(START_HEIGHT >= 180){
                         targetObject.setImage(boxDestroyed);
                     }
+                
                 }
                 
                 

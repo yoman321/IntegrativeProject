@@ -119,12 +119,6 @@ public class DemoInputScreenFXMLController implements Initializable {
         }
     }
     
-    public void handleBack(){
-        
-        
-        
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         height = (int)heightSlider.getValue();;
