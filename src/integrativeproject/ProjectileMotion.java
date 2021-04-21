@@ -76,15 +76,6 @@ public class ProjectileMotion {
     public double getFDistance(){
         return fDistance;
     }
-    public FallingCircle getCircleObject(){
-        return circleObject;
-    }
-    public FallingRectangle getRectangleObject(){
-        return rectangleObject;
-    }
-    public FallingSquare getSquareObject(){
-        return squareObject;
-    }
     public double getMass(){
         return mass;
     }
@@ -93,6 +84,8 @@ public class ProjectileMotion {
     }
     
     //Solve for time has to be written before any solve for methods since they wont have access to the time
+    
+    //Solves motion for the distance at a specific point in time
     public double solveForDistance(){
         if(hasTime == true && hasIVelX == true){
             fDistance = iDistance + (iVelX * time);
@@ -104,6 +97,8 @@ public class ProjectileMotion {
         }
         
     }
+    
+    //Solves motion for the height at a specific point in time
     public double solveForHeight(){
          if(hasIHeight == true && hasIVelY == true && hasTime == true){
              fHeight = iHeight + (iVelY * time) - (0.5 * ACCELERATION * time * time);
@@ -113,6 +108,7 @@ public class ProjectileMotion {
          return -1;
     }
 
+    //Solves for the time if it has initial height and initial velocity
     public double solveForTime(){ 
         if (hasIHeight && hasIVelY){
             double a = -0.5*ACCELERATION;
@@ -125,12 +121,14 @@ public class ProjectileMotion {
         }
         return -1;
     }
+    
+    //Solves for the y velocity at a specific point int ime
     public double solveForFVelY(){
         fVelY = iVelY - (ACCELERATION * time);
         return fVelY;
     }
     
-    
+    //Converts a velocity with an x and y component into its respective velocity`s in each direction
     public void convertXY(double degree){
         double radians = (degree * Math.PI) / 180;
         
@@ -140,6 +138,8 @@ public class ProjectileMotion {
         setIVelY(velY);
         setIVelX(velX);
     }
+    
+    //Solves a quadratic 
     public double quadratic(double a, double b, double c){
         double resultOne = ((-b) + Math.sqrt((b*b) - (4*a*c)))/(2*a);
         double resultTwo = ((-b) - Math.sqrt((b*b) - (4*a*c)))/(2*a);

@@ -32,7 +32,7 @@ import javafx.stage.Stage;
  *
  * @author liamd
  */
-public class DemoScreenFXMLController implements Initializable{
+public class DemoScreenFXMLController{
     
     
     @FXML private ImageView background;
@@ -42,6 +42,9 @@ public class DemoScreenFXMLController implements Initializable{
     @FXML private ImageView targetObject;
     @FXML private TextField forceTF;
     @FXML private Button goButton;
+    @FXML private TextField velTF;
+    @FXML private TextField heightTF;
+    @FXML private TextField distanceTF;
     private double targetObjectLayoutX;
     private boolean collision = false;
     private Image boxChipped = new Image("/resources/Box_Destroyed 1.png");
@@ -51,38 +54,61 @@ public class DemoScreenFXMLController implements Initializable{
     
 
     public void InitializeData(DemoInputScreenFXMLController inputController){
+        
+        //Retrieving data from the demo input screen
         input = inputController;
         motion = input.pm;
+        
+        //Sets the scene from the demo input screen with proper ratio
         ledge.setFitHeight(input.getLedgeHeight() * finalDemoPane.getPrefHeight() / input.getPreviewHeight());
         targetObject.setLayoutX(input.getTargetObjectDistance() * finalDemoPane.getPrefWidth() / input.getPreviewWidth());
-        System.out.println(input.getTargetObjectDistance() +"\t\t\t" + finalDemoPane.getPrefWidth() + "\t\t\t" + input.getPreviewHeight());
         fallingObject.setY(finalDemoPane.getPrefHeight() - ledge.getFitHeight() -11);
+        
+        //Creating a variable that is equal to the targetObjects's x position to avoid a bug
         targetObjectLayoutX = targetObject.getLayoutX();
+        
+        //Disables the go button after the motion has started
+        goButton.setDisable(false);
+        motion.setMass(0.59);
     }
+    
+    //Handles the motion of the falling object once the GO button is clicked
     public void handleGo(){
         
-                motion.setTime(0);
-                final double  START_HEIGHT = motion.solveForHeight();
-                final double START_Y = fallingObject.getY();
+            //Disables the go button
+            goButton.setDisable(true);
         
-                
+            //Setting the motion at (0,0)
+            motion.setTime(0);
+            final double  START_HEIGHT = motion.solveForHeight();
+            final double START_Y = fallingObject.getY();
+
+            //Thread that controls the motion of the falling object
             Thread demoMotion = new Thread(() -> {
             
+                //Setting the initial values of the variables
                 double initialHeight = START_HEIGHT;
                 double initialY = START_Y;
                 double currentHeight = 0;
                 double currentDistance = 0;
                 double heightDifference = 0;
-        
-                //Motion works, but when the motion hits 0 its not on the floor. This could be a ratio thing, so maybe try finding the max height and ratio something. Could also be the difference between the cooridnate systems (like the fact that 0,100 in a regular system would be equivalent to 0,200 in javafx system if the total height is 300
+                
+                //Creating the format for the displayed values
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                
+                //Loop for the motion up until the object reaches it's highest height
                 while(motion.solveForFVelY() > 0){
                 
+                    //Retrieves the position of the object at a specific point in time
                     currentHeight = motion.solveForHeight();
                     currentDistance = motion.solveForDistance();
+                    
+                    //Setting the falling object to it's position at that specific point in time
                     heightDifference = currentHeight - initialHeight;
-                    System.out.println(currentHeight);
                     fallingObject.setX(currentDistance);
                     fallingObject.setY((initialY - heightDifference));
+                    
+                    //Increasing the time by 0.01 seconds for the next iteration
                     motion.setTime(motion.getTime() + 0.01);
                 
                 try {
@@ -93,9 +119,18 @@ public class DemoScreenFXMLController implements Initializable{
                 
                 }
             
+                //Code that deals with the object at its max height
+                
+                //Setting the initial height to the max height for the calculation of the height difference
                 initialHeight = currentHeight;
+                
+                //Setting the maxHeight for the instance of ProjectileMotion so as to be able to calculate the force on impact
                 motion.setMaxHeight(initialHeight);
+                
+                //Setting the initial Y to be able to calculate the current Y position of the falling object
                 initialY = fallingObject.getY();
+                
+                //Increasing the time by 0.01 seconds
                 motion.setTime(motion.getTime() + 0.01);
             
                 try {
@@ -104,21 +139,25 @@ public class DemoScreenFXMLController implements Initializable{
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             
-                while(fallingObject.getY() < finalDemoPane.getPrefHeight() - 60){
                 
-                    //Need to add an if statement for if the falling object collides with the target object
+                //Loop that deals with the motion after the falling object reaches its max height
+                while(fallingObject.getY() < finalDemoPane.getPrefHeight() - 60){
+                    
+                    //Retrieves the position of the object at a specific point in time
                     currentHeight = motion.solveForHeight();
                     currentDistance = motion.solveForDistance();
+                    
+                    //Setting the falling object to it's position at that specific point in time
                     heightDifference = initialHeight - currentHeight;
-                    System.out.println(fallingObject.getY());
                     fallingObject.setX(currentDistance);
                     fallingObject.setY(initialY + heightDifference);
                 
-                    //Box coords are stuck to its initial position right at the base of the ledge NEEDS FIXING
+                    //If statement that controls the collision with the falling object and the target object
                     if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
                         collision = true;break;
                     }
                 
+                    //Increasing the time by 0.01 seconds for the next iteration
                     motion.setTime(motion.getTime() + 0.01);
                 
                 try {
@@ -127,11 +166,15 @@ public class DemoScreenFXMLController implements Initializable{
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 }
-                motion.setMass(0.59);
-                DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                forceTF.setText((decimalFormat.format(motion.getForce())));
+                
+                //Sets the impact force exerted on the target object or floor from the falling object
+                forceTF.setText((decimalFormat.format(motion.getForce())) +"N");
+                
+                //If the objects collide, this statement is true
                 if(collision == true){
                     double forceExerted = motion.getForce();
+                    
+                    //If and else if statement to set the damage done to the target object
                     if(START_HEIGHT >= 85 && START_HEIGHT < 180){
                         targetObject.setImage(boxChipped);
                     }
@@ -139,20 +182,21 @@ public class DemoScreenFXMLController implements Initializable{
                         targetObject.setImage(boxDestroyed);
                     }
                 }
+                
+                
         });
         demoMotion.start();
         }
-        
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
-    
+    //Handles the code for the "Back" button
     public void handleBack(ActionEvent event) throws IOException{
         
+        //Creates and loads the Previous FXML Screen
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("DemoInputScreen.fxml"));
         Parent previousScene = loader.load();
+        
+        //Displays the previous screen to the user
         Scene scene = new Scene(previousScene);
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -160,40 +204,3 @@ public class DemoScreenFXMLController implements Initializable{
     }
 }
 
-
-
-
-
-/*final double DISTANCE = motion.solveForDistance();
-        final double HEIGHT = motion.getIHeight();
-        double maxHeight = 0;
-        double maxHeightY = 0;
-        
-        boolean differenceSwitch = false;
-        motion.setTime(0);    
-        final double INITIAL_Y = fallingObject.getY();
-        while(motion.solveForHeight() > 0){
-            double currentDistance = motion.solveForDistance();
-            double currentHeight = motion.solveForHeight();
-            double heightDifference = Math.abs(currentHeight - HEIGHT);
-            double maxHeightDifference = Math.abs(maxHeight - currentHeight);
-            
-            fallingObject.setX(currentDistance);
-            if(motion.solveForFVelY() > 0){
-                fallingObject.setY((INITIAL_Y - heightDifference));
-            }
-            else if(differenceSwitch == false){
-                differenceSwitch = true;
-                maxHeight = currentHeight;
-                maxHeightY = fallingObject.getY();
-            }
-            else{
-                fallingObject.setY((maxHeightY + maxHeightDifference));
-            } //The project runs now but the only thing is that the path that it follows does not hit the bottom of the pane at the end of the run, so you might need to figure out how to have it do that by taking the final values and doing some ratio stuff to determine by what the object should fall by.
-            motion.setTime(motion.getTime() + 0.01);
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }*/

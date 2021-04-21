@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -53,13 +54,15 @@ public class DemoInputScreenFXMLController implements Initializable {
     @FXML private RadioButton rbBoxSquare;
     @FXML private RadioButton rbBoxRectangle;
     @FXML private ImageView fallingObjectDisplay;
-    @FXML private ImageView demoBackground;
     @FXML private ImageView demoLedge = new ImageView();
     @FXML private Slider heightSlider = new Slider();
+    @FXML public AnchorPane anchorPane;
+    @FXML public TabPane tabPane;
     
     private double velXY, angle, time, height, distance, targetObjectDistance;
     private double ledgeHeight, previewHeight, previewWidth;
     private boolean isInitialized = false;
+    
     
 
     protected ProjectileMotion pm = new ProjectileMotion();
@@ -98,7 +101,7 @@ public class DemoInputScreenFXMLController implements Initializable {
         pm.solveForTime(); //This method solves for the time and sets the value for the time variable in its method
         pm.solveForDistance();
         
-        
+        //If statement that has to be able to solve for a height and distance of a projectile motion
         if(pm.solveForHeight() != -1 && pm.solveForDistance() != -1){
             setLedgeHeight(ledgeHeight);
             setPreviewHeight(demoPane.getHeight());
@@ -131,6 +134,16 @@ public class DemoInputScreenFXMLController implements Initializable {
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                 height = (int)heightSlider.getValue();;
                 iHeightTF.setText(Double.toString(height));
+            }
+            
+        });
+        
+        rSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            
+            @Override
+            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
+                int value =(int)(rSlider.getValue());
+                
             }
         });
     }
@@ -189,4 +202,21 @@ public class DemoInputScreenFXMLController implements Initializable {
     public double getTargetObjectDistance(){
         return targetObject.getTranslateX();
     }
+    
+    public void handleBack(ActionEvent event) throws IOException{
+        System.out.println("Worked!");
+        //Creates and loads the Previous FXML Screen
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("MenuSceneFXML.fxml"));
+        Parent previousScene = loader.load();
+        
+        
+        
+        //Displays the previous screen to the user
+        Scene scene = new Scene(previousScene);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+            
 }

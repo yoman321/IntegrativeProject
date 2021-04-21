@@ -22,9 +22,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="integrativeproject.DemoInputScreenFXMLController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="integrativeproject.DemoInputScreenFXMLController">
    <children>
-      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Demo Input">
             <content>
@@ -69,7 +69,7 @@
                                     </HBox>
                                     <HBox layoutY="52.0" prefHeight="44.0" prefWidth="600.0">
                                        <children>
-                                          <Label fx:id="accelerationLabel" text="Acceleration: ">
+                                          <Label fx:id="accelerationLabel" text="Acceleration: 9.8">
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
@@ -105,7 +105,7 @@
                                           <Insets left="10.0" top="12.0" />
                                        </HBox.margin>
                                     </Label>
-                                    <Slider fx:id="objectPosSlider" max="363.0" min="20.0" prefHeight="14.0" prefWidth="371.0">
+                                    <Slider fx:id="objectPosSlider" max="345.0" min="25.0" prefHeight="14.0" prefWidth="371.0">
                                        <HBox.margin>
                                           <Insets top="15.0" />
                                        </HBox.margin>
