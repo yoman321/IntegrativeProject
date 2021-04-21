@@ -204,7 +204,7 @@ public class DemoInputScreenFXMLController implements Initializable {
     }
     
     public void handleBack(ActionEvent event) throws IOException{
-        System.out.println("Worked!");
+
         //Creates and loads the Previous FXML Screen
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("MenuSceneFXML.fxml"));
