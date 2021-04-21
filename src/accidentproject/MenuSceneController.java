@@ -20,18 +20,18 @@ public class MenuSceneController {
     
     public void onclickVehicleCollisions(ActionEvent e) throws Exception{
         Parent nextPane = FXMLLoader.load(getClass().getResource(("FXML/VehicleCollisionsFXML.fxml")));
-            Scene trainerScene = new Scene (nextPane);
+            Scene collisionScene = new Scene (nextPane);
         
             Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(trainerScene);
+            stage.setScene(collisionScene);
             stage.show();
     }
     public void onclickSpeedingVehicle(ActionEvent e) throws Exception{
         Parent nextPane = FXMLLoader.load(getClass().getResource(("FXML/SpeedingVehicleFXML.fxml")));
-            Scene trainerScene = new Scene (nextPane);
+            Scene speedingScene = new Scene (nextPane);
         
             Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(trainerScene);
+            stage.setScene(speedingScene);
             stage.show();
     }
 }

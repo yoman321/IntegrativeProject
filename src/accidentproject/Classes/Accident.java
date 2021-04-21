@@ -18,53 +18,84 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javafx.scene.paint.Color;
 import accidentproject.SpeedingVehicleController;
+import accidentproject.Classes.SpeedingVehicle;
+import javafx.scene.image.ImageView;
+import java.lang.Thread;
 /**
  *
  * @author luoph
  */
 public class Accident {
 
-    public void accidentMovementAnimation(){
-        
-        //Create variables
-        int lane = (int)(Math.random() * 3);
-        Rectangle accident = new Rectangle();
+    public void accidentMovementAnimation(SpeedingVehicle vehicle, ImageView backgroundImage){
         
         //Set values for accident
-        accident.setHeight(40);
-        accident.setWidth(20);
-        accident.setY(50);
-        accident.setFill(Color.BLUE);
-               
+//        Rectangle accident = new Rectangle();
+//        accident.setHeight(80);
+//        accident.setWidth(50);
+//        accident.setY(-60);
+//        accident.setFill(Color.BLUE);
+        
+        //Create images for accidents
+        ImageView[] accident = {new ImageView("accidentproject/Ressources/BlueCarBase.png"), 
+            new ImageView("accidentproject/Ressources/PinkCarBase.png"), new ImageView("accidentproject/Ressources/RedCarBase.png")};
+        
+        //Create lane variable
+        int lane = (int)(Math.random() * 3);
+        int cars = (int)(Math.random() * 3);
+              
         //Randomize lane
         if (lane == 0){
-            accident.setX(187);
+            accident[cars].setX(175);
         }
         else if (lane == 1){
-            accident.setX(305);
+            accident[cars].setX(295);
         }
         else if (lane == 2){
-            accident.setX(418);
+            accident[cars].setX(418);
         }
+        //Set accident values
+        accident[cars].setY(-60);
+        accident[cars].setFitHeight(90);
+        accident[cars].setFitWidth(50);
+        
         //Add accident to pane        
-        SpeedingVehicleController.speedingInstance.addAccident(accident);
+        SpeedingVehicleController.speedingInstance.addAccident(accident[cars]);
         
         //Create accident movement
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run(){
                 try{
-                    while (accident.getY() < 1000){
-                        Platform.runLater(() -> accident.setY(accident.getY() + 8));
-                        Thread.sleep(50);
+                    while (!accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal()) || accident[cars].getY() > 1050){
+                        if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
+                            break;
+                        }
+                        Platform.runLater(() -> accident[cars].setY(accident[cars].getY() + 8));
+                        Thread.sleep(SpeedingVehicleController.speedingInstance.getTime());
                     }
+                    if (accident[cars].getY() > 1050){
+                        SpeedingVehicleController.speedingInstance.removeAccident(accident[cars], false);
+                    }
+                    if (accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal()) || 
+                            SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
+                        Platform.runLater(() -> SpeedingVehicleController.speedingInstance.accidentExecutorShutdown());
+                        Platform.runLater(() -> SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown());
+                        SpeedingVehicleController.speedingInstance.removeAccident(accident[cars], true);
+                        
+                        if (accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal())){
+                            Platform.runLater(() -> SpeedingVehicleController.speedingInstance.collisionText());
+                        }
+                    }
+                    Thread.currentThread().interrupt();
                 }
                 catch(Exception ex){
                     ex.printStackTrace();
                 }
+                
             }
         });
         thread.start();
     } 
-     
+
 }
