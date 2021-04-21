@@ -21,7 +21,14 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.control.Button;
+import java.lang.Thread;
+import javafx.fxml.FXMLLoader;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
@@ -29,23 +36,28 @@ import javafx.scene.layout.AnchorPane;
  */
 public class SpeedingVehicleController {
     
+    //Create controller instance
     public static SpeedingVehicleController speedingInstance;
     
     //Create FXML variables
     @FXML private Pane pane;
     @FXML private ImageView backgroundImage;
     @FXML private ImageView newImage;
-    @FXML private Text collisionText;    
+    @FXML private Text collisionText; 
+    @FXML private Button resetBtn;
+    @FXML private Button startBtn;
+    @FXML private Button backBtn;
+    
     
     //Create variables
     private long time = 40;
     
     //Create executors
-    private ExecutorService vehicleExecutor = Executors.newFixedThreadPool(1);
-    private ScheduledExecutorService accidentExecutor = Executors.newScheduledThreadPool(3);
-    private ExecutorService imageExecutor = Executors.newFixedThreadPool(1);
-    private ExecutorService timerExecutor = Executors.newFixedThreadPool(1);
-    //305, 500, 40, 60
+    private ExecutorService vehicleExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private ScheduledExecutorService accidentExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+    private ExecutorService imageExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private ExecutorService timerExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
     //Create objects
     private SpeedingVehicle vehicle = new SpeedingVehicle(new ImageView("accidentproject/Ressources/YellowCarBase.png"));
     private BackgroundImageClass bImage = new BackgroundImageClass();
@@ -53,18 +65,52 @@ public class SpeedingVehicleController {
     private Accident accident = new Accident();
     
     public void initialize(){
-        
+        resetBtn.setVisible(false);
     }
     public SpeedingVehicleController(){
         speedingInstance = this;
     }
     public void onclickStart(){
-        pane.getChildren().add(vehicle.getVehicle());
+        //Create executors
+        accidentExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+        vehicleExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        imageExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        timerExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        
+        //Run executors
         vehicleExecutor.execute(new vehicleMovementTask());
         accidentExecutor.scheduleWithFixedDelay(new accidentMovementTask(), 0, getTime() * 20, TimeUnit.MILLISECONDS);
         imageExecutor.execute(new imageMovementTask());
         timerExecutor.execute(new timerTask());
         
+        //Apply changes to pane
+        pane.getChildren().add(vehicle.getVehicle());
+        startBtn.setVisible(false);
+        backBtn.setVisible(false);
+        resetBtn.setVisible(true);
+    }
+    public void onclickReset(){
+        //Reset executors
+        accidentExecutor.shutdown();
+        vehicleExecutor.shutdown();
+        timerExecutor.shutdown();
+        imageExecutor.shutdown();
+        
+        //Reset variables
+        collisionText.setOpacity(0);
+        time = 40;
+        startBtn.setVisible(true);
+        backBtn.setVisible(true);
+        resetBtn.setVisible(false);
+    }
+    //Return to menu button
+    public void onclickBack(ActionEvent e) throws Exception{
+        Parent backPane = FXMLLoader.load(getClass().getResource(("FXML/MenuSceneFXML.fxml")));
+        Scene menuScene = new Scene(backPane);
+        
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(menuScene);
+        stage.show();
     }
     private class vehicleMovementTask implements Runnable{
         @Override
@@ -114,26 +160,49 @@ public class SpeedingVehicleController {
     public long getTime(){
         return time;
     }
-    public void addAccident(ImageView accident){
+    public synchronized void addAccident(ImageView accident){
         Platform.runLater(() -> pane.getChildren().add(accident));
     }
-    public void removeAccident(ImageView accident) throws Exception{
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), accident);
-        ft.setFromValue(1.0);
-        ft.setToValue(0.0);
-        ft.setAutoReverse(false);
-        ft.play();
-        Thread.sleep(3000);
-        Platform.runLater(() -> pane.getChildren().remove(accident));
+    public void removeAccident(ImageView accident, boolean endgame) throws Exception{
+        if (endgame){
+            Thread thread = new Thread(new Runnable(){
+                @Override
+                public void run(){
+                    try{
+                        while (accident.getOpacity() > 0){
+                            out.println(accident.getOpacity());
+                            accident.setOpacity(accident.getOpacity() - 0.055);
+                            Thread.sleep(165);
+                        }
+                        Platform.runLater(() -> pane.getChildren().remove(accident));
+                        Thread.currentThread().interrupt();
+                    }
+                    catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+        }
     }
     public void removeVehicle(ImageView vehicle) throws Exception{
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), vehicle);
-        ft.setFromValue(1.0);
-        ft.setToValue(0.0);
-        ft.setAutoReverse(false);
-        ft.play();
-        Thread.sleep(3000);
-        Platform.runLater(() -> pane.getChildren().remove(vehicle));
+        Thread thread = new Thread(new Runnable(){
+            @Override
+            public void run(){
+                try{
+                    while (vehicle.getOpacity() > 0){
+                        vehicle.setOpacity(vehicle.getOpacity() - 0.055);
+                        Thread.sleep(165);
+                    }
+                    Platform.runLater(() -> pane.getChildren().remove(vehicle));
+                    Thread.currentThread().interrupt();
+                }
+                catch (Exception ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
     //Create thread shutdownsmethods
     public void accidentExecutorShutdown(){
@@ -154,19 +223,7 @@ public class SpeedingVehicleController {
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.setAutoReverse(false);
-        ft.play();
-        
-        FadeTransition ft1 = new FadeTransition(Duration.millis(3000), backgroundImage);
-        ft1.setFromValue(1.0);
-        ft1.setToValue(0.4);
-        ft1.setAutoReverse(false);
-        ft1.play();
-        
-        FadeTransition ft2 = new FadeTransition(Duration.millis(3000), newImage);
-        ft2.setFromValue(1.0);
-        ft2.setToValue(0.4);
-        ft2.setAutoReverse(false);
-        ft2.play();
+        ft.play(); 
     }
     //Create background image class
     private class BackgroundImageClass{
@@ -176,14 +233,16 @@ public class SpeedingVehicleController {
                 while (!SpeedingVehicleController.speedingInstance.vehicleExceutorIsShutdown()){
                     Platform.runLater(() -> backgroundImage.setY(backgroundImage.getY() + 8));
                     Platform.runLater(() -> newImage.setY(newImage.getY() + 8));
-                    out.println(newImage.getY());
                     if (backgroundImage.getY() >= 1000){
-                        backgroundImage.setY(-1000);
+                        Platform.runLater(() -> backgroundImage.setY(-992));
                     }
-                    if (newImage.getY() >= 1000){
-                        newImage.setY(-1000);
+                    else if (newImage.getY() >= 1000){
+                        Platform.runLater(() -> newImage.setY(-992));
                     }
                     Thread.sleep(getTime());
+                }
+                if (imageExecutor.isShutdown()){
+                    Thread.currentThread().interrupt();
                 }
             }
             catch (Exception ex){
@@ -195,9 +254,12 @@ public class SpeedingVehicleController {
         
         public void newTime(){
             try{
-                while (time >= 20){
-                    time -= 5;
+                while (time >= 10){
+                    time -= 8;
                     Thread.sleep(15000);
+                }
+                if (vehicleExecutor.isShutdown()){
+                    Thread.currentThread().interrupt();
                 }
             }
             catch (Exception ex){

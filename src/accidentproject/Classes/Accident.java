@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import accidentproject.SpeedingVehicleController;
 import accidentproject.Classes.SpeedingVehicle;
 import javafx.scene.image.ImageView;
+import java.lang.Thread;
 /**
  *
  * @author luoph
@@ -42,7 +43,7 @@ public class Accident {
         //Create lane variable
         int lane = (int)(Math.random() * 3);
         int cars = (int)(Math.random() * 3);
-               
+              
         //Randomize lane
         if (lane == 0){
             accident[cars].setX(175);
@@ -66,18 +67,27 @@ public class Accident {
             @Override
             public void run(){
                 try{
-                    while (!accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal())){
+                    while (!accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal()) || accident[cars].getY() > 1050){
                         if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
                             break;
                         }
                         Platform.runLater(() -> accident[cars].setY(accident[cars].getY() + 8));
                         Thread.sleep(SpeedingVehicleController.speedingInstance.getTime());
                     }
-                    SpeedingVehicleController.speedingInstance.accidentExecutorShutdown();
-                    SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown();
-                    SpeedingVehicleController.speedingInstance.collisionText();
-                    SpeedingVehicleController.speedingInstance.removeAccident(accident[cars]);
-                    
+                    if (accident[cars].getY() > 1050){
+                        SpeedingVehicleController.speedingInstance.removeAccident(accident[cars], false);
+                    }
+                    if (accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal()) || 
+                            SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
+                        Platform.runLater(() -> SpeedingVehicleController.speedingInstance.accidentExecutorShutdown());
+                        Platform.runLater(() -> SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown());
+                        SpeedingVehicleController.speedingInstance.removeAccident(accident[cars], true);
+                        
+                        if (accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal())){
+                            Platform.runLater(() -> SpeedingVehicleController.speedingInstance.collisionText());
+                        }
+                    }
+                    Thread.currentThread().interrupt();
                 }
                 catch(Exception ex){
                     ex.printStackTrace();
@@ -87,17 +97,5 @@ public class Accident {
         });
         thread.start();
     } 
-//    //Create method for distance between accidents and vehicle
-//    public boolean distance(double[] upLeftCorner, double[] upRightCorner, double[] bottomLeftCorner, double[] bottomRightCorner, double[] accidentCorners){
-//        //Check distance between all corners
-//        for (int i=0, j=i+1; i<accidentCorners.length; i+=2, j+=2){
-//            if (Math.sqrt(Math.pow(upLeftCorner[0] - accidentCorners[i], 2) + Math.pow(upLeftCorner[1] - accidentCorners[j], 2)) < 10 || 
-//                    Math.sqrt(Math.pow(upRightCorner[0] - accidentCorners[i], 2) + Math.pow(upRightCorner[1] - accidentCorners[j], 2)) < 10 ||
-//                        Math.sqrt(Math.pow(bottomLeftCorner[0] - accidentCorners[i], 2) + Math.pow(bottomLeftCorner[1] - accidentCorners[j], 2)) < 10 ||
-//                            Math.sqrt(Math.pow(bottomRightCorner[0] - accidentCorners[i], 2) + Math.pow(bottomRightCorner[1] - accidentCorners[j], 2)) < 10){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+
 }

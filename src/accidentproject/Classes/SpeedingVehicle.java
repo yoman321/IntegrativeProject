@@ -90,6 +90,7 @@ public class SpeedingVehicle {
         getVehicle().setFitHeight(90);
         getVehicle().setX(305);
         getVehicle().setY(500);
+        getVehicle().setOpacity(1);
         
         Timer timer = new Timer();
         timer.schedule(new TimerTask(){
