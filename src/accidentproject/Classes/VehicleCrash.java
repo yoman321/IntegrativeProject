@@ -188,6 +188,11 @@ public class VehicleCrash {
                         while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1300){
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
+                            //Set acceleration to 0 if speed is higher than 70
+                            if (getVelocity() > 65 || getVelocity() < -65){
+                                setAcceleration(0);
+                                out.println("veloctiy"+ getAcceleration());
+                            }
 //                            out.println("Position: "+getY()+" "+getStartLocation());
                             Platform.runLater(() -> getVehicle().setY(getY()));
                             Thread.sleep(1);
@@ -293,10 +298,11 @@ public class VehicleCrash {
                         double crashDistance = crashDistance(copyVehicles[vehicleIndex]);
                         double endPosition = 0;
                         out.println(crashDistance(copyVehicles[vehicleIndex])+"crashdistance "+getStartLocation());//test
+                        out.println(getVelocity()+" speed "+" "+getStartLocation());
                         out.println(crashSpeed(copyVehicles[vehicleIndex])+"crashspeed "+getStartLocation());//test
                         if (crashSpeed < 0){//To be changed later on
                             //Get crash values
-                            endPosition = -(getY() - crashDistance);
+                            endPosition = getY() - crashDistance;
                         }
                         else{
                             endPosition = getY() + crashDistance;
