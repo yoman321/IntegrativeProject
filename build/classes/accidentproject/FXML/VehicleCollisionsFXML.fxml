@@ -194,7 +194,12 @@
                   <Font size="48.0" />
                </font>
             </Text>
-            <Text fx:id="noCollisionText" layoutX="627.0" layoutY="69.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No collision, but if there was a cop, you would have gotten a mighty big fine." wrappingWidth="358.546875">
+            <Text fx:id="drunkNoCollisionText" layoutX="627.0" layoutY="69.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No collision, but if there was a cop, you would have gotten a mighty big fine." wrappingWidth="358.546875">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Text>
+            <Text fx:id="noCollisionText" layoutX="610.0" layoutY="76.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Isn't it great to drive safely?" wrappingWidth="352.328125">
                <font>
                   <Font size="48.0" />
                </font>
