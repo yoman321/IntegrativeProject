@@ -132,14 +132,6 @@ public class DemoInputScreenFXMLController implements Initializable {
             
         });
         
-        rSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                int value =(int)(rSlider.getValue());
-                
-            }
-        });
     }
     
     public boolean isDouble(String string){

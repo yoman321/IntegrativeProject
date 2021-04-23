@@ -13,9 +13,6 @@ public class ProjectileMotion {
     private double iVelY, iVelX, time, velXY, iHeight, fDistance, fHeight = 0, iDistance = 0, fVelY, maxHeight, mass;
     private final double ACCELERATION = 9.8;
     private boolean hasIVelY = false, hasIVelX = false, hasTime = false, hasIHeight = false, hasFDistance = false, hasFHeight = false;
-    FallingCircle circleObject;
-    FallingRectangle rectangleObject;
-    FallingSquare squareObject;
     
     
     public ProjectileMotion(){
@@ -42,15 +39,6 @@ public class ProjectileMotion {
     public void setIHeight(double iHeight){
         hasIHeight = true;
         this.iHeight = iHeight;
-    }
-    public void setObject(FallingCircle object){
-        circleObject = object;
-    }
-    public void setObject(FallingSquare object){
-        squareObject = object;
-    }
-    public void setObject(FallingRectangle object){
-        rectangleObject = object;
     }
     public void setMaxHeight(double height){
         maxHeight = height;

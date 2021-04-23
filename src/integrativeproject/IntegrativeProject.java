@@ -19,18 +19,6 @@ public class IntegrativeProject extends Application {
     
    public static void main(String[] args) {
         Application.launch(args);
-        
-      
-       //TEST FOR PUSH
-        
-        /*test.solveForY();
-        System.out.println(test.getFHeight());
-        test.setTime(test.getTime() + 0.01);
-        while(test.getFHeight() >= 0){
-            test.solveForY();
-            System.out.println(test.getFHeight());
-            test.setTime(test.getTime() + 0.01); */
-        
     }
         
         
