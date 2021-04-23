@@ -16,6 +16,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,7 +35,8 @@ public class DemoScreenFXMLController{
     @FXML private ImageView fallingObject;
     @FXML private StackPane finalDemoPane;
     @FXML private ImageView targetObject;
-    @FXML private TextField forceTF;
+    @FXML private TextArea impactForceTA;
+    @FXML private TextArea distanceTA;
     @FXML private Button goButton;
     private double targetObjectLayoutX;
     private boolean collision = false;
@@ -63,6 +66,7 @@ public class DemoScreenFXMLController{
     }
     
     //Handles the motion of the falling object once the GO button is clicked
+    @FXML
     public void handleGo(){
         
             //Disables the go button
@@ -72,9 +76,14 @@ public class DemoScreenFXMLController{
             motion.setTime(0);
             final double  START_HEIGHT = motion.solveForHeight();
             final double START_Y = fallingObject.getY();
-
+            
+            
+            
             //Thread that controls the motion of the falling object
             Thread demoMotion = new Thread(() -> {
+                
+                //Creating the format for the displayed values
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
             
                 //Setting the initial values of the variables
                 double initialHeight = START_HEIGHT;
@@ -83,8 +92,7 @@ public class DemoScreenFXMLController{
                 double currentDistance = 0;
                 double heightDifference = 0;
                 
-                //Creating the format for the displayed values
-                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                
                 
                 //Loop for the motion up until the object reaches it's highest height
                 while(motion.solveForFVelY() > 0){
@@ -143,7 +151,7 @@ public class DemoScreenFXMLController{
                     fallingObject.setY(initialY + heightDifference);
                 
                     //If statement that controls the collision with the falling object and the target object
-                    if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
+                    /*Redo this statement with the new box. If you cant figure it out, just switch back to the old box*/if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
                         collision = true;
                         break;
                     }
@@ -152,14 +160,13 @@ public class DemoScreenFXMLController{
                     motion.setTime(motion.getTime() + 0.01);
                 
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(4);
                 }catch (InterruptedException ex) {
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 }
                 
-                //Sets the impact force exerted on the target object or floor from the falling object
-
+                
                 
                 //If the objects collide, this statement is true
                 if(collision == true){
@@ -173,13 +180,21 @@ public class DemoScreenFXMLController{
                     }
                 
                 }
+
+                //Sets the impact force exerted on the target object or floor from the falling object into the text area
+                impactForceTA.setText(decimalFormat.format(motion.getForce()) + "N");
                 
-                
+                //Sets the distance of the falling object into the text area
+                distanceTA.setText(decimalFormat.format(motion.solveForDistance()) + "m");
         });
         demoMotion.start();
+        
+        
+
         }
 
     //Handles the code for the "Back" button
+    @FXML
     public void handleBack(ActionEvent event) throws IOException{
         
         //Creates and loads the Previous FXML Screen

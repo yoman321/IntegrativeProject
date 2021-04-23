@@ -107,7 +107,7 @@ public class DemoInputScreenFXMLController implements Initializable {
             setPreviewHeight(demoPane.getHeight());
             setPreviewWidth(demoPane.getWidth());
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("ProjectileMotionDemoScreen.fxml"));
+            loader.setLocation(getClass().getResource("FallingObjectDemo.fxml"));
             Parent demo = loader.load();
             Scene scene = new Scene(demo);
             
