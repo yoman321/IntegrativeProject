@@ -204,6 +204,11 @@
                   <Font size="48.0" />
                </font>
             </Text>
+            <Text fx:id="crashValuesText" layoutX="19.0" layoutY="451.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
          </children></Pane>
    </children>
 </AnchorPane>
