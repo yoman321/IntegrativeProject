@@ -210,6 +210,7 @@ public class VehicleCrash {
                             getVehicle().setX(getX());
                         }
                         while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1300){
+                            Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
                             //Set acceleration to 0 if speed is higher than 70
@@ -219,7 +220,6 @@ public class VehicleCrash {
                             }
 //                            out.println("Position: "+getY()+" "+getStartLocation());
                             Platform.runLater(() -> getVehicle().setY(getY()));
-                            Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
                             Thread.sleep(1);
 //                            out.println("up");  
                         }

@@ -188,7 +188,7 @@
                   <Font size="15.0" />
                </font>
             </Text>
-            <Button fx:id="resetBtn" layoutX="64.0" layoutY="299.0" mnemonicParsing="false" onAction="#onclickReset" text="Reset" />
+            <Button fx:id="resetBtn" layoutX="169.0" layoutY="299.0" mnemonicParsing="false" onAction="#onclickReset" text="Reset" />
             <Text fx:id="collisionText" layoutX="621.0" layoutY="51.0" opacity="0.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Oof... This collision is fatal. Maybe you shouldn't have been drunk driving. Better luck next life." wrappingWidth="370.13671875">
                <font>
                   <Font size="48.0" />
@@ -209,6 +209,8 @@
                   <Font size="20.0" />
                </font>
             </Text>
+            <Button fx:id="backNbreVehicleBtn" layoutX="63.0" layoutY="299.0" mnemonicParsing="false" onAction="#backNbreVehicle" text="Back" />
+            <Button fx:id="backMenuBtn" layoutX="114.0" layoutY="299.0" mnemonicParsing="false" onAction="#backMenu" text="Menu" />
          </children></Pane>
    </children>
 </AnchorPane>

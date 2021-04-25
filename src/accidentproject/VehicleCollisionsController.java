@@ -29,7 +29,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.CheckBox;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+
 /**
  *
  * @author luoph
@@ -56,6 +64,8 @@ public class VehicleCollisionsController {
     @FXML private CheckBox drunkChk;
     @FXML private Button startBtn;
     @FXML private Button resetBtn;
+    @FXML private Button backNbreVehicleBtn;
+    @FXML private Button backMenuBtn;
     @FXML private Text collisionText;
     @FXML private Text drunkNoCollisionText;
     @FXML private Text noCollisionText;
@@ -92,7 +102,11 @@ public class VehicleCollisionsController {
     private TextField[] velocityArray;
     private TextField[] accelerationArray;
     private VehicleCrash[] vehicles;
-
+    
+    //Enable use of controller from classes
+    public VehicleCollisionsController(){
+        controllerInstance = this;
+    }
     //Create initialize mesthod
     public void initialize(){
         //Grid visible
@@ -109,14 +123,12 @@ public class VehicleCollisionsController {
         //Button visible
         startBtn.setVisible(false);
         resetBtn.setVisible(false);
+        backNbreVehicleBtn.setVisible(false);
+        backMenuBtn.setVisible(false);
         
         //Background opacity
         backgroundImage.setOpacity(0.4);
         
-        
-    }
-    public VehicleCollisionsController(){
-        controllerInstance = this;
     }
     //Check for numbers of vehicle
     public void onclickNbreVehicles(){
@@ -138,10 +150,22 @@ public class VehicleCollisionsController {
             sPositionGrid.setVisible(true);
             trafficLightGrid.setVisible(true);
             startBtn.setVisible(true);
+            backNbreVehicleBtn.setVisible(true);
+            backMenuBtn.setVisible(true);
             if (Integer.valueOf(nbreVehicle.getText()) < 2){
                 drunkChk.setVisible(false);
             }
+            //Clear unuse nodes in grids
+            nbreVehicleGrid.getChildren().clear();
+            massGrid.getChildren().clear();
+            velocityGrid.getChildren().clear();
+            accelerationGrid.getChildren().clear();
+            sLocationGrid.getChildren().clear();
+            sPositionGrid.getChildren().clear();
+            trafficLightGrid.getChildren().clear();
             
+            
+            //Set button visibility
             nbreVehicleBtn.setVisible(false);
             nbreVehicle.setVisible(false);
             nbreVehicleText.setVisible(false);
@@ -197,7 +221,7 @@ public class VehicleCollisionsController {
                 correctValues = false;
             }
             else if (Double.valueOf(velocityArray[i].getText()) <= 0 ||Double.valueOf(velocityArray[i].getText()) > 200){
-                alert.setContentText("Erro: Vehicle velocity");
+                alert.setContentText("Error: Vehicle velocity");
                 alert.show();
                  correctValues = false;
             }
@@ -209,7 +233,6 @@ public class VehicleCollisionsController {
             else if (sLocationArray[i].getSelectionModel().isEmpty()){
                 alert.setContentText("Error: Vehicle Start Location");
                 alert.show();
-                out.println("here");//test
                 correctValues = false;
             }
             else if (startUp > 1 || startDown > 1){
@@ -218,7 +241,6 @@ public class VehicleCollisionsController {
                 correctValues = false;
             }
             else if (sPositionArray[i].getSelectionModel().isEmpty()){
-                out.println("here again");//test
                 alert.setContentText("Error: Vehicle Position");
                 alert.show();
                 correctValues = false;
@@ -227,7 +249,6 @@ public class VehicleCollisionsController {
                 alert.setContentText("Error: Traffic Lights");
                 alert.show();
                 correctValues = false;
-                out.println("and again");//test
             }
             if (sLocationArray[i].equals("up") || sLocationArray[i].equals("down")){
                 if (sLocationArray[i].equals("up")){
@@ -236,10 +257,7 @@ public class VehicleCollisionsController {
                 else
                     startDown++;
             }
-            out.println(sPositionArray[i].getSelectionModel().isEmpty());
-            out.println(trafficLightArray[i].getSelectionModel().isEmpty());
         }
-        
         //Add values from textfield to arrays
         ImageView trafficLight = new ImageView();
         if (correctValues){
@@ -377,7 +395,81 @@ public class VehicleCollisionsController {
             backgroundImage.setOpacity(1);
             startBtn.setVisible(false);
             resetBtn.setVisible(true);
+            backNbreVehicleBtn.setVisible(false);
+            backMenuBtn.setVisible(false);
         }
+    }
+    //Reset the simulation
+    public void onclickReset(){
+        
+        //Make click reset true
+        clickReset = true;
+        
+        //Reset properties
+        startBtn.setVisible(true);
+        resetBtn.setVisible(false);
+        backNbreVehicleBtn.setVisible(true);
+        backMenuBtn.setVisible(true);
+        
+//        //Reset vehicles and text
+//        for (int i=0; i<vehicles.length; i++){
+//            vehicles[i].getVehicle().setX(2000);
+//            vehicles[i].getVehicle().setY(2000);
+//        }
+        collisionText.setOpacity(0.0);
+        drunkNoCollisionText.setOpacity(0.0);
+        noCollisionText.setOpacity(0.0);
+        crashValuesText.setVisible(false);
+        vehicles = new VehicleCrash[Integer.valueOf(nbreVehicle.getText())];   
+        executor = Executors.newFixedThreadPool(2);
+        out.println("reset");
+    }
+    //Back to nbre of vehicle screen
+    public void backNbreVehicle(){
+        nbreVehicleBtn.setVisible(true);
+        nbreVehicle.setVisible(true);
+        nbreVehicleText.setVisible(true);
+        
+        variableGrid.setVisible(false);
+        nbreVehicleGrid.setVisible(false);
+        massGrid.setVisible(false);
+        velocityGrid.setVisible(false);
+        accelerationGrid.setVisible(false);
+        sLocationGrid.setVisible(false);
+        sPositionGrid.setVisible(false);
+        trafficLightGrid.setVisible(false);
+        startBtn.setVisible(false);
+        backNbreVehicleBtn.setVisible(false);
+        backMenuBtn.setVisible(false);
+        drunkChk.setVisible(false);
+        
+        backgroundImage.setOpacity(0.4);
+    }
+    //Back to main menu
+    public void backMenu(ActionEvent e) throws Exception{
+        nbreVehicleBtn.setVisible(true);
+        nbreVehicle.setVisible(true);
+        nbreVehicleText.setVisible(true);
+        
+        variableGrid.setVisible(false);
+        nbreVehicleGrid.setVisible(false);
+        massGrid.setVisible(false);
+        velocityGrid.setVisible(false);
+        accelerationGrid.setVisible(false);
+        sLocationGrid.setVisible(false);
+        sPositionGrid.setVisible(false);
+        trafficLightGrid.setVisible(false);
+        startBtn.setVisible(false);
+        backNbreVehicleBtn.setVisible(false);
+        backMenuBtn.setVisible(false);
+        drunkChk.setVisible(false);
+        
+        Parent backPane = FXMLLoader.load(getClass().getResource(("FXML/MenuSceneFXML.fxml")));
+        Scene menuScene = new Scene(backPane);
+        
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(menuScene);
+        stage.show();
     }
     //Remove vehicle method
     public void removeVehicle(ImageView vehicle){
@@ -415,29 +507,6 @@ public class VehicleCollisionsController {
     //Check if reset button has been clicked
     public boolean isClickReset(){
         return clickReset;
-    }
-    //Reset the simulation
-    public void onclickReset(){
-        
-        //Make click reset true
-        clickReset = true;
-        
-        //Reset properties
-        startBtn.setVisible(true);
-        resetBtn.setVisible(false);
-        
-//        //Reset vehicles and text
-//        for (int i=0; i<vehicles.length; i++){
-//            vehicles[i].getVehicle().setX(2000);
-//            vehicles[i].getVehicle().setY(2000);
-//        }
-        collisionText.setOpacity(0.0);
-        drunkNoCollisionText.setOpacity(0.0);
-        noCollisionText.setOpacity(0.0);
-        crashValuesText.setVisible(false);
-        vehicles = new VehicleCrash[Integer.valueOf(nbreVehicle.getText())];   
-        executor = Executors.newFixedThreadPool(2);
-        out.println("reset");
     }
     //Create tasks
     public class vehicleMovementTask implements Runnable{
