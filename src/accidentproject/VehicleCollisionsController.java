@@ -66,6 +66,7 @@ public class VehicleCollisionsController {
     @FXML private Button resetBtn;
     @FXML private Button backNbreVehicleBtn;
     @FXML private Button backMenuBtn;
+    @FXML private Button instructionsBtn;
     @FXML private Text collisionText;
     @FXML private Text drunkNoCollisionText;
     @FXML private Text noCollisionText;
@@ -125,6 +126,7 @@ public class VehicleCollisionsController {
         resetBtn.setVisible(false);
         backNbreVehicleBtn.setVisible(false);
         backMenuBtn.setVisible(false);
+        instructionsBtn.setVisible(true);
         
         //Background opacity
         backgroundImage.setOpacity(0.4);
@@ -152,6 +154,7 @@ public class VehicleCollisionsController {
             startBtn.setVisible(true);
             backNbreVehicleBtn.setVisible(true);
             backMenuBtn.setVisible(true);
+            instructionsBtn.setVisible(false);
             if (Integer.valueOf(nbreVehicle.getText()) < 2){
                 drunkChk.setVisible(false);
             }
@@ -441,6 +444,7 @@ public class VehicleCollisionsController {
         startBtn.setVisible(false);
         backNbreVehicleBtn.setVisible(false);
         backMenuBtn.setVisible(false);
+        instructionsBtn.setVisible(true);
         drunkChk.setVisible(false);
         
         backgroundImage.setOpacity(0.4);
@@ -462,9 +466,19 @@ public class VehicleCollisionsController {
         startBtn.setVisible(false);
         backNbreVehicleBtn.setVisible(false);
         backMenuBtn.setVisible(false);
+        instructionsBtn.setVisible(false);
         drunkChk.setVisible(false);
         
         Parent backPane = FXMLLoader.load(getClass().getResource(("FXML/MenuSceneFXML.fxml")));
+        Scene menuScene = new Scene(backPane);
+        
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(menuScene);
+        stage.show();
+    }
+    //Button to instructions
+    public void onclickInstructions(ActionEvent e) throws Exception{
+        Parent backPane = FXMLLoader.load(getClass().getResource(("FXML/InstructionsSceneFXML.fxml")));
         Scene menuScene = new Scene(backPane);
         
         Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();

@@ -211,6 +211,7 @@
             </Text>
             <Button fx:id="backNbreVehicleBtn" layoutX="63.0" layoutY="299.0" mnemonicParsing="false" onAction="#backNbreVehicle" text="Back" />
             <Button fx:id="backMenuBtn" layoutX="114.0" layoutY="299.0" mnemonicParsing="false" onAction="#backMenu" text="Menu" />
+            <Button fx:id="instructionsBtn" layoutX="19.0" layoutY="953.0" mnemonicParsing="false" onAction="#onclickInstructions" text="Instructions" />
          </children></Pane>
    </children>
 </AnchorPane>

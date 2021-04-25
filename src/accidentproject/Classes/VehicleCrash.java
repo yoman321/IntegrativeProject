@@ -209,7 +209,7 @@ public class VehicleCrash {
                             setX(430);
                             getVehicle().setX(getX());
                         }
-                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1300){
+                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1100){
                             Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
@@ -226,7 +226,7 @@ public class VehicleCrash {
                     }
                     //Check for traffic light
                     else if (getTrafficLight().equals("green")){
-                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1300){
+                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1100){
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
 //                                out.println("Position: "+getY()+" "+getStartLocation());
