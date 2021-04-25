@@ -18,20 +18,28 @@ import javafx.event.ActionEvent;
  */
 public class MenuSceneController {
     
+    public void onclickProjectileObject(ActionEvent e) throws Exception{
+        Parent nextPane = FXMLLoader.load(getClass().getResource(("FXML/DemoInputScreen.fxml")));
+        Scene collisionScene = new Scene (nextPane);
+        
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(collisionScene);
+        stage.show();
+    }
     public void onclickVehicleCollisions(ActionEvent e) throws Exception{
         Parent nextPane = FXMLLoader.load(getClass().getResource(("FXML/VehicleCollisionsFXML.fxml")));
-            Scene collisionScene = new Scene (nextPane);
+        Scene collisionScene = new Scene (nextPane);
         
-            Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(collisionScene);
-            stage.show();
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(collisionScene);
+        stage.show();
     }
     public void onclickSpeedingVehicle(ActionEvent e) throws Exception{
         Parent nextPane = FXMLLoader.load(getClass().getResource(("FXML/SpeedingVehicleFXML.fxml")));
-            Scene speedingScene = new Scene (nextPane);
-        
-            Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-            stage.setScene(speedingScene);
-            stage.show();
+        Scene speedingScene = new Scene (nextPane);
+      
+        Stage stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        stage.setScene(speedingScene);
+        stage.show();
     }
 }

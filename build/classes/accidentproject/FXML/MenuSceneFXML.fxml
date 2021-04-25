@@ -15,10 +15,9 @@
                   <Font name="System Bold" size="61.0" />
                </font>
             </Text>
-            <Button layoutX="455.0" layoutY="350.0" mnemonicParsing="false" text="Falling Object" />
-            <Button layoutX="448.0" layoutY="391.0" mnemonicParsing="false" text="Projectile Object" />
-            <Button layoutX="446.0" layoutY="555.0" mnemonicParsing="false" onAction="#onclickSpeedingVehicle" text="Speeding Vehicle" />
-            <Button layoutX="448.0" layoutY="508.0" mnemonicParsing="false" onAction="#onclickVehicleCollisions" text="Vehicle Collision" />
+            <Button layoutX="448.0" layoutY="391.0" mnemonicParsing="false" onAction="#onclickProjectileObject" text="Projectile Object" />
+            <Button layoutX="445.0" layoutY="495.0" mnemonicParsing="false" onAction="#onclickSpeedingVehicle" text="Speeding Vehicle" />
+            <Button layoutX="447.0" layoutY="440.0" mnemonicParsing="false" onAction="#onclickVehicleCollisions" text="Vehicle Collision" />
          </children>
       </Pane>
    </children>
