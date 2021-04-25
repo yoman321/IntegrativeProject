@@ -10,39 +10,41 @@ import javafx.scene.shape.Rectangle;
 import java.util.concurrent.*;
 import javafx.application.Platform;
 import static java.lang.System.out;
+import java.lang.Thread;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.scene.layout.Pane;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+import javafx.scene.image.ImageView;
+
 /**
  *
  * @author luoph
  */
 public class VehicleCrash {
-    
-    //Create FXML variables
-    @FXML Text avoidCollisionText;
-    
+     
     //Create datafields
     private double mass;
     private double velocity;
     private double acceleration;
     private double x;
     private double y;
+    private int vehicleNbre;
     private boolean isDrunk;
     private String startLocation;
     private String startPosition;
     private String trafficLight;
-    private Rectangle vehicle;
+    private ImageView vehicle;
     
     //Create constructor
-    public VehicleCrash(double mass, double velocity, double acceleration, double x, double y, boolean isDrunk, String startLocation, String startPosition, String trafficLight, Rectangle vehicle) {
+    public VehicleCrash(double mass, double velocity, double acceleration, double x, double y, int vehicleNbre, boolean isDrunk, String startLocation, String startPosition, String trafficLight, ImageView vehicle) {
         this.mass = mass;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.x = x;
         this.y = y;
+        this.vehicleNbre = vehicleNbre;
         this.isDrunk = isDrunk;
         this.startLocation = startLocation;
         this.startPosition = startPosition;
@@ -65,6 +67,9 @@ public class VehicleCrash {
     public double getY(){
         return y;
     }
+    public int getVehicleNbre(){
+        return vehicleNbre;
+    }
     public boolean getIsDrunk(){
         return isDrunk;
     }
@@ -77,10 +82,9 @@ public class VehicleCrash {
     public String getTrafficLight(){
         return trafficLight;
     }
-    public Rectangle getVehicle(){
+    public ImageView getVehicle(){
         return vehicle;
     }
-    
     //Create setters
     public void setMass(double mass){
         this.mass = mass;
@@ -97,6 +101,9 @@ public class VehicleCrash {
     public void setY(double y){
         this.y = y;
     }
+    public void setVehicleNbre(int vehicleNbre){
+        this.vehicleNbre = vehicleNbre;
+    }
     public void setIsDrunk(boolean isDrunk){
         this.isDrunk = isDrunk;
     }
@@ -109,7 +116,7 @@ public class VehicleCrash {
     public void setTrafficLight(String trafficLight){
         this.trafficLight = trafficLight;
     }
-    public void setVehicle(Rectangle vehicle){
+    public void setVehicle(ImageView vehicle){
         this.vehicle = vehicle;
     }
     
@@ -122,7 +129,11 @@ public class VehicleCrash {
         return Math.pow(crashSpeed(vehicle), 2) / (2 * 0.72 * 9.8);
     }
     public double crashDeceleration(double vi, double distance){
-        return -(Math.pow(vi, 2)) / (2 * distance);
+        if (vi < 0){
+            return (Math.pow(vi, 2)) / (2 * distance);
+        }
+        else 
+            return -(Math.pow(vi, 2)) / (2 * distance);
     }
     public int isCrash(VehicleCrash[] vehicles){
         for (int i=0; i<vehicles.length; i++){
@@ -139,12 +150,24 @@ public class VehicleCrash {
     public double conversionMetersPerSeconds(double kilometersPerHours){
         return (kilometersPerHours * 1000) / 3600;
     }
+    public double conversionKilometersPerHours(double metersPerSeconds){
+        return (metersPerSeconds * 3600) / 1000;
+    }
     //Create variables value change at each sleep
     public double newVelocity(double a, double vi, double t){
         return a * t + vi;
     }
     public double newPosition(double a, double vi, double t){
         return vi * t + 0.5 * a * Math.pow(t, 2);
+    }
+    //Check other vehicle drunk
+    public boolean checkIsDrunk(VehicleCrash[] copyVehicles){
+        for (int i=0; i<copyVehicles.length; i++){
+            if (copyVehicles[i].getIsDrunk()){
+                return true;
+            }
+        }
+        return false;
     }
     //Animation method
     public synchronized void vehicleAnimation(VehicleCrash[] vehicles, VehicleCrash duplicateVehicle){
@@ -178,6 +201,7 @@ public class VehicleCrash {
                     if (getIsDrunk()){
                         int random = (int)(Math.random() * 2);
                         setAcceleration(-6.86);
+                        out.println("drunk");
                         
                         //Check side of road
                         if (random == 1){
@@ -185,9 +209,15 @@ public class VehicleCrash {
                             setX(430);
                             getVehicle().setX(getX());
                         }
-                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1300){
+                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1100){
+                            Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
+                            //Set acceleration to 0 if speed is higher than 70
+                            if (getVelocity() > 65 || getVelocity() < -65){
+                                setAcceleration(0);
+                                out.println("veloctiy"+ getVelocity());
+                            }
 //                            out.println("Position: "+getY()+" "+getStartLocation());
                             Platform.runLater(() -> getVehicle().setY(getY()));
                             Thread.sleep(1);
@@ -196,50 +226,16 @@ public class VehicleCrash {
                     }
                     //Check for traffic light
                     else if (getTrafficLight().equals("green")){
-                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1300){
+                        while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1100){
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
 //                                out.println("Position: "+getY()+" "+getStartLocation());
                             Platform.runLater(() -> getVehicle().setY(getY()));
                             out.println(getY());
+                            Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
                             Thread.sleep(1);
 //                                out.println("up");  
                         }
-//                        if (getStartLocation().equals("up")){
-//                            while(isCrash(copyVehicles) < 0){
-//                                setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
-//                                setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
-//                                out.println("Position: "+getY()+" "+getStartLocation());
-//                                Platform.runLater(() -> getVehicle().setY(getY()));
-//                                Thread.sleep(1);
-//                                out.println("up");  
-//                            }
-//
-//                        }
-//                        else if (getStartLocation().equals("down")){
-//                            while (isCrash(copyVehicles) < 0){
-//                                setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
-//                                setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
-//                                Platform.runLater(() -> getVehicle().setY(getY()));
-//                                out.println("Position: "+getY()+" "+getStartLocation());
-//                                Thread.sleep(1);
-//                                out.println("down");
-//                            }
-//                        }
-//                        else if (getStartLocation().equals("left")){
-//                            while (isCrash(copyVehicles) < 0){
-//                                setX(getX() + 5);
-//                                Platform.runLater(() -> getVehicle().setX(getX()));
-//                                Thread.sleep(2);
-//                            }
-//                        }
-//                        else  if (getStartLocation().equals("right")){
-//                            while (isCrash(copyVehicles) < 0){
-//                                setX(getX() - 5);
-//                                Platform.runLater(() -> getVehicle().setX(getX()));
-//                                Thread.sleep(2);
-//                            }
-//                        }  
                     }
                     else if (getTrafficLight().equals("red")){
                         //Create variables
@@ -249,6 +245,10 @@ public class VehicleCrash {
                         if (getStartPosition().equals("center")){
                             setVelocity(0);
                             setAcceleration(0);
+                            Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
+                            while (!VehicleCollisionsController.controllerInstance.isClickReset() && isCrash(copyVehicles) < 0){
+                                Thread.sleep(1);
+                            }
                         }
                         else if (getStartPosition().equals("back")){
                             if (getStartLocation().equals("up")){
@@ -256,36 +256,31 @@ public class VehicleCrash {
                                 endPosition = 385;
                             }
                             else if (getStartLocation().equals("down")){
-                                distance  = -(getY() - 574);
+                                distance  = (getY() - 574);
                                 endPosition = 580;
                             }
-                            double velocity = getVelocity();
-                            double y = getY();
-                            double deceleration = crashDeceleration(velocity, distance);
-                            if (getStartLocation().equals("down")){ 
-                                while (y > endPosition + 1){
-                                    velocity = newVelocity(deceleration, velocity, 0.01);
-                                    y = y + newPosition(deceleration, velocity, 0.01);
-                                    out.println("Y: "+y);
-                                    final double finalY = y;
-                                    Platform.runLater(() -> getVehicle().setY(finalY));
+                            setAcceleration(crashDeceleration(getVelocity(), distance));
+                            if (getStartLocation().equals("down")){
+                                while (getY() > endPosition + 1 && isCrash(copyVehicles) < 0){
+                                    setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
+                                    setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
+                                    Platform.runLater(() -> getVehicle().setY(getY()));
+                                    Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
                                     Thread.sleep(1);
                                 }
                             }
-                            if (getStartLocation().equals("up")){ 
-                                while (y < endPosition - 1){
-                                    velocity = newVelocity(deceleration, velocity, 0.01);
-                                    out.println("velocity "+velocity);
-                                        
-                                    y = y + newPosition(deceleration, velocity, 0.01);
-                                    out.println("Y: "+y);
-                                    final double finalY = y;
-                                    Platform.runLater(() -> getVehicle().setY(finalY));
-                                    Thread.sleep(1);  
+                            else if (getStartLocation().equals("up")){
+                                while (getY() < endPosition - 1 && isCrash(copyVehicles) < 0){
+                                    setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
+                                    setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
+                                    Platform.runLater(() -> getVehicle().setY(getY()));
+                                    Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(getVelocity()), getAcceleration(), getVehicleNbre()));
+                                    Thread.sleep(1);
                                 }
                             }
                         }
                     }
+                    //Remove vehicle if oiut of thread
                     //Crash animation
                     if (isCrash(copyVehicles) >= 0){
                         int vehicleIndex = isCrash(copyVehicles);
@@ -293,10 +288,11 @@ public class VehicleCrash {
                         double crashDistance = crashDistance(copyVehicles[vehicleIndex]);
                         double endPosition = 0;
                         out.println(crashDistance(copyVehicles[vehicleIndex])+"crashdistance "+getStartLocation());//test
+                        out.println(getVelocity()+" speed "+" "+getStartLocation());
                         out.println(crashSpeed(copyVehicles[vehicleIndex])+"crashspeed "+getStartLocation());//test
                         if (crashSpeed < 0){//To be changed later on
                             //Get crash values
-                            endPosition = -(getY() - crashDistance);
+                            endPosition = getY() - crashDistance;
                         }
                         else{
                             endPosition = getY() + crashDistance;
@@ -305,39 +301,75 @@ public class VehicleCrash {
                         double velocity = crashSpeed;
                         double y = getY();
                         out.println(endPosition+" endposition "+getStartLocation());//test
-                        while (y > endPosition + 1){ 
-                            velocity = newVelocity(acceleration, velocity, 0.01);
-                            y = y + newPosition(acceleration, velocity, 0.01);
+                        if (crashSpeed < 0){
+                            while (y > endPosition + 1){ 
+                                velocity = newVelocity(acceleration, velocity, 0.01);
+                                out.println("crashvelocity "+velocity);
+                                y = y + newPosition(acceleration, velocity, 0.01);
 //                            setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
 //                            setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
-                            if (getY() < endPosition){
-                                out.println(getY()+" crashPosition "+getStartLocation());//test
-                            }
+                                if (getY() < endPosition){
+                                    out.println(getY()+" crashPosition "+getStartLocation());//test
+                                }
 //                          copyVehicles[vehicleIndex].setY(copyVehicles[vehicleIndex].getY() - 5);
-                            final double finalY = y;
-                            Platform.runLater(() -> getVehicle().setY(finalY));
-//                          Platform.runLater(() -> copyVehicles[vehicleIndex].getVehicle().setY(copyVehicles[vehicleIndex].getY()));
-                            Thread.sleep(1);
+                                final double finalY = y;
+                                final double finalVelocity = velocity;
+                                final double finalAcceleration = acceleration;
+                                final double finalCrashDistance = crashDistance;
+                                Platform.runLater(() -> getVehicle().setY(finalY));
+//                              Platform.runLater(() -> copyVehicles[vehicleIndex].getVehicle().setY(copyVehicles[vehicleIndex].getY()));
+                                Platform.runLater(() -> VehicleCollisionsController.controllerInstance.showCrashValues(conversionKilometersPerHours(crashSpeed), finalAcceleration, finalCrashDistance));
+                                Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(finalVelocity), finalAcceleration, getVehicleNbre()));
+                                Thread.sleep(1);
+                            }
+                        }
+                        else if (crashSpeed > 0){
+                            while (y < endPosition - 1){
+                                velocity = newVelocity(acceleration, velocity, 0.01);
+                                y = y + newPosition(acceleration, velocity, 0.01);
+                                final double finalY = y;
+                                final double finalVelocity = velocity;
+                                final double finalAcceleration = acceleration;
+                                final double finalCrashDistance = crashDistance;
+                                Platform.runLater(() -> getVehicle().setY(finalY));
+                                Platform.runLater(() -> VehicleCollisionsController.controllerInstance.showCrashValues(conversionKilometersPerHours(crashSpeed), finalAcceleration, finalCrashDistance));
+                                Platform.runLater(() -> VehicleCollisionsController.controllerInstance.setPhysicsValues(conversionKilometersPerHours(finalVelocity), finalAcceleration, getVehicleNbre()));
+                                Thread.sleep(1);
+                            }
                         }
                         //Set correct values for vehicle at the end of loop
                         setY(y);
                         setVelocity(velocity);
                         
                         //Show collision message
-                        VehicleCollisionsController.controllerInstance.collisionText(true);
+                        VehicleCollisionsController.controllerInstance.collisionText("collision");
 
                     }
-                    out.println("drunk: "+getIsDrunk());
-                    if (getIsDrunk()){
-                        VehicleCollisionsController.controllerInstance.collisionText(false);
+                    //Show end of simulation text
+                    if (isCrash(copyVehicles) < 0 && (getIsDrunk() || checkIsDrunk(copyVehicles))){
+                        VehicleCollisionsController.controllerInstance.collisionText("drunkNoCollision");
                         out.println("looped");
+                        Thread.sleep(100);
+                    }
+                    else if (isCrash(copyVehicles) < 0 && !getIsDrunk() && !checkIsDrunk(copyVehicles)){
+                        VehicleCollisionsController.controllerInstance.collisionText("noCollisionText");
                     }
                 }   
                 catch (Exception ex){
                     ex.getStackTrace();
                 }
-            }
-               
+                //End thread and remove vehicle
+                try{
+                    while (!VehicleCollisionsController.controllerInstance.isClickReset()){
+                        Thread.sleep(500);
+                    }
+                    Platform.runLater(() -> VehicleCollisionsController.controllerInstance.removeVehicle(getVehicle())); 
+                    Thread.currentThread().interrupt();
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }
+            } 
         });
         thread.start();
         out.println("something");

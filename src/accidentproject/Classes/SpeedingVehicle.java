@@ -97,8 +97,13 @@ public class SpeedingVehicle {
             @Override
             public void run(){
                 try{
-                    if (SpeedingVehicleController.speedingInstance.vehicleExceutorIsShutdown()){
+                    if (SpeedingVehicleController.speedingInstance.vehicleExceutorIsShutdown() || 
+                            getVehicle().getX() < 131 || getVehicle().getX() > 466){
+                        if (getVehicle().getX() < 131 || getVehicle().getX() > 466){
+                            SpeedingVehicleController.speedingInstance.endgameText("offroad");
+                        }
                         SpeedingVehicleController.speedingInstance.removeVehicle(vehicle);
+                        SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown();
                         timer.cancel();
                     }
                 }

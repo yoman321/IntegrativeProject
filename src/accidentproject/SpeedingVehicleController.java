@@ -44,6 +44,7 @@ public class SpeedingVehicleController {
     @FXML private ImageView backgroundImage;
     @FXML private ImageView newImage;
     @FXML private Text collisionText; 
+    @FXML private Text offroadText;
     @FXML private Button resetBtn;
     @FXML private Button startBtn;
     @FXML private Button backBtn;
@@ -98,6 +99,7 @@ public class SpeedingVehicleController {
         
         //Reset variables
         collisionText.setOpacity(0);
+        offroadText.setOpacity(0);
         time = 40;
         startBtn.setVisible(true);
         backBtn.setVisible(true);
@@ -218,8 +220,14 @@ public class SpeedingVehicleController {
         return accidentExecutor.isShutdown();
     }
     //Create endgame text 
-    public void collisionText(){
-        FadeTransition ft = new FadeTransition(Duration.millis(3000), collisionText);
+    public void endgameText(String situation){
+        FadeTransition ft = new FadeTransition();
+        if (situation.equals("collision")){
+            ft = new FadeTransition(Duration.millis(3000), collisionText);
+        }
+        else if (situation.equals("offroad")){
+            ft = new FadeTransition(Duration.millis(3000), offroadText);
+        }
         ft.setFromValue(0.0);
         ft.setToValue(1.0);
         ft.setAutoReverse(false);

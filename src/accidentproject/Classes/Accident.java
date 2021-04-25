@@ -29,13 +29,6 @@ public class Accident {
 
     public void accidentMovementAnimation(SpeedingVehicle vehicle, ImageView backgroundImage){
         
-        //Set values for accident
-//        Rectangle accident = new Rectangle();
-//        accident.setHeight(80);
-//        accident.setWidth(50);
-//        accident.setY(-60);
-//        accident.setFill(Color.BLUE);
-        
         //Create images for accidents
         ImageView[] accident = {new ImageView("accidentproject/Ressources/BlueCarBase.png"), 
             new ImageView("accidentproject/Ressources/PinkCarBase.png"), new ImageView("accidentproject/Ressources/RedCarBase.png")};
@@ -68,7 +61,8 @@ public class Accident {
             public void run(){
                 try{
                     while (!accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal()) || accident[cars].getY() > 1050){
-                        if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
+                        if (SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown() || 
+                                SpeedingVehicleController.speedingInstance.vehicleExceutorIsShutdown()){
                             break;
                         }
                         Platform.runLater(() -> accident[cars].setY(accident[cars].getY() + 8));
@@ -78,13 +72,14 @@ public class Accident {
                         SpeedingVehicleController.speedingInstance.removeAccident(accident[cars], false);
                     }
                     if (accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal()) || 
-                            SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown()){
+                            SpeedingVehicleController.speedingInstance.accidentExecutorIsShutdown() || 
+                                SpeedingVehicleController.speedingInstance.vehicleExceutorIsShutdown()){
                         Platform.runLater(() -> SpeedingVehicleController.speedingInstance.accidentExecutorShutdown());
                         Platform.runLater(() -> SpeedingVehicleController.speedingInstance.vehicleExecutorShutdown());
                         SpeedingVehicleController.speedingInstance.removeAccident(accident[cars], true);
                         
                         if (accident[cars].intersects(vehicle.getVehicle().getBoundsInLocal())){
-                            Platform.runLater(() -> SpeedingVehicleController.speedingInstance.collisionText());
+                            Platform.runLater(() -> SpeedingVehicleController.speedingInstance.endgameText("collision"));
                         }
                     }
                     Thread.currentThread().interrupt();
