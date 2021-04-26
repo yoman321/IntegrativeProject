@@ -108,7 +108,7 @@ public class DemoInputScreenFXMLController implements Initializable {
             setPreviewHeight(demoPane.getHeight());
             setPreviewWidth(demoPane.getWidth());
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("FallingObjectDemo.fxml"));
+            loader.setLocation(getClass().getResource("FXML/FallingObjectDemo.fxml"));
             Parent demo = loader.load();
             Scene scene = new Scene(demo);
             
@@ -194,7 +194,7 @@ public class DemoInputScreenFXMLController implements Initializable {
 
         //Creates and loads the Previous FXML Screen
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("MenuSceneFXML.fxml"));
+        loader.setLocation(getClass().getResource("FXML/MenuSceneFXML.fxml"));
         Parent previousScene = loader.load();
         
         

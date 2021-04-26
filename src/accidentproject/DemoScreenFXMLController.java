@@ -42,8 +42,8 @@ public class DemoScreenFXMLController{
     @FXML private Button goButton;
     private double targetObjectLayoutX;
     private boolean collision = false;
-    private Image boxChipped = new Image("/resources/Box_Destroyed 1.png");
-    private Image boxDestroyed = new Image("/resources/Box_Destroyed 2.png");
+    private Image boxChipped = new Image("accidentproject/Ressources/Box_Destroyed 1.png");
+    private Image boxDestroyed = new Image("accidentproject/Ressources/Box_Destroyed 2.png");
     DemoInputScreenFXMLController input = new DemoInputScreenFXMLController();
     ProjectileMotion motion = new ProjectileMotion();
     
@@ -201,7 +201,7 @@ public class DemoScreenFXMLController{
         
         //Creates and loads the Previous FXML Screen
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("DemoInputScreen.fxml"));
+        loader.setLocation(getClass().getResource("FXML/DemoInputScreen.fxml"));
         Parent previousScene = loader.load();
         
         //Displays the previous screen to the user
