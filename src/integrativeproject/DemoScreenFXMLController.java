@@ -16,9 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -40,10 +38,10 @@ public class DemoScreenFXMLController{
     @FXML private Button goButton;
     private double targetObjectLayoutX;
     private boolean collision = false;
-    private Image boxChipped = new Image("/resources/Box_Destroyed 1.png");
-    private Image boxDestroyed = new Image("/resources/Box_Destroyed 2.png");
-    DemoInputScreenFXMLController input = new DemoInputScreenFXMLController();
-    ProjectileMotion motion = new ProjectileMotion();
+    private final Image boxChipped = new Image("/resources/Box_Destroyed 1.png");
+    private final Image boxDestroyed = new Image("/resources/Box_Destroyed 2.png");
+    private DemoInputScreenFXMLController input = new DemoInputScreenFXMLController();
+    private ProjectileMotion motion = new ProjectileMotion();
     
 
     public void InitializeData(DemoInputScreenFXMLController inputController){
@@ -110,7 +108,7 @@ public class DemoScreenFXMLController{
                     motion.setTime(motion.getTime() + 0.01);
                 
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(4);
                 }catch (InterruptedException ex) {
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -132,7 +130,7 @@ public class DemoScreenFXMLController{
                 motion.setTime(motion.getTime() + 0.01);
             
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(4);
                 }catch (InterruptedException ex) {
                     Logger.getLogger(DemoScreenFXMLController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -151,7 +149,7 @@ public class DemoScreenFXMLController{
                     fallingObject.setY(initialY + heightDifference);
                 
                     //If statement that controls the collision with the falling object and the target object
-                    /*Redo this statement with the new box. If you cant figure it out, just switch back to the old box*/if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
+                    if((targetObjectLayoutX <= fallingObject.getX() && fallingObject.getX() < targetObjectLayoutX + targetObject.getFitWidth()) && fallingObject.getY() >= targetObject.getLayoutY() - 35){
                         collision = true;
                         break;
                     }

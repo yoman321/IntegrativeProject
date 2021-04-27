@@ -6,11 +6,9 @@
 package integrativeproject;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,12 +18,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -36,30 +33,17 @@ import javafx.stage.Stage;
 public class DemoInputScreenFXMLController implements Initializable {
     @FXML private TextField iVelXYTF;
     @FXML private TextField angleTF;
-    @FXML private TextField timeTF;
     @FXML private TextField iHeightTF;
     @FXML private StackPane demoPane;
     @FXML private ImageView targetObject;
-    @FXML private Label rLabel;
-    @FXML private Label accelerationLabel;
     @FXML private Label demoLabel;
-    @FXML private Slider rSlider;
-    @FXML private Label gLabel;
-    @FXML private Slider gSlider;
-    @FXML private Label bLabel;
-    @FXML private Slider bSlider;
     @FXML private Slider objectPosSlider;
-    @FXML private ImageView heightObject;
-    @FXML private RadioButton rbBasketball;
-    @FXML private RadioButton rbBoxSquare;
-    @FXML private RadioButton rbBoxRectangle;
-    @FXML private ImageView fallingObjectDisplay;
-    @FXML private ImageView demoLedge = new ImageView();
-    @FXML private Slider heightSlider = new Slider();
-    @FXML public AnchorPane anchorPane;
-    @FXML public TabPane tabPane;
+    @FXML private ImageView demoLedge;
+    @FXML private Slider heightSlider;
+    @FXML private TabPane tabPane;
+    @FXML private Pane infoPane;
     
-    private double velXY, angle, time, height, distance, targetObjectDistance;
+    private double velXY, angle, height;
     private double ledgeHeight, previewHeight, previewWidth;
     private boolean isInitialized = false;
     
@@ -78,7 +62,7 @@ public class DemoInputScreenFXMLController implements Initializable {
         if(isDouble(iVelXYTF.getText())&& isDouble(angleTF.getText())){
             velXY = Double.parseDouble(iVelXYTF.getText());
             angle = Double.parseDouble(angleTF.getText());
-            height = Double.parseDouble(iHeightTF.getText());
+            height = Double.parseDouble(retrieveNumberFromString(iHeightTF.getText()));
         }
         else{
             demoLabel.setText("Not enough information");
@@ -93,6 +77,9 @@ public class DemoInputScreenFXMLController implements Initializable {
         else if(angle <=0){
             demoLabel.setText("Angle must be > 0");
             return;
+        }
+        else if(velXY <= 0){
+            demoLabel.setText("Velocity must be > 0");
         }
         else{
         pm.convertXY(angle);
@@ -121,15 +108,11 @@ public class DemoInputScreenFXMLController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        height = (int)heightSlider.getValue();;
-        iHeightTF.setText(Double.toString(height));
-        heightSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                height = (int)heightSlider.getValue();;
-                iHeightTF.setText(Double.toString(height));
-            }
-            
+        height = (int)heightSlider.getValue();
+        iHeightTF.setText(Double.toString(height) + " m");
+        heightSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
+            height = (int)heightSlider.getValue();
+            iHeightTF.setText(Double.toString(height) + " m");
         });
         
     }
@@ -162,7 +145,8 @@ public class DemoInputScreenFXMLController implements Initializable {
     }
     public void handleInitialize(ActionEvent event){
         previewHeight = demoPane.getHeight();
-        ledgeHeight =(Double.parseDouble(iHeightTF.getText()));
+        String numberHeight = retrieveNumberFromString(iHeightTF.getText());
+        ledgeHeight = Double.parseDouble(numberHeight);
         demoLedge.setFitHeight(ledgeHeight);
         targetObject.setTranslateX(objectPosSlider.getValue());
         isInitialized = true;
@@ -203,6 +187,27 @@ public class DemoInputScreenFXMLController implements Initializable {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+    
+    public void handleContinue(ActionEvent event) {
+        tabPane.setOpacity(100);
+        infoPane.setVisible(false);
+    }
+    
+    public String retrieveNumberFromString(String string){
+        //Removing only the number from the initial height string
+        
+        String formattedString = "";
+        for(int i = 0; i < string.length(); i++){
+            if(string.charAt(i) == '0' || string.charAt(i) == '1' || string.charAt(i) == '2' || string.charAt(i) == '3' || string.charAt(i) == '4' || string.charAt(i) == '5' || string.charAt(i) == '6' || string.charAt(i) == '7' || string.charAt(i) == '8' || string.charAt(i) == '9'){
+                formattedString = formattedString + string.charAt((i));
+            }
+            else if(string.charAt(i) == '.'){
+                break;
+            }
+        }
+        
+        return formattedString;
     }
             
 }

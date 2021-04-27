@@ -21,7 +21,7 @@
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="integrativeproject.DemoInputScreenFXMLController">
    <children>
-      <TabPane fx:id="tabPane" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPane" opacity="0.26" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab text="Demo Input">
             <content>
@@ -33,31 +33,31 @@
                                  <children>
                                     <HBox prefHeight="53.0" prefWidth="600.0">
                                        <children>
-                                          <TextField fx:id="iVelXYTF" prefHeight="25.0" prefWidth="99.0" promptText="Velocity (m/s)">
+                                          <TextField fx:id="iVelXYTF" prefHeight="25.0" prefWidth="118.0" promptText="Velocity (m/s)">
                                              <HBox.margin>
                                                 <Insets left="10.0" right="10.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField fx:id="angleTF" prefHeight="25.0" prefWidth="129.0" promptText="Launch Angle (°C)">
+                                          <TextField fx:id="angleTF" prefHeight="25.0" prefWidth="139.0" promptText="Launch Angle (°C)">
                                              <HBox.margin>
                                                 <Insets right="10.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
-                                          <TextField fx:id="iHeightTF" editable="false" prefHeight="25.0" prefWidth="104.0" promptText="Initial Height (m)">
+                                          <TextField fx:id="iHeightTF" editable="false" prefHeight="25.0" prefWidth="133.0" promptText="Initial Height (m)">
                                              <HBox.margin>
                                                 <Insets right="20.0" top="14.0" />
                                              </HBox.margin>
                                           </TextField>
                                           <Slider fx:id="heightSlider" max="230.0" min="70.0" prefHeight="14.0" prefWidth="179.0">
                                              <HBox.margin>
-                                                <Insets right="35.0" top="19.5" />
+                                                <Insets right="30.0" top="19.5" />
                                              </HBox.margin>
                                           </Slider>
                                           <VBox prefHeight="200.0" prefWidth="100.0">
                                              <children>
                                                 <Button mnemonicParsing="false" onAction="#handleBack" prefHeight="31.0" prefWidth="52.0" text="Back">
                                                    <VBox.margin>
-                                                      <Insets left="15.0" top="10.0" />
+                                                      <Insets left="10.0" top="10.0" />
                                                    </VBox.margin>
                                                 </Button>
                                              </children>
@@ -148,5 +148,58 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Pane fx:id="infoPane" layoutX="100.0" prefHeight="400.0" prefWidth="400.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="400.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+            <VBox prefHeight="360.0" prefWidth="400.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="403.0" text="Tips on using the Projectile Motion Demo" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="400.0" text="- The higher up the fall, the more damage to the box (force)">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="20.0" prefWidth="404.0" text="- The velocity in the horizontal direction stays constant">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="- The angle to maximize distance is 45 degrees">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="- If the ball goes off screen dont worry! It will come back down">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="- The impact force is calculated assuming the ball travels 0.1 m">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="120.0" text="   into the target">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="- The slider next to the angle field is for the initial height">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <Button layoutX="152.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleContinue" prefHeight="25.0" prefWidth="96.0" text="Continue" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
