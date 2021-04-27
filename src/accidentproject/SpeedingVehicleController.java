@@ -77,7 +77,7 @@ public class SpeedingVehicleController {
         accidentExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
         vehicleExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         imageExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-        timerExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        timerExecutor = Executors.newFixedThreadPool(1);
         
         //Run executors
         vehicleExecutor.execute(new vehicleMovementTask());
@@ -86,6 +86,7 @@ public class SpeedingVehicleController {
         timerExecutor.execute(new timerTask());
         
         //Apply changes to pane
+        time = 40;
         pane.getChildren().add(vehicle.getVehicle());
         startBtn.setVisible(false);
         backBtn.setVisible(false);
@@ -102,6 +103,7 @@ public class SpeedingVehicleController {
         collisionText.setOpacity(0);
         offroadText.setOpacity(0);
         time = 40;
+        out.println(time ); //test
         startBtn.setVisible(true);
         backBtn.setVisible(true);
         resetBtn.setVisible(false);
@@ -173,7 +175,7 @@ public class SpeedingVehicleController {
                 public void run(){
                     try{
                         while (accident.getOpacity() > 0){
-                            out.println(accident.getOpacity());
+//                            out.println(accident.getOpacity()); //test
                             accident.setOpacity(accident.getOpacity() - 0.055);
                             Thread.sleep(165);
                         }
@@ -263,13 +265,12 @@ public class SpeedingVehicleController {
         
         public void newTime(){
             try{
-                while (time >= 10){
+                while (time >= 5 && !vehicleExecutor.isShutdown()){
                     time -= 8;
-                    Thread.sleep(15000);
+                    out.println(time);//test
+                    Thread.sleep(10000);
                 }
-                if (vehicleExecutor.isShutdown()){
-                    Thread.currentThread().interrupt();
-                }
+                Thread.currentThread().interrupt();
             }
             catch (Exception ex){
                 ex.printStackTrace();

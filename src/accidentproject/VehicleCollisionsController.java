@@ -80,9 +80,9 @@ public class VehicleCollisionsController {
     //Create alert
     Alert alert = new Alert(AlertType.WARNING);
     
-    //Create check reset button
+    //Create variable
     boolean clickReset = false;
-    
+    int runCount = 0;
     
     //Create combo box
     private final String[] startLocations = {"up", "down"};
@@ -98,7 +98,7 @@ public class VehicleCollisionsController {
     private ObservableList<String> trafficLightItems = FXCollections.observableArrayList(trafficLighString);
     
     //Create arrays
-    private ArrayList<VehicleCrash> vehicleArray = new ArrayList<>();
+//    private ArrayList<VehicleCrash> vehicleArray = new ArrayList<>();
     private TextField[] massArray;
     private TextField[] velocityArray;
     private TextField[] accelerationArray;
@@ -134,7 +134,11 @@ public class VehicleCollisionsController {
     }
     //Check for numbers of vehicle
     public void onclickNbreVehicles(){
-        if (Integer.valueOf(nbreVehicle.getText()) > 2){
+        if (nbreVehicle.getText().isEmpty()){
+            alert.setContentText("No value has been inputed.");
+            alert.show();
+        }
+        else if (Integer.valueOf(nbreVehicle.getText()) > 2){
             alert.setContentText("There is more than 8 vehicles.");
             alert.show();
         }
@@ -158,6 +162,8 @@ public class VehicleCollisionsController {
             if (Integer.valueOf(nbreVehicle.getText()) < 2){
                 drunkChk.setVisible(false);
             }
+            else 
+                drunkChk.setVisible(true);
             //Clear unuse nodes in grids
             nbreVehicleGrid.getChildren().clear();
             massGrid.getChildren().clear();
@@ -218,12 +224,17 @@ public class VehicleCollisionsController {
         int startDown = 0;
         boolean correctValues = true;
         for (int i=0; i<vehicles.length; i++){
-            if (Double.valueOf(massArray[i].getText()) < 700 || Double.valueOf(massArray[i].getText()) > 2000){
+            if (massArray[i].getText().isEmpty() || velocityArray[i].getText().isEmpty() || accelerationArray[i].getText().isEmpty()){
+                alert.setContentText("Error: Vehicle Mass");
+                alert.show();
+                correctValues = false;
+            } 
+            else if (Double.valueOf(massArray[i].getText()) < 700 || Double.valueOf(massArray[i].getText()) > 2000){
                 alert.setContentText("Error: Vehicle Mass");
                 alert.show();
                 correctValues = false;
             }
-            else if (Double.valueOf(velocityArray[i].getText()) <= 0 ||Double.valueOf(velocityArray[i].getText()) > 200){
+            else if (Double.valueOf(velocityArray[i].getText()) <= 0 ||Double.valueOf(velocityArray[i].getText()) > 250){
                 alert.setContentText("Error: Vehicle velocity");
                 alert.show();
                  correctValues = false;
@@ -236,12 +247,7 @@ public class VehicleCollisionsController {
             else if (sLocationArray[i].getSelectionModel().isEmpty()){
                 alert.setContentText("Error: Vehicle Start Location");
                 alert.show();
-                correctValues = false;
-            }
-            else if (startUp > 1 || startDown > 1){
-                alert.setContentText("Error: Vehicle Start Location");
-                alert.show();
-                correctValues = false;
+                correctValues = false;            
             }
             else if (sPositionArray[i].getSelectionModel().isEmpty()){
                 alert.setContentText("Error: Vehicle Position");
@@ -253,17 +259,25 @@ public class VehicleCollisionsController {
                 alert.show();
                 correctValues = false;
             }
-            if (sLocationArray[i].equals("up") || sLocationArray[i].equals("down")){
-                if (sLocationArray[i].equals("up")){
+            else if (sLocationArray[i].getValue().equals("up") || sLocationArray[i].getValue().equals("down")){
+                out.println("hello");
+                if (sLocationArray[i].getValue().equals("up")){
                     startUp++;
                 }
-                else
+                if (sLocationArray[i].getValue().equals("down")){
                     startDown++;
+                }
+                if (startUp >= 2 || startDown >= 2){
+                    alert.setContentText("Error: Same Start Location");
+                    alert.show();
+                    correctValues = false;
+                }
             }
         }
         //Add values from textfield to arrays
         ImageView trafficLight = new ImageView();
         if (correctValues){
+            runCount++;
             for (int i=0; i<vehicles.length; i++){
                 if (sLocationArray[i].getValue().equals("up") && sPositionArray[i].getValue().equals("back")){
                 // x - 430
@@ -405,6 +419,13 @@ public class VehicleCollisionsController {
     //Reset the simulation
     public void onclickReset(){
         
+        //Reset values in textfields
+        for (int i=0; i<Integer.valueOf(nbreVehicle.getText()); i++){
+            massArray[i].setText("");
+            velocityArray[i].setText("");
+            accelerationArray[i].setText("");
+            
+        }
         //Make click reset true
         clickReset = true;
         
@@ -521,6 +542,10 @@ public class VehicleCollisionsController {
     //Check if reset button has been clicked
     public boolean isClickReset(){
         return clickReset;
+    }
+    //Check runCount
+    public int getRunCount(){
+        return runCount;
     }
     //Create tasks
     public class vehicleMovementTask implements Runnable{

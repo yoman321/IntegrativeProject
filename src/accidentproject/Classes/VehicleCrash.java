@@ -204,7 +204,7 @@ public class VehicleCrash {
                         out.println("drunk");
                         
                         //Check side of road
-                        if (random == 1){
+                        if (random == 1 || VehicleCollisionsController.controllerInstance.getRunCount() > 2){
                             out.println("random: "+random);
                             setX(430);
                             getVehicle().setX(getX());
@@ -227,6 +227,10 @@ public class VehicleCrash {
                     //Check for traffic light
                     else if (getTrafficLight().equals("green")){
                         while(isCrash(copyVehicles) < 0 && getY() > -40 && getY() < 1100){
+                            if (getVelocity() > 65 || getVelocity() < -65){
+                                setAcceleration(0);
+                                out.println("veloctiy"+ getVelocity());
+                            }
                             setVelocity(newVelocity(getAcceleration(), getVelocity(), 0.01));
                             setY(getY()+newPosition(getAcceleration(), getVelocity(), 0.01));
 //                                out.println("Position: "+getY()+" "+getStartLocation());
