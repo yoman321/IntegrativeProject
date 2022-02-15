@@ -81,7 +81,9 @@ public class VehicleCollisionsController {
     Alert alert = new Alert(AlertType.WARNING);
     
     //Create variable
+    int vehicleCount = 0;
     boolean clickReset = false;
+    int resetCall = 0;
     int runCount = 0;
     
     //Create combo box
@@ -147,6 +149,7 @@ public class VehicleCollisionsController {
             alert.show();
         }
         else {
+            vehicleCount = Integer.valueOf(nbreVehicle.getText());
             variableGrid.setVisible(true);
             nbreVehicleGrid.setVisible(true);
             massGrid.setVisible(true);
@@ -417,7 +420,12 @@ public class VehicleCollisionsController {
     }
     //Make reset btn visible
     public void resetBtnVisible(){
-        resetBtn.setVisible(true);
+        if (resetCall == vehicleCount-1){
+            resetBtn.setVisible(true);
+            resetCall = 0;
+        }
+        else
+            resetCall++;
     }
     //Reset the simulation
     public void onclickReset(){
