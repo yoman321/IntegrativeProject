@@ -139,7 +139,7 @@ public class VehicleCollisionsController {
             alert.show();
         }
         else if (Integer.valueOf(nbreVehicle.getText()) > 2){
-            alert.setContentText("There is more than 8 vehicles.");
+            alert.setContentText("There is more than 2 vehicles.");
             alert.show();
         }
         else if (Integer.valueOf(nbreVehicle.getText()) < 1){
@@ -282,12 +282,12 @@ public class VehicleCollisionsController {
                 if (sLocationArray[i].getValue().equals("up") && sPositionArray[i].getValue().equals("back")){
                 // x - 430
                     if (trafficLightArray[i].getValue().equals("red")){
-                        trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/RedLight.png");
                         vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                             430, 5, i,false, "up", "back", "red", new ImageView("accidentproject/Ressources/BlueCarReverse.png"));
                     } 
                     else if (trafficLightArray[i].getValue().equals("green")){
-                        trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/GreenLight.png");
                         vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                              430, 5, i, false, "up", "back", "green", new ImageView("accidentproject/Ressources/BlueCarReverse.png"));
                     }
@@ -307,13 +307,13 @@ public class VehicleCollisionsController {
                 }
                 else if (sLocationArray[i].getValue().equals("up") && sPositionArray[i].getValue().equals("center")){
                     if (trafficLightArray[i].getValue().equals("red")){
-                        trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/RedLight.png");
                         vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                             430, 385, i, false, "up", "center", "red", new ImageView("accidentproject/Ressources/BlueCarReverse.png"));
                     
                     }
                     else if (trafficLightArray[i].getValue().equals("green")){
-                        trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/GreenLight.png");
                         vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                             430, 385, i, false, "up", "center", "green", new ImageView("accidentproject/Ressources/BlueCarReverse.png"));
                     }
@@ -331,7 +331,7 @@ public class VehicleCollisionsController {
                 }
                 else if (sLocationArray[i].getValue().equals("down") && sPositionArray[i].getValue().equals("back")){
                     if (trafficLightArray[i].getValue().equals("red")){
-                        trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/RedLight.png");
                         if (drunkChk.isSelected()){
                             vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                                 545, 975, i, true, "down", "back", "red", new ImageView("accidentproject/Ressources/CollisionYellowCarBase.png"));
@@ -342,7 +342,7 @@ public class VehicleCollisionsController {
                         }
                     }   
                     else if (trafficLightArray[i].getValue().equals("green")){
-                        trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/GreenLight.png");
                         if (drunkChk.isSelected()){
                             vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                                  545, 975, i, true, "down", "back", "green", new ImageView("accidentproject/Ressources/CollisionYellowCarBase.png"));
@@ -368,19 +368,19 @@ public class VehicleCollisionsController {
                 }
                 else if (sLocationArray[i].getValue().equals("down") && sPositionArray[i].getValue().equals("center")){
                     if (trafficLightArray[i].getValue().equals("red")){
-                        trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/RedLight.png");
                         if (drunkChk.isSelected()){
                             vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                              545, 585, i, true, "down", "center", "red", new ImageView("accidentproject/Ressources/CollisionYellowCarBase.png"));
                         }
                         else{
-                            trafficLight = new ImageView("accidentProject/Ressources/RedLight.png");
+                            trafficLight = new ImageView("accidentproject/Ressources/RedLight.png");
                             vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                              545, 585, i, false, "down", "center", "red", new ImageView("accidentproject/Ressources/CollisionYellowCarBase.png"));
                         }
                     }
                     else if (trafficLightArray[i].getValue().equals("green")){
-                        trafficLight = new ImageView("accidentProject/Ressources/GreenLight.png");
+                        trafficLight = new ImageView("accidentproject/Ressources/GreenLight.png");
                         if (drunkChk.isSelected()){
                             vehicles[i] = new VehicleCrash(Double.valueOf(massArray[i].getText()), Double.valueOf(velocityArray[i].getText()), Double.valueOf(accelerationArray[i].getText()), 
                              545, 585, i, true, "down", "center", "green", new ImageView("accidentproject/Ressources/CollisionYellowCarBase.png"));
@@ -411,10 +411,13 @@ public class VehicleCollisionsController {
             //initialize properties on click
             backgroundImage.setOpacity(1);
             startBtn.setVisible(false);
-            resetBtn.setVisible(true);
             backNbreVehicleBtn.setVisible(false);
             backMenuBtn.setVisible(false);
         }
+    }
+    //Make reset btn visible
+    public void resetBtnVisible(){
+        resetBtn.setVisible(true);
     }
     //Reset the simulation
     public void onclickReset(){
@@ -445,8 +448,7 @@ public class VehicleCollisionsController {
         noCollisionText.setOpacity(0.0);
         crashValuesText.setVisible(false);
         vehicles = new VehicleCrash[Integer.valueOf(nbreVehicle.getText())];   
-        executor = Executors.newFixedThreadPool(2);
-        out.println("reset");
+        executor = Executors.newFixedThreadPool(1);
     }
     //Back to nbre of vehicle screen
     public void backNbreVehicle(){
@@ -514,13 +516,13 @@ public class VehicleCollisionsController {
         FadeTransition ft = new FadeTransition();
         if (collisionText.getOpacity() == 0 && drunkNoCollisionText.getOpacity() == 0 && noCollisionText.getOpacity() == 0){
             if (situation.equals("collision")){
-                ft = new FadeTransition(Duration.millis(3000), collisionText);
+                ft = new FadeTransition(Duration.millis(2000), collisionText);
             }
             else if (situation.equals("drunkNoCollision")){
-                ft = new FadeTransition(Duration.millis(3000), drunkNoCollisionText);  
+                ft = new FadeTransition(Duration.millis(2000), drunkNoCollisionText);  
             }
             else
-                ft = new FadeTransition(Duration.millis(3000), noCollisionText);
+                ft = new FadeTransition(Duration.millis(2000), noCollisionText);
         
             ft.setFromValue(0.0);
             ft.setToValue(1.0);
@@ -555,7 +557,6 @@ public class VehicleCollisionsController {
                 for (int i=0; i<vehicles.length; i++){
                     vehicles[i].vehicleAnimation(vehicles, vehicles[i]);
                 }
-                out.println("nothing");
             }
             catch (Exception ex){
                 ex.printStackTrace();

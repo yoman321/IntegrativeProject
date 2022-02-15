@@ -347,16 +347,16 @@ public class VehicleCrash {
                         
                         //Show collision message
                         VehicleCollisionsController.controllerInstance.collisionText("collision");
-
+                        VehicleCollisionsController.controllerInstance.resetBtnVisible();
                     }
                     //Show end of simulation text
                     if (isCrash(copyVehicles) < 0 && (getIsDrunk() || checkIsDrunk(copyVehicles))){
                         VehicleCollisionsController.controllerInstance.collisionText("drunkNoCollision");
-                        out.println("looped");
-                        Thread.sleep(100);
+                        VehicleCollisionsController.controllerInstance.resetBtnVisible();
                     }
                     else if (isCrash(copyVehicles) < 0 && !getIsDrunk() && !checkIsDrunk(copyVehicles)){
                         VehicleCollisionsController.controllerInstance.collisionText("noCollisionText");
+                        VehicleCollisionsController.controllerInstance.resetBtnVisible();
                     }
                 }   
                 catch (Exception ex){
@@ -376,7 +376,6 @@ public class VehicleCrash {
             } 
         });
         thread.start();
-        out.println("something");
         
     } 
     

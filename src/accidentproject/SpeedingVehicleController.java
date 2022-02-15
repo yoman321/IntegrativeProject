@@ -104,9 +104,12 @@ public class SpeedingVehicleController {
         offroadText.setOpacity(0);
         time = 40;
         out.println(time ); //test
-        startBtn.setVisible(true);
-        backBtn.setVisible(true);
-        resetBtn.setVisible(false);
+        
+        if (accidentExecutor.isShutdown() && vehicleExecutor.isShutdown() && timerExecutor.isShutdown() && imageExecutor.isShutdown()){
+            startBtn.setVisible(true);
+            backBtn.setVisible(true);
+            resetBtn.setVisible(false);
+        }
     }
     //Return to menu button
     public void onclickBack(ActionEvent e) throws Exception{
@@ -176,7 +179,7 @@ public class SpeedingVehicleController {
                     try{
                         while (accident.getOpacity() > 0){
 //                            out.println(accident.getOpacity()); //test
-                            accident.setOpacity(accident.getOpacity() - 0.055);
+                            accident.setOpacity(accident.getOpacity() - 0.3);
                             Thread.sleep(165);
                         }
                         Platform.runLater(() -> pane.getChildren().remove(accident));
@@ -196,7 +199,7 @@ public class SpeedingVehicleController {
             public void run(){
                 try{
                     while (vehicle.getOpacity() > 0){
-                        vehicle.setOpacity(vehicle.getOpacity() - 0.055);
+                        vehicle.setOpacity(vehicle.getOpacity() - 0.2);
                         Thread.sleep(165);
                     }
                     Platform.runLater(() -> pane.getChildren().remove(vehicle));
@@ -226,10 +229,10 @@ public class SpeedingVehicleController {
     public void endgameText(String situation){
         FadeTransition ft = new FadeTransition();
         if (situation.equals("collision")){
-            ft = new FadeTransition(Duration.millis(3000), collisionText);
+            ft = new FadeTransition(Duration.millis(2000), collisionText);
         }
         else if (situation.equals("offroad")){
-            ft = new FadeTransition(Duration.millis(3000), offroadText);
+            ft = new FadeTransition(Duration.millis(2000), offroadText);
         }
         ft.setFromValue(0.0);
         ft.setToValue(1.0);

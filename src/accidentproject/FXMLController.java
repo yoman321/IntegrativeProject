@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
-import accidentproject.Classes.Physics;
 
 /**
  *
